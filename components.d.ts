@@ -9,11 +9,21 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Content: typeof import('./src/components/Layout/Content.vue')['default']
+    Layout: typeof import('./src/components/Layout/index.vue')['default']
+    ListCard: typeof import('./src/components/Layout/ListCard.vue')['default']
+    ListItem: typeof import('./src/components/Layout/ListItem.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
+    NCard: typeof import('naive-ui')['NCard']
+    NIcon: typeof import('naive-ui')['NIcon']
+    NInput: typeof import('naive-ui')['NInput']
+    NLayout: typeof import('naive-ui')['NLayout']
+    NLayoutSider: typeof import('naive-ui')['NLayoutSider']
+    NMenu: typeof import('naive-ui')['NMenu']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TheCounter: typeof import('./src/components/TheCounter.vue')['default']
-    TheFooter: typeof import('./src/components/TheFooter.vue')['default']
-    TheInput: typeof import('./src/components/TheInput.vue')['default']
+    SideBar: typeof import('./src/components/Layout/SideBar.vue')['default']
+    TheFooter: typeof import('./src/composables/TheFooter.vue')['default']
+    TopBar: typeof import('./src/components/Layout/TopBar.vue')['default']
   }
 }
