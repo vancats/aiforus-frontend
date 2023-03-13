@@ -9,21 +9,23 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Container: typeof import('./src/components/Layout/Content.vue')['default']
     Content: typeof import('./src/components/Layout/Content.vue')['default']
     Layout: typeof import('./src/components/Layout/index.vue')['default']
+    ListBar: typeof import('./src/components/Layout/ListBar.vue')['default']
     ListCard: typeof import('./src/components/Layout/ListCard.vue')['default']
-    ListItem: typeof import('./src/components/Layout/ListItem.vue')['default']
-    NButton: typeof import('naive-ui')['NButton']
+    ListItem: typeof import('./src/components/Layout/ListCard.vue')['default']
+    NavBar: typeof import('./src/components/Layout/NavBar.vue')['default']
     NCard: typeof import('naive-ui')['NCard']
-    NIcon: typeof import('naive-ui')['NIcon']
+    NConfigProvider: typeof import('naive-ui')['NConfigProvider']
+    NEllipsis: typeof import('naive-ui')['NEllipsis']
     NInput: typeof import('naive-ui')['NInput']
-    NLayout: typeof import('naive-ui')['NLayout']
-    NLayoutSider: typeof import('naive-ui')['NLayoutSider']
-    NMenu: typeof import('naive-ui')['NMenu']
+    NSpace: typeof import('naive-ui')['NSpace']
+    NTag: typeof import('naive-ui')['NTag']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SearchBar: typeof import('./src/components/Layout/SearchBar.vue')['default']
     SideBar: typeof import('./src/components/Layout/SideBar.vue')['default']
-    TheFooter: typeof import('./src/composables/TheFooter.vue')['default']
-    TopBar: typeof import('./src/components/Layout/TopBar.vue')['default']
+    TopBar: typeof import('./src/components/Layout/SearchBar.vue')['default']
   }
 }

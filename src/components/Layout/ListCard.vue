@@ -1,22 +1,26 @@
 <template>
-  <div text-left mb-2>
-    <n-card size="small" rounded-xl title="最近使用" hoverable>
-      <template #header-extra>
-        <div i-basil:award-solid w-8 h-8 text-blue text-4xl inline-block />
-      </template>
-      <div flex flex-wrap>
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
+  <n-card hoverable embedded mr-2 mb-2 w-44 h-44 rounded-xl>
+    <div flex flex-col items-center justify-between>
+      <img :src="avator" w-16 h-16 rounded>
+      <div mt-1 text-lg class="text-#303544">
+        {{ cardInfo.name }}
       </div>
-    </n-card>
-  </div>
+      <n-ellipsis :line-clamp="2" text-sm class="text-#5B6681">
+        {{ cardInfo.explaining }}
+      </n-ellipsis>
+    </div>
+  </n-card>
 </template>
 
 <script setup lang='ts'>
+import type { CardType } from './Layout'
+import avator from '~/assets/avator.jpeg'
 
+defineProps<{
+  cardInfo: CardType
+}>()
+
+defineOptions({
+  name: 'ListCardPage',
+})
 </script>
