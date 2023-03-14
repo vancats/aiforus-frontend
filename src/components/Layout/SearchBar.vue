@@ -5,7 +5,7 @@
   </div>
   <n-input
     v-model="modelValue"
-    class="px-2 py-2 mt-4 mb-6 box-border rounded-lg bg-transparent"
+    class="px-2 py-2 mt-4 mb-6 box-border rounded-lg"
     placeholder="搜索你想找的相关应用" size="small"
   >
     <template #prefix>
@@ -23,9 +23,3 @@ const { modelValue } = defineModel<{
   modelValue: string
 }>()
 </script>
-
-<style>
-.n-input:not(.n-input--disabled).n-input--focus {
-    background-color: transparent;
-}
-</style>

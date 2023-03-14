@@ -4,9 +4,7 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #3a5c89;
-}
-
-html.dark {
-  background: #121212;
+  background-image: url(~/assets/bg.png);
+  background-size: contain;
+  background-repeat: no-repeat;
 }

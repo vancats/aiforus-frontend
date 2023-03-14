@@ -1,5 +1,3 @@
-import type { StyleValue } from 'vue'
-
 interface TagType {
   id: number
   tagName: string
@@ -17,10 +15,7 @@ interface CardType {
 
 interface ListType {
   title: string
-  icon: {
-    iconName: string
-    iconStyle: StyleValue
-  }
+  icon: string
   cardList: CardType[]
 }
 

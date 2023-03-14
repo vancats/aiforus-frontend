@@ -2,7 +2,7 @@
   <n-space py-4>
     <template v-for="tag in tags" :key="tag.id">
       <n-tag
-        px-4 py-4 rounded-lg cursor-pointer border
+        p-4 rounded-lg cursor-pointer border
         :class="tag.active && 'border-blue'"
         @click="handleClick(tag.id)"
       >

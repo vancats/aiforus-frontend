@@ -1,6 +1,6 @@
 <template>
   <div py-2 flex items-center>
-    <div :class="listIcon.iconName" mr-1 w-6 h-6 inline-block :style="listIcon.iconStyle" />
+    <img :src="listIcon" mr-1 w-5 h-5>
     <div text-5>
       {{ listTitle }}
     </div>
@@ -13,15 +13,11 @@
 </template>
 
 <script setup lang='ts'>
-import type { StyleValue } from 'vue'
 import type { CardType } from './Layout'
 
 defineProps<{
-  listTitle: String
-  listIcon: {
-    iconName: String
-    iconStyle: StyleValue
-  }
+  listTitle: string
+  listIcon: string
   cardList: CardType[]
 }>()
 

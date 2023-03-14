@@ -12,7 +12,7 @@
         <n-input
           v-model="modelValue"
           class="px-2 py-1 w-[600px]! box-border rounded-lg bg-transparent"
-          placeholder="搜索你想找的相关应用" size="small"
+          placeholder="搜索你想找的相关应用" size="small" clearable
         >
           <template #prefix>
             <span i-carbon:search style="color: #ffffff" />
@@ -29,7 +29,7 @@ defineOptions({
 })
 
 const router = useRouter()
-const goHome = () => router.push('/1')
+const goHome = () => router.push('/')
 
 const { modelValue } = defineModel<{
   modelValue: string
