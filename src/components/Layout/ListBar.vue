@@ -1,14 +1,12 @@
 <template>
-  <div py-2 flex items-center>
-    <img :src="listIcon" mr-1 w-5 h-5>
+  <div py-2 flex-center>
+    <img :src="listIcon" mr-1 wh-5>
     <div text-5>
       {{ listTitle }}
     </div>
   </div>
-  <div flex flex-wrap>
-    <template v-for="card in cardList" :key="card">
-      <ListCard :card-info="card" />
-    </template>
+  <div flex-wrap>
+    <ListCard v-for="card in cardList" :key="card.id" :card-info="card" />
   </div>
 </template>
 
@@ -21,7 +19,5 @@ defineProps<{
   cardList: CardType[]
 }>()
 
-defineOptions({
-  name: 'ListBarPage',
-})
+defineOptions({ name: 'ListBar' })
 </script>

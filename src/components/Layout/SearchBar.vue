@@ -1,12 +1,14 @@
 <template>
-  <div text-5xl leading-14 text-white>
-    <span>百度一下 </span>
-    <span>使用每一种AI</span>
+  <div main-title>
+    百度一下 使用每一种AI
   </div>
+
   <n-input
-    v-model="modelValue"
-    class="px-2 py-2 mt-4 mb-6 box-border rounded-lg"
-    placeholder="搜索你想找的相关应用" size="small"
+    :value="searchValue"
+    class="p-2 my-6 box-border rounded-lg"
+    placeholder="搜索你想找的相关应用" size="small" clearable
+    :on-input="handleInput"
+    @keydown.enter="handleSearch"
   >
     <template #prefix>
       <span i-carbon:search style="color: #ffffff" />
@@ -15,11 +17,13 @@
 </template>
 
 <script setup lang="ts">
-defineOptions({
-  name: 'SearchBarPage',
-})
+defineOptions({ name: 'SearchBar' })
 
-const { modelValue } = defineModel<{
-  modelValue: string
-}>()
+const { searchValue } = defineModel<{ searchValue: string }>()
+
+const handleInput = (value: string) => searchValue.value = value
+
+const handleSearch = useThrottleFn(() => {
+  // TODO 发起请求
+}, 1000)
 </script>

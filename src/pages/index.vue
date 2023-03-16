@@ -1,28 +1,27 @@
 <template>
-  <NavBar />
-  <header class="sm:px-10vw md:px-20vw  pt-20">
-    <SearchBar />
+  <header layout pt-20>
+    <SearchBar v-model:searchValue="searchValue" />
   </header>
-  <div
-    class="px-10vw md:px-20vw rounded-t-3 bg-#F4F8FD"
-  >
+  <div layout-content pr-10vw>
     <Content :tags="tags" :lists-data="listsData" @tag-change="tagChange" />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { ListType, TagType } from '~/components/Layout/Layout'
+import type { CardType, ListType, TagType } from '~/components/Layout/Layout'
 import hot from '~/assets/hot.png'
 import application from '~/assets/application.png'
+import { hotLimitNum } from '~/config/index.js'
 
-defineOptions({
-  name: 'IndexPage',
-})
+defineOptions({ name: 'IndexPage' })
 
+const searchValue = ref('')
+
+// 获取 tag
 const tags: TagType[] = reactive([
   {
     id: 0,
-    tagName: '全部',
+    tagName: '全部应用',
     active: true,
   },
   {
@@ -52,114 +51,48 @@ const tags: TagType[] = reactive([
   },
 ])
 
+const data: CardType[] = []
+
+for (let i = 0; i < 30; i++) {
+  data.push({
+    id: i,
+    name: 'ChatGPT',
+    explaining: '简单介简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍绍',
+    imageUrl: '',
+    pageView: Math.floor(Math.random() * 1000),
+    hot: false,
+  })
+}
+
+data.sort((a, b) => b.pageView - a.pageView)
+
+const hotList: CardType[] = []
+const normalList: CardType[] = []
+for (const item of data) {
+  if (item.hot)
+    hotList.push(item)
+
+  else
+    normalList.push(item)
+}
+
+if (hotList.length < 4) {
+  const subs = hotLimitNum - hotList.length
+  hotList.push(...normalList.slice(0, subs))
+  normalList.splice(0, subs)
+}
+
+// 获取 lists
 const listsData: ListType[] = reactive([
   {
     title: '热门应用',
     icon: hot,
-    cardList: [
-      {
-        id: 0,
-        name: 'ChatGPT',
-        explaining: '简单介简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍绍',
-        imageUrl: '',
-        pageView: 0,
-        hot: false,
-      },
-    ],
+    cardList: hotList,
   },
   {
     title: '更多应用',
     icon: application,
-    cardList: [
-      {
-        id: 1,
-        name: 'ChatGPT',
-        explaining: 'ChatGPT是美国人工智能研究实验室OpenAIIIIIIIIIII',
-        imageUrl: '简单介绍',
-        pageView: 0,
-        hot: false,
-      },
-      {
-        id: 2,
-        name: 'ChatGPT',
-        explaining: 'ChatGPT是美国人工智能研究实验室OpenAIIIIIIIIIII',
-        imageUrl: '简单介绍',
-        pageView: 0,
-        hot: false,
-      },
-      {
-        id: 3,
-        name: 'ChatGPT',
-        explaining: 'ChatGPT是美国人工智能研究实验室OpenAIIIIIIIIIII',
-        imageUrl: '简单介绍',
-        pageView: 0,
-        hot: false,
-      },
-      {
-        id: 4,
-        name: 'ChatGPT',
-        explaining: 'ChatGPT是美国人工智能研究实验室OpenAIIIIIIIIIII',
-        imageUrl: '简单介绍',
-        pageView: 0,
-        hot: false,
-      },
-      {
-        id: 5,
-        name: 'ChatGPT',
-        explaining: 'ChatGPT是美国人工智能研究实验室OpenAIIIIIIIIIII',
-        imageUrl: '简单介绍',
-        pageView: 0,
-        hot: false,
-      },
-      {
-        id: 6,
-        name: 'ChatGPT',
-        explaining: 'ChatGPT是美国人工智能研究实验室OpenAIIIIIIIIIII',
-        imageUrl: '简单介绍',
-        pageView: 0,
-        hot: false,
-      },
-      {
-        id: 7,
-        name: 'ChatGPT',
-        explaining: 'ChatGPT是美国人工智能研究实验室OpenAIIIIIIIIIII',
-        imageUrl: '简单介绍',
-        pageView: 0,
-        hot: false,
-      },
-      {
-        id: 8,
-        name: 'ChatGPT',
-        explaining: 'ChatGPT是美国人工智能研究实验室OpenAIIIIIIIIIII',
-        imageUrl: '简单介绍',
-        pageView: 0,
-        hot: false,
-      },
-      {
-        id: 9,
-        name: 'ChatGPT',
-        explaining: 'ChatGPT是美国人工智能研究实验室OpenAIIIIIIIIIII',
-        imageUrl: '简单介绍',
-        pageView: 0,
-        hot: false,
-      },
-      {
-        id: 10,
-        name: 'ChatGPT',
-        explaining: 'ChatGPT是美国人工智能研究实验室OpenAIIIIIIIIIII',
-        imageUrl: '简单介绍',
-        pageView: 0,
-        hot: false,
-      },
-      {
-        id: 11,
-        name: 'ChatGPT',
-        explaining: 'ChatGPT是美国人工智能研究实验室OpenAIIIIIIIIIII',
-        imageUrl: '简单介绍',
-        pageView: 0,
-        hot: false,
-      },
-    ],
+    cardList: normalList,
   },
 ])
 
@@ -170,5 +103,7 @@ const tagChange = (id: number) => {
     else
       tag.active = false
   })
+
+  // TODO 发送请求
 }
 </script>

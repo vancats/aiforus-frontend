@@ -1,18 +1,18 @@
 <template>
   <n-space py-4>
-    <template v-for="tag in tags" :key="tag.id">
-      <n-tag
-        p-4 rounded-lg cursor-pointer border
-        :class="tag.active && 'border-blue'"
-        @click="handleClick(tag.id)"
-      >
-        {{ tag.tagName }}
-      </n-tag>
-    </template>
+    <n-tag
+      v-for="tag in tags" :key="tag.id"
+      p-4 border rounded-lg cursor
+      :class="tag.active && 'border-blue'"
+      @click="handleClick(tag.id)"
+    >
+      {{ tag.tagName }}
+    </n-tag>
   </n-space>
-  <template v-for="list in listsData" :key="list.title">
-    <ListBar :list-title="list.title" :list-icon="list.icon" :card-list="list.cardList" />
-  </template>
+  <ListBar
+    v-for="list in listsData" :key="list.title"
+    :list-title="list.title" :list-icon="list.icon" :card-list="list.cardList"
+  />
 </template>
 
 <script setup lang='ts'>
@@ -21,12 +21,9 @@ defineProps<{
   tags: TagType[]
   listsData: ListType[]
 }>()
-
 const emit = defineEmits(['tagChange'])
 
-defineOptions({
-  name: 'ContentPage',
-})
+defineOptions({ name: 'Content' })
 
 function handleClick(id: number) {
   emit('tagChange', id)

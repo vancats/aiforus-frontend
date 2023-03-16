@@ -11,6 +11,7 @@ import VueMacros from 'unplugin-vue-macros/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
+  base: '/',
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
