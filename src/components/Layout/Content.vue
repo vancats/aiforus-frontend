@@ -6,7 +6,7 @@
       :class="tag.active && 'border-blue'"
       @click="handleClick(tag.id)"
     >
-      {{ tag.tagName }}
+      {{ tag.name }}
     </n-tag>
   </n-space>
   <ListBar

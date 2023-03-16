@@ -7,7 +7,7 @@
     </div>
 
     <!-- Title & Button -->
-    <div class="absolute -top-6vh left-17vw sm:left-22vw xl:left-27vw  text-4xl flex">
+    <div class="absolute -top-6vh left-17vw sm:left-22vw text-4xl flex">
       <span text-white>
         ChatGPT
       </span>

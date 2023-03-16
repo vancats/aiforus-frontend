@@ -12,47 +12,39 @@ import type { CardType, ListType, TagType } from '~/components/Layout/Layout'
 import hot from '~/assets/hot.png'
 import application from '~/assets/application.png'
 import { hotLimitNum } from '~/config/index.js'
+import { getTags } from '~/api'
 
 defineOptions({ name: 'IndexPage' })
 
 const searchValue = ref('')
 
 // 获取 tag
-const tags: TagType[] = reactive([
-  {
+const tags = ref<TagType[]>([])
+
+const fetchTags = async () => {
+  const data = await getTags()
+  const temp = [{
     id: 0,
-    tagName: '全部应用',
+    name: '全部应用',
     active: true,
-  },
-  {
-    id: 1,
-    tagName: '学习',
-    active: false,
-  },
-  {
-    id: 2,
-    tagName: '职业规划',
-    active: false,
-  },
-  {
-    id: 3,
-    tagName: '娱乐',
-    active: false,
-  },
-  {
-    id: 4,
-    tagName: '教育',
-    active: false,
-  },
-  {
-    id: 5,
-    tagName: '互联网',
-    active: false,
-  },
-])
+  }]
+  if (Array.isArray(data.data?.tag_list)) {
+    data.data?.tag_list.forEach((item) => {
+      temp.push({
+        id: item.ID,
+        name: item.Name,
+        active: false,
+      })
+    })
+  }
+  tags.value = temp
+}
+
+onMounted(async () => {
+  await fetchTags()
+})
 
 const data: CardType[] = []
-
 for (let i = 0; i < 30; i++) {
   data.push({
     id: i,
@@ -97,7 +89,7 @@ const listsData: ListType[] = reactive([
 ])
 
 const tagChange = (id: number) => {
-  tags.forEach((tag) => {
+  tags.value.forEach((tag) => {
     if (tag.id === id)
       tag.active = true
     else

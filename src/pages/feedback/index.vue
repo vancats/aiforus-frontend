@@ -77,32 +77,32 @@ const handleSearch = useThrottleFn(() => {
 const tags: TagType[] = reactive([
   {
     id: 0,
-    tagName: '全部应用',
+    name: '全部应用',
     active: true,
   },
   {
     id: 1,
-    tagName: '学习',
+    name: '学习',
     active: false,
   },
   {
     id: 2,
-    tagName: '职业规划',
+    name: '职业规划',
     active: false,
   },
   {
     id: 3,
-    tagName: '娱乐',
+    name: '娱乐',
     active: false,
   },
   {
     id: 4,
-    tagName: '教育',
+    name: '教育',
     active: false,
   },
   {
     id: 5,
-    tagName: '互联网',
+    name: '互联网',
     active: false,
   },
 ])

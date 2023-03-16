@@ -1,6 +1,6 @@
 interface TagType {
   id: number
-  tagName: string
+  name: string
   active: boolean
 }
 
