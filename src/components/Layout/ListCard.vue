@@ -1,5 +1,5 @@
 <template>
-  <n-card mr-4 mb-4 wh-44 rounded-lg cursor hoverable embedded @click="goCardDeatil">
+  <n-card mr-4 mb-4 wh-44 rounded-lg cursor hoverable embedded @click="goDeatil">
     <div flex-center-between-col>
       <img :src="avator" wh-16 rounded>
       <div mt-1 text-lg text="#303544">
@@ -21,5 +21,5 @@ const props = defineProps<{ cardInfo: CardType }>()
 defineOptions({ name: 'ListCard' })
 
 const router = useRouter()
-const goCardDeatil = () => router.push(`/card/${encodeURIComponent(props.cardInfo.id)}`)
+const goDeatil = () => router.push(`/${props.cardInfo.type}/${encodeURIComponent(props.cardInfo.id)}`)
 </script>

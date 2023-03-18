@@ -17,7 +17,7 @@ export default defineConfig({
     ['cursor', 'cursor-pointer select-none'],
 
     // adapt
-    ['layout', 'px-5vw sm:px-10vw md:px-15vw lg:px-20vw'],
+    ['layout', 'px-5vw sm:px-20vw'],
     ['layout-content', 'layout relative rounded-t-3 bg-#F4F8FD'],
 
     ['main-title', 'text-center sm:text-left text-2xl sm:text-5xl sm:leading-14 text-white'],
@@ -27,6 +27,7 @@ export default defineConfig({
     // Flex flex + align-items + justify-content + flex-direction
     ['flex-center', 'flex items-center'],
     ['flex-center-between', 'flex-center justify-between'],
+    ['flex-center-center', 'flex-center justify-center'],
     ['flex-center-between-col', 'flex-center-between flex-col'],
     ['flex-wrap', 'flex flex-wrap'],
   ],

@@ -1,9 +1,11 @@
 <template>
   <div py-2 flex-center>
-    <img :src="listIcon" mr-1 wh-5>
-    <div text-5>
-      {{ listTitle }}
-    </div>
+    <template v-if="listTitle">
+      <img :src="listIcon" mr-1 wh-5>
+      <div text-5>
+        {{ listTitle }}
+      </div>
+    </template>
   </div>
   <div flex-wrap>
     <ListCard v-for="card in cardList" :key="card.id" :card-info="card" />
@@ -14,8 +16,8 @@
 import type { CardType } from './Layout'
 
 defineProps<{
-  listTitle: string
-  listIcon: string
+  listTitle?: string
+  listIcon?: string
   cardList: CardType[]
 }>()
 

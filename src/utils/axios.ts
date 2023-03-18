@@ -2,6 +2,7 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Inte
 import axios from 'axios'
 import type { Router } from 'vue-router'
 import { useRouter } from 'vue-router'
+import { convertObjectKeysToCamelCase } from '.'
 import naiveui from '~/utils/naiveui'
 
 // 定义请求响应参数，不含data
@@ -73,7 +74,7 @@ class RequestHttp {
         //   naiveui.message.error(data) // 此处也可以使用组件提示报错信息
         //   return Promise.reject(data)
         // }
-        return data
+        return convertObjectKeysToCamelCase(data)
       },
       (error: AxiosError) => {
         const { response } = error

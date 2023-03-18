@@ -54,7 +54,9 @@
     "extends": "@antfu",
     "rules": {
       "vue/component-tags-order": 0,
-      "@typescript-eslint/ban-ts-comment": 0
+      "@typescript-eslint/ban-ts-comment": 0,
+      "curly": 0,
+      "antfu/if-newline": 0
     }
   }
 }

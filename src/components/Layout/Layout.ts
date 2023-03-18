@@ -8,9 +8,10 @@ interface CardType {
   id: number
   name: string
   explaining: string
-  imageUrl: string
+  iconUrl: string
   pageView: number
   hot?: boolean
+  type: string
 }
 
 interface ListType {

@@ -1,101 +1,71 @@
 <template>
   <header layout pt-20>
-    <SearchBar v-model:searchValue="searchValue" />
+    <SearchBar v-model:searchVal="searchVal" @search="onSearch" />
   </header>
-  <div layout-content pr-10vw>
-    <Content :tags="tags" :lists-data="listsData" @tag-change="tagChange" />
+  <div layout-content pr-10vw min-h-80vh>
+    <Content :tags="tags" :list-data="listData" @tag-change="tagChange" />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { CardType, ListType, TagType } from '~/components/Layout/Layout'
-import hot from '~/assets/hot.png'
-import application from '~/assets/application.png'
-import { hotLimitNum } from '~/config/index.js'
-import { getTags } from '~/api'
+import type { CardType, TagType } from '~/components/Layout/Layout'
+import { getCards, getTags } from '~/api'
 
 defineOptions({ name: 'IndexPage' })
 
-const searchValue = ref('')
+const searchVal = ref('')
 
-// 获取 tag
+// Tag
 const tags = ref<TagType[]>([])
-
 const fetchTags = async () => {
-  const data = await getTags()
+  const { data } = await getTags()
   const temp = [{
     id: 0,
     name: '全部应用',
     active: true,
   }]
-  if (Array.isArray(data.data?.tag_list)) {
-    data.data?.tag_list.forEach((item) => {
+  if (Array.isArray(data?.tagList)) {
+    data?.tagList.forEach((item) => {
       temp.push({
-        id: item.ID,
-        name: item.Name,
+        id: item.id,
+        name: item.name,
         active: false,
       })
     })
   }
   tags.value = temp
 }
+const tagChange = (id: number) => {
+  let shouldFresh = true
+  tags.value.forEach((tag) => {
+    if (tag.id === id) {
+      if (tag.active) shouldFresh = false
+      tag.active = true
+    }
+    else {
+      tag.active = false
+    }
+  })
+  shouldFresh && fetchCards()
+}
 
-onMounted(async () => {
-  await fetchTags()
+// List
+const listData = ref<CardType[]>([])
+async function fetchCards() {
+  const query = searchVal.value
+  const tag = tags.value.find(i => i.active)?.id
+  const { data } = await getCards({ query, tag })
+  if (data?.cardList) {
+    listData.value = data?.cardList
+  }
+}
+
+onMounted(() => {
+  fetchTags()
+  fetchCards()
 })
 
-const data: CardType[] = []
-for (let i = 0; i < 30; i++) {
-  data.push({
-    id: i,
-    name: 'ChatGPT',
-    explaining: '简单介简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍绍',
-    imageUrl: '',
-    pageView: Math.floor(Math.random() * 1000),
-    hot: false,
-  })
-}
-
-data.sort((a, b) => b.pageView - a.pageView)
-
-const hotList: CardType[] = []
-const normalList: CardType[] = []
-for (const item of data) {
-  if (item.hot)
-    hotList.push(item)
-
-  else
-    normalList.push(item)
-}
-
-if (hotList.length < 4) {
-  const subs = hotLimitNum - hotList.length
-  hotList.push(...normalList.slice(0, subs))
-  normalList.splice(0, subs)
-}
-
-// 获取 lists
-const listsData: ListType[] = reactive([
-  {
-    title: '热门应用',
-    icon: hot,
-    cardList: hotList,
-  },
-  {
-    title: '更多应用',
-    icon: application,
-    cardList: normalList,
-  },
-])
-
-const tagChange = (id: number) => {
-  tags.value.forEach((tag) => {
-    if (tag.id === id)
-      tag.active = true
-    else
-      tag.active = false
-  })
-
-  // TODO 发送请求
+const onSearch = () => {
+  fetchCards()
 }
 </script>

@@ -1,14 +1,14 @@
 <template>
   <div h-8vh />
-  <div layout-content pr-10vw min-h-92vh>
+  <div layout-content pr-20vw min-h-92vh>
     <!-- Input -->
     <n-input
-      :value="searchValue"
+      :value="searchVal"
       mt-4 p-2 rounded-lg
       placeholder="搜索你想找的相关应用" size="small" clearable
       :theme-overrides="feedbackInputTheme"
-      :on-input="handleInput"
-      @keydown.enter="handleSearch"
+      :on-input="onInput"
+      @keydown.enter="onSearch"
     >
       <template #prefix>
         <span i-carbon:search style="color: #3A50FF" />
@@ -16,16 +16,14 @@
     </n-input>
 
     <!-- Content -->
-    <div v-if="hotList.length">
-      <Content :tags="tags" :lists-data="listsData" @tag-change="tagChange" />
-    </div>
-    <div v-else flex justify-center items-center>
+    <Content v-if="listData.length" :tags="tags" :list-data="listData" @tag-change="tagChange" />
+    <div v-else flex-center-center my-4>
       <div i-mingcute:planet-line mr-2 text="#3A50FF" />
       老板，没有应用可以“用Chat GPT写商业计划书”，换个关键词试试
     </div>
 
     <!-- Feedback -->
-    <div py-6 text="#3A50FF center">
+    <div pb-4 text="#3A50FF center">
       <span cursor @click="openFeedbackDialog">
         没有找到可用ai应用？点击向我们反馈
       </span>
@@ -35,135 +33,92 @@
     <n-modal v-model:show="showModal" preset="dialog" type="info" auto-focus close-on-esc title="反馈">
       <n-input
         type="textarea"
-        :value="textValue"
+        :value="textareaValue"
         :theme-overrides="feedbackTextareaTheme"
-        :on-input="handleChange"
+        :on-input="onTextarea"
         :autosize="{ minRows: 3 }"
       />
       <template #action>
-        <button btn>
+        <n-button type="info" bg="#3A50FF" @click="onSubmit">
           提交
-        </button>
+        </n-button>
       </template>
     </n-modal>
   </div>
 </template>
 
 <script setup lang='ts'>
-import type { CardType, ListType, TagType } from '~/components/Layout/Layout'
-import { hotLimitNum } from '~/config/index.js'
-import hot from '~/assets/hot.png'
-import application from '~/assets/application.png'
+import type { CardType, TagType } from '~/components/Layout/Layout'
+import { getCards, getTags } from '~/api'
 import { feedbackInputTheme, feedbackTextareaTheme } from '~/config/themeOverrides'
+import { postFeedback } from '~/api/feedback'
 
 defineOptions({ name: 'FeedbackPage' })
 
-const showModal = ref(false)
-const textValue = ref('123')
+const searchVal = ref(localStorage.getItem('feedback-search') || '')
+localStorage.removeItem('feedback-search')
+const onInput = (value: string) => searchVal.value = value
+const onSearch = () => fetchCards()
 
-const handleChange = (value: string) => {
-  textValue.value = value
-}
-
-const searchValue = ref('')
-
-const handleInput = (value: string) => searchValue.value = value
-
-const handleSearch = useThrottleFn(() => {
-  // TODO 发起请求
-}, 1000)
-
-// 获取 tag
-const tags: TagType[] = reactive([
-  {
+// Tag
+const tags = ref<TagType[]>([])
+const fetchTags = async () => {
+  const { data } = await getTags()
+  const temp = [{
     id: 0,
     name: '全部应用',
     active: true,
-  },
-  {
-    id: 1,
-    name: '学习',
-    active: false,
-  },
-  {
-    id: 2,
-    name: '职业规划',
-    active: false,
-  },
-  {
-    id: 3,
-    name: '娱乐',
-    active: false,
-  },
-  {
-    id: 4,
-    name: '教育',
-    active: false,
-  },
-  {
-    id: 5,
-    name: '互联网',
-    active: false,
-  },
-])
-
-const data: CardType[] = []
-
-for (let i = 0; i < 30; i++) {
-  data.push({
-    id: i,
-    name: 'ChatGPT',
-    explaining: '简单介简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍简单介绍绍',
-    imageUrl: '',
-    pageView: Math.floor(Math.random() * 1000),
-    hot: false,
-  })
+  }]
+  if (Array.isArray(data?.tagList)) {
+    data?.tagList.forEach((item) => {
+      temp.push({
+        id: item.id,
+        name: item.name,
+        active: false,
+      })
+    })
+  }
+  tags.value = temp
 }
-
-data.sort((a, b) => b.pageView - a.pageView)
-
-const hotList: CardType[] = []
-const normalList: CardType[] = []
-for (const item of data) {
-  if (item.hot)
-    hotList.push(item)
-
-  else
-    normalList.push(item)
-}
-
-if (hotList.length < 4) {
-  const subs = hotLimitNum - hotList.length
-  hotList.push(...normalList.slice(0, subs))
-  normalList.splice(0, subs)
-}
-
-// 获取 lists
-const listsData: ListType[] = reactive([
-  {
-    title: '热门应用',
-    icon: hot,
-    cardList: hotList,
-  },
-  {
-    title: '更多应用',
-    icon: application,
-    cardList: normalList,
-  },
-])
-
 const tagChange = (id: number) => {
-  tags.forEach((tag) => {
-    if (tag.id === id)
+  let shouldFresh = true
+  tags.value.forEach((tag) => {
+    if (tag.id === id) {
+      if (tag.active) shouldFresh = false
       tag.active = true
-    else
+    }
+    else {
       tag.active = false
+    }
   })
-
-  // TODO 发送请求
+  shouldFresh && fetchCards()
 }
 
-const openFeedbackDialog = () => {
-  showModal.value = true
+// List
+const listData = ref<CardType[]>([])
+async function fetchCards() {
+  const query = searchVal.value
+  const tag = tags.value.find(i => i.active)?.id
+  const { data } = await getCards({ query, tag })
+  if (data?.cardList) {
+    listData.value = data?.cardList
+  }
+}
+
+onMounted(() => {
+  fetchTags()
+  fetchCards()
+})
+
+// Modal
+const showModal = ref(false)
+const openFeedbackDialog = () => showModal.value = true
+
+const textareaValue = ref('')
+const onTextarea = (value: string) => textareaValue.value = value
+
+const onSubmit = async () => {
+  await postFeedback({ type: 0, context: textareaValue.value })
+  showModal.value = false
 }
 </script>

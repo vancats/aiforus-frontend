@@ -1,16 +1,17 @@
 <template>
-  <div fixed left-0 top-0 p-5 pr-10 w-full h-16 text-white text-xl flex-center-between>
+  <div fixed left-0 top-0 p-5 pr-10 w-full h-16 text="gray-300" text-xl flex-center-between z-1>
     <div flex-center cursor @click="goHome">
       <div i-mingcute:planet-line mx-2 py-1 />
       <div>AI FOR US</div>
     </div>
-    <div ref="searchEl" web-only @click="onChange">
+    <div ref="searchEl" @click="onChange">
       <template v-if="searchFocus">
         <n-input
-          v-model="modelValue"
+          :value="searchVal"
           class="px-2 py-1 w-[600px]! rounded-lg"
           placeholder="搜索你想找的相关应用" size="small" clearable
-          :on-input="handleChange"
+          :on-input="onInput"
+          @keyup.enter="onSearch"
         >
           <template #prefix>
             <span i-carbon:search text-white />
@@ -29,16 +30,17 @@ defineOptions({ name: 'NavBar' })
 
 const router = useRouter()
 const goHome = () => router.push('/')
-
-const { modelValue } = defineModel<{ modelValue: string }>()
-
+const searchVal = ref('')
 const searchFocus = ref(false)
 
 const searchEl = ref(null)
 onClickOutside(searchEl, () => searchFocus.value = false)
 const onChange = () => searchFocus.value = true
-
-const handleChange = () => {
-
+const onInput = (value: string) => searchVal.value = value
+const onSearch = () => {
+  localStorage.setItem('feedback-search', searchVal.value)
+  router.push({ name: 'Feedback' })
+  searchVal.value = ''
+  searchFocus.value = false
 }
 </script>

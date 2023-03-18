@@ -33,8 +33,8 @@ export const feedbackInputTheme = {
 }
 
 export const feedbackTextareaTheme = {
-  border: '1px solid #000000',
-  borderHover: '1px solid #000000',
-  borderFocus: '1px solid #000000',
+  border: '1px solid #3A50FF',
+  borderHover: '1px solid #3A50FF',
+  borderFocus: '1px solid #3A50FF',
   textColor: '#303544',
 }
