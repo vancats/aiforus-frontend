@@ -17,11 +17,15 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits<{ (e: 'search'): void }>()
 defineOptions({ name: 'SearchBar' })
-const { searchVal } = defineModel<{ searchVal: string }>()
+const router = useRouter()
+
+const searchVal = ref('')
 
 const onInput = (value: string) => searchVal.value = value
-
-const onSearch = () => emit('search')
+const onSearch = () => {
+  sessionStorage.setItem('feedback-search', searchVal.value)
+  router.push({ name: 'Feedback' })
+  searchVal.value = ''
+}
 </script>

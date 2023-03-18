@@ -1,9 +1,9 @@
 <template>
   <header layout pt-20>
-    <SearchBar v-model:searchVal="searchVal" @search="onSearch" />
+    <SearchBar />
   </header>
   <div layout-content pr-10vw min-h-80vh>
-    <Content :tags="tags" :list-data="listData" @tag-change="tagChange" />
+    <Content :tags="tags" :list-data="listData" :is-home="true" @tag-change="tagChange" />
   </div>
 </template>
 
@@ -64,8 +64,4 @@ onMounted(() => {
   fetchTags()
   fetchCards()
 })
-
-const onSearch = () => {
-  fetchCards()
-}
 </script>

@@ -1,13 +1,13 @@
 <template>
   <div h-20vh />
   <div layout-content min-h-80vh>
-    <div class="absolute -top-5vw left-10vw wh-10vw bg-blue rounded">
+    <div class="absolute -top-5vw left-10vw wh-10vw bg-blue rounded-3xl" border="5 white">
       <span wh-full i-carbon:airport-01 />
     </div>
     <div class="absolute -top-6vh left-22vw text-4xl flex">
       <span text-white>{{ promptInfo?.name }}</span>
     </div>
-    <div p-6>
+    <div p-2vw>
       <div text-2xl mb-2>
         关于 {{ promptInfo?.name }}
       </div>
@@ -47,10 +47,12 @@ import { getPromptInfo } from '~/api/prompt'
 defineOptions({ name: 'PromptPage' })
 
 const { params } = useRoute()
+const isClick = Boolean(sessionStorage.getItem('click')) || false
+sessionStorage.removeItem('click')
 
 const promptInfo = ref<PromptInfo>()
 const fetchPromptInfo = async () => {
-  const { data } = await getPromptInfo({ id: Number(params.id), click: false })
+  const { data } = await getPromptInfo({ id: Number(params.id), click: isClick })
   if (data?.toolPageInfo) {
     promptInfo.value = data.toolPageInfo
   }

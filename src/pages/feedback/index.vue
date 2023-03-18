@@ -55,8 +55,8 @@ import { postFeedback } from '~/api/feedback'
 
 defineOptions({ name: 'FeedbackPage' })
 
-const searchVal = ref(localStorage.getItem('feedback-search') || '')
-localStorage.removeItem('feedback-search')
+const searchVal = ref(sessionStorage.getItem('feedback-search') || '')
+sessionStorage.removeItem('feedback-search')
 const onInput = (value: string) => searchVal.value = value
 const onSearch = () => fetchCards()
 

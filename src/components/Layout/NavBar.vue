@@ -1,5 +1,5 @@
 <template>
-  <div fixed left-0 top-0 p-5 pr-10 w-full h-16 text="gray-300" text-xl flex-center-between z-1>
+  <div fixed left-0 top-0 p-5 pr-10 w-full h-16 text="white" :class="y > 165 && 'bg-#0e1a32'" text-xl flex-center-between z-1>
     <div flex-center cursor @click="goHome">
       <div i-mingcute:planet-line mx-2 py-1 />
       <div>AI FOR US</div>
@@ -7,8 +7,8 @@
     <div ref="searchEl" @click="onChange">
       <template v-if="searchFocus">
         <n-input
-          :value="searchVal"
-          class="px-2 py-1 w-[600px]! rounded-lg"
+          ref="inputRef"
+          class="px-2 py-1 w-35vw! rounded-lg"
           placeholder="搜索你想找的相关应用" size="small" clearable
           :on-input="onInput"
           @keyup.enter="onSearch"
@@ -38,9 +38,10 @@ onClickOutside(searchEl, () => searchFocus.value = false)
 const onChange = () => searchFocus.value = true
 const onInput = (value: string) => searchVal.value = value
 const onSearch = () => {
-  localStorage.setItem('feedback-search', searchVal.value)
+  sessionStorage.setItem('feedback-search', searchVal.value)
   router.push({ name: 'Feedback' })
   searchVal.value = ''
   searchFocus.value = false
 }
+const { y } = useWindowScroll()
 </script>

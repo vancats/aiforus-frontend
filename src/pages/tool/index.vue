@@ -3,7 +3,7 @@ import { ToolInfo } from './index';
   <div h-20vh />
   <div layout-content min-h-80vh>
     <!-- Image -->
-    <div class="absolute -top-5vw left-5vw sm:left-10vw wh-10vw bg-blue rounded">
+    <div class="absolute -top-5vw left-5vw sm:left-10vw wh-10vw bg-blue rounded-3xl" border="5 white">
       <span wh-full i-carbon:airport-01 />
     </div>
 
@@ -26,7 +26,7 @@ import { ToolInfo } from './index';
     </div>
 
     <!-- Content -->
-    <div p-6>
+    <div p-2vw>
       <div text-2xl mb-2>
         关于 {{ toolInfo?.name }}
       </div>
@@ -51,10 +51,12 @@ import { getToolInfo } from '~/api/tool'
 defineOptions({ name: 'ToolPage' })
 
 const { params } = useRoute()
+const isClick = Boolean(sessionStorage.getItem('click')) || false
+sessionStorage.removeItem('click')
 
 const toolInfo = ref<ToolInfo>()
 const fetchPromptInfo = async () => {
-  const { data } = await getToolInfo({ id: Number(params.id), click: false })
+  const { data } = await getToolInfo({ id: Number(params.id), click: isClick })
   if (data?.toolPageInfo) {
     toolInfo.value = data.toolPageInfo
   }

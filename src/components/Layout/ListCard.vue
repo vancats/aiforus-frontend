@@ -21,5 +21,8 @@ const props = defineProps<{ cardInfo: CardType }>()
 defineOptions({ name: 'ListCard' })
 
 const router = useRouter()
-const goDeatil = () => router.push(`/${props.cardInfo.type}/${encodeURIComponent(props.cardInfo.id)}`)
+const goDeatil = () => {
+  sessionStorage.setItem('click', 'true')
+  router.push(`/${props.cardInfo.type}/${encodeURIComponent(props.cardInfo.id)}`)
+}
 </script>

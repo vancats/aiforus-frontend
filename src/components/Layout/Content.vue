@@ -19,21 +19,23 @@
 import type { CardType, TagType } from './Layout'
 import hot from '~/assets/hot.png'
 import application from '~/assets/application.png'
+import { hotLimitNum } from '~/config'
 
 const props = defineProps<{
   tags: TagType[]
   listData: CardType[]
+  isHome?: boolean
 }>()
 const emit = defineEmits(['tagChange'])
 
 defineOptions({ name: 'Content' })
 
-const { listData, tags } = toRefs(props)
+const { listData, tags, isHome } = toRefs(props)
 const onClick = (id: number) => emit('tagChange', id)
 
 const listBars = computed(() => {
   const currentTag = tags.value.find(tag => tag.active)
-  if (currentTag?.id) {
+  if (currentTag?.id || !isHome.value) {
     return [
       {
         title: '',
@@ -46,7 +48,7 @@ const listBars = computed(() => {
     {
       title: '热门应用',
       icon: hot,
-      cardList: listData.value.slice(0, 4),
+      cardList: listData.value.slice(0, hotLimitNum),
     },
     {
       title: '更多应用',
