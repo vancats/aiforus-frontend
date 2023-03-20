@@ -3,11 +3,10 @@
   <div layout-content pr-20vw min-h-92vh>
     <!-- Input -->
     <n-input
-      :value="searchVal"
+      v-model:value="searchVal"
       mt-4 p-2 rounded-lg
       placeholder="搜索你想找的相关应用" size="small" clearable
       :theme-overrides="feedbackInputTheme"
-      :on-input="onInput"
       @keydown.enter="onSearch"
     >
       <template #prefix>
@@ -57,7 +56,6 @@ defineOptions({ name: 'FeedbackPage' })
 
 const searchVal = ref(sessionStorage.getItem('feedback-search') || '')
 sessionStorage.removeItem('feedback-search')
-const onInput = (value: string) => searchVal.value = value
 const onSearch = () => fetchCards()
 
 // Tag

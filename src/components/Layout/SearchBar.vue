@@ -4,10 +4,9 @@
   </div>
 
   <n-input
-    :value="searchVal"
+    v-model:value="searchVal"
     class="p-2 my-6 box-border rounded-lg"
     placeholder="搜索你想找的相关应用" size="small" clearable
-    :on-input="onInput"
     @keydown.enter="onSearch"
   >
     <template #prefix>
@@ -22,7 +21,6 @@ const router = useRouter()
 
 const searchVal = ref('')
 
-const onInput = (value: string) => searchVal.value = value
 const onSearch = () => {
   sessionStorage.setItem('feedback-search', searchVal.value)
   router.push({ name: 'Feedback' })

@@ -8,9 +8,9 @@
       <template v-if="searchFocus">
         <n-input
           ref="inputRef"
+          v-model:value="searchVal"
           class="px-2 py-1 w-35vw! rounded-lg"
           placeholder="搜索你想找的相关应用" size="small" clearable
-          :on-input="onInput"
           @keyup.enter="onSearch"
         >
           <template #prefix>
@@ -36,7 +36,6 @@ const searchFocus = ref(false)
 const searchEl = ref(null)
 onClickOutside(searchEl, () => searchFocus.value = false)
 const onChange = () => searchFocus.value = true
-const onInput = (value: string) => searchVal.value = value
 const onSearch = () => {
   sessionStorage.setItem('feedback-search', searchVal.value)
   router.push({ name: 'Feedback' })
