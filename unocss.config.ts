@@ -18,7 +18,7 @@ export default defineConfig({
 
     // adapt
     ['layout', 'px-5vw sm:px-20vw'],
-    ['layout-content', 'layout relative rounded-t-3 bg-#F4F8FD'],
+    ['layout-content', 'layout relative rounded-t-3'],
 
     ['main-title', 'text-center sm:text-left text-2xl sm:text-5xl sm:leading-14 text-white'],
     ['web-only', 'hidden sm:block'], // 移动端不展示

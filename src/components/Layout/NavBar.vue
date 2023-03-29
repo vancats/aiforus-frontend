@@ -1,8 +1,11 @@
 <template>
-  <div fixed left-0 top-0 p-5 pr-10 w-full h-16 text="white" :class="y > 165 && 'bg-#0e1a32'" text-xl flex-center-between z-1>
-    <div flex-center cursor @click="goHome">
-      <div i-mingcute:planet-line mx-2 py-1 />
-      <div>AI FOR US</div>
+  <div fixed left-42 right-14 top-0 h-32 flex-center-between>
+    <div
+      flex-center text-7xl font-black cursor
+      style="font-family: Inter; color: #A47FFA; font-style: normal;"
+      @click="goHome"
+    >
+      AI FOR US
     </div>
     <div ref="searchEl" @click="onChange">
       <template v-if="searchFocus">
@@ -21,6 +24,9 @@
       <template v-else>
         <span i-carbon:search />
       </template>
+    </div>
+    <div>
+      登录/注册
     </div>
   </div>
 </template>
@@ -42,5 +48,4 @@ const onSearch = () => {
   searchVal.value = ''
   searchFocus.value = false
 }
-const { y } = useWindowScroll()
 </script>

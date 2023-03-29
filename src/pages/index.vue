@@ -1,9 +1,9 @@
 <template>
-  <header layout pt-20>
-    <SearchBar />
-  </header>
-  <div layout-content pr-10vw min-h-80vh>
-    <Content :tags="tags" :list-data="listData" :is-home="true" @tag-change="tagChange" />
+  <div>
+    <div v-for="(item, index) in 500" :key="index" color-white>
+      {{ item }}
+    </div>
+    <!-- <Content :tags="tags" :list-data="listData" :is-home="true" @tag-change="tagChange" /> -->
   </div>
 </template>
 
@@ -61,7 +61,7 @@ async function fetchCards() {
 }
 
 onMounted(() => {
-  fetchTags()
-  fetchCards()
+//   fetchTags()
+//   fetchCards()
 })
 </script>

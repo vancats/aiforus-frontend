@@ -1,3 +1,4 @@
+import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '~/pages/index.vue'
 import ToolPage from '~/pages/tool/index.vue'
 import PromptPage from '~/pages/prompt/index.vue'
@@ -10,4 +11,12 @@ const routes = [
   { name: 'Feedback', path: '/feedback', component: FeedbackPage },
 ]
 
-export default routes
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes,
+  scrollBehavior() {
+    return { top: 0 }
+  },
+})
+
+export default router

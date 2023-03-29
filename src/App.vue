@@ -6,9 +6,12 @@
     <dialog-api />
   </n-dialog-provider>
   <n-config-provider :theme-overrides="appTheme">
-    <NavBar />
-    <main font-sans text="gray-700 dark:gray-200" h-screen>
-      <RouterView />
+    <main flex h-screen>
+      <SideBar />
+      <NavBar />
+      <div ml-42 mt-32 w-full overflow-y-scroll>
+        <RouterView />
+      </div>
     </main>
   </n-config-provider>
 </template>
@@ -17,3 +20,7 @@
 import { appTheme } from './config/themeOverrides'
 defineOptions({ name: 'AppPage' })
 </script>
+
+<style scoped>
+
+</style>
