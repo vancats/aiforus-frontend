@@ -9,9 +9,11 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AiSideHome: typeof import('~icons/ai/side-home')['default']
+    AiSidePrompt: typeof import('~icons/ai/side-prompt')['default']
+    AiSideTool: typeof import('~icons/ai/side-tool')['default']
     Content: typeof import('./src/components/Layout/Content.vue')['default']
     DialogApi: typeof import('./src/components/NaiveAPI/dialogApi.vue')['default']
-    Layout: typeof import('./src/components/Layout/index.vue')['default']
     ListBar: typeof import('./src/components/Layout/ListBar.vue')['default']
     ListCard: typeof import('./src/components/Layout/ListCard.vue')['default']
     MessageApi: typeof import('./src/components/NaiveAPI/messageApi.vue')['default']
@@ -20,16 +22,10 @@ declare module '@vue/runtime-core' {
     NCard: typeof import('naive-ui')['NCard']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
-    NEllipsis: typeof import('naive-ui')['NEllipsis']
     NInput: typeof import('naive-ui')['NInput']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
-    NModal: typeof import('naive-ui')['NModal']
-    NPopover: typeof import('naive-ui')['NPopover']
-    NSpace: typeof import('naive-ui')['NSpace']
-    NTag: typeof import('naive-ui')['NTag']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SearchBar: typeof import('./src/components/Layout/SearchBar.vue')['default']
     SideBar: typeof import('./src/components/Layout/SideBar.vue')['default']
   }
 }

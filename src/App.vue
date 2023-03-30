@@ -6,10 +6,10 @@
     <dialog-api />
   </n-dialog-provider>
   <n-config-provider :theme-overrides="appTheme">
-    <main flex h-screen>
+    <main w-full flex>
       <SideBar />
-      <NavBar />
-      <div ml-42 mt-32 w-full overflow-y-scroll>
+      <div w-full flex-col pl-14 pt-8 overflow-hidden h-screen>
+        <NavBar />
         <RouterView />
       </div>
     </main>

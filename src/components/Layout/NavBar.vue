@@ -1,33 +1,27 @@
 <template>
-  <div fixed left-42 right-14 top-0 h-32 flex-center-between>
-    <div
-      flex-center text-7xl font-black cursor
-      style="font-family: Inter; color: #A47FFA; font-style: normal;"
+  <div flex-center-between-row mb-8 pr-14>
+    <span
+      w-110 text-5xl font-black cursor text="#A47FFA"
       @click="goHome"
     >
       AI FOR US
-    </div>
-    <div ref="searchEl" @click="onChange">
-      <template v-if="searchFocus">
-        <n-input
-          ref="inputRef"
-          v-model:value="searchVal"
-          class="px-2 py-1 w-35vw! rounded-lg"
-          placeholder="搜索你想找的相关应用" size="small" clearable
-          @keyup.enter="onSearch"
-        >
-          <template #prefix>
-            <span i-carbon:search text-white />
-          </template>
-        </n-input>
+    </span>
+    <n-input
+      ref="inputRef"
+      v-model:value="searchVal"
+      px-2 py-2 rounded-2xl
+      h="12"
+      placeholder="搜索" clearable
+      @keyup.enter="onSearch"
+      @click="onChange"
+    >
+      <template #prefix>
+        <span i-carbon:search text-white />
       </template>
-      <template v-else>
-        <span i-carbon:search />
-      </template>
-    </div>
-    <div>
+    </n-input>
+    <n-button ml-10 h-12 p-4>
       登录/注册
-    </div>
+    </n-button>
   </div>
 </template>
 
@@ -39,8 +33,8 @@ const goHome = () => router.push('/')
 const searchVal = ref('')
 const searchFocus = ref(false)
 
-const searchEl = ref(null)
-onClickOutside(searchEl, () => searchFocus.value = false)
+const inputRef = ref(null)
+onClickOutside(inputRef, () => searchFocus.value = false)
 const onChange = () => searchFocus.value = true
 const onSearch = () => {
   sessionStorage.setItem('feedback-search', searchVal.value)

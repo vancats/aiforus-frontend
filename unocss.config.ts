@@ -10,26 +10,30 @@ import {
 
 export default defineConfig({
   shortcuts: [
-    ['btn', 'px-4 py-1 rounded inline-block bg-teal-600 text-white cursor-pointer hover:bg-teal-700 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50'],
-    ['icon-btn', 'text-[0.9em] inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-teal-600 !outline-none'],
-
     // normal
     ['cursor', 'cursor-pointer select-none'],
+
+    // Flex flex + align-items + justify-content + flex-direction
+    ['flex-col', 'flex flex-col'],
+    ['flex-wrap', 'flex flex-wrap'],
+    ['flex-center', 'flex items-center'],
+    ['flex-center-row', 'flex-center flex-row'],
+    ['flex-center-between', 'flex-center justify-between'],
+    ['flex-center-center', 'flex-center justify-center'],
+    ['flex-center-between-col', 'flex-center-between flex-col'],
+    ['flex-center-between-row', 'flex-center-between flex-row'],
+    ['flex-center-center-col', 'flex-center-center flex-col'],
 
     // adapt
     ['layout', 'px-5vw sm:px-20vw'],
     ['layout-content', 'layout relative rounded-t-3'],
 
-    ['main-title', 'text-center sm:text-left text-2xl sm:text-5xl sm:leading-14 text-white'],
+    // sidebar
+    ['side-icon', 'wh-20 mb-2 rounded-lg cursor flex-center-center-col hover:bg-gradient-to-r from-#5779FF to-#A47FFA color-#9C9CA9 hover:color-#FFFFFF'],
+
     ['web-only', 'hidden sm:block'], // 移动端不展示
     ['mobile-only', 'block sm:hidden'], // 移动端不展示
 
-    // Flex flex + align-items + justify-content + flex-direction
-    ['flex-center', 'flex items-center'],
-    ['flex-center-between', 'flex-center justify-between'],
-    ['flex-center-center', 'flex-center justify-center'],
-    ['flex-center-between-col', 'flex-center-between flex-col'],
-    ['flex-wrap', 'flex flex-wrap'],
   ],
 
   rules: [
