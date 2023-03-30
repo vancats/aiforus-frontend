@@ -1,4 +1,5 @@
 // import '@unocss/reset/tailwind.css'
+import './styles/font.css'
 import './styles/reset.css'
 import './styles/main.css'
 import 'uno.css'

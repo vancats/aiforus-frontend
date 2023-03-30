@@ -1,7 +1,8 @@
 <template>
   <div flex-center-between-row mb-8 pr-14>
     <span
-      w-110 text-5xl font-black cursor text="#A47FFA"
+      w-110 text-5xl cursor text="#A47FFA"
+      style="font-family: AlibabaPuHuiTi-ExtraBold"
       @click="goHome"
     >
       AI FOR US
