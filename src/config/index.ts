@@ -1,1 +1,1 @@
-export const hotLimitNum = 4
+export const hotLimitNum = 20

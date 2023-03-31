@@ -1,85 +1,103 @@
+<!-- eslint-disable no-console -->
 <template>
   <div overflow-y-scroll pr-14>
     <div text-xl pb-4>
       热门应用
     </div>
+
     <div flex overflow-x-scroll>
-      <n-card v-for="(tool, index) in 20" :key="index" w-50 h-75 rounded-2xl mr-4 flex-shrink-0 bg-gray>
-        {{ tool }}
-      </n-card>
-      <n-card w-20 h-75 rounded-2xl mr-4 flex-shrink-0 bg-gray @click="router.push('/tool')">
-        更多
+      <template v-for="tool in 20" :key="tool">
+        <ToolCard :tool-info="info" />
+      </template>
+      <n-card
+        w-20 rounded-2xl mr-4 flex-shrink-0 :bordered="false" cursor bg="#2B2C3E" hoverable
+        @click="router.push('/tool')"
+      >
+        <div h-75 flex-center-center-col>
+          <ai-card-arrow mb-4 />
+          <div>更多</div>
+        </div>
       </n-card>
     </div>
-    <div text-xl pt-8 pb-4>
-      热门应用
+
+    <div text-xl pt-8 pb-4 flex-center>
+      <span mr-6>AI小工具</span>
+      <TagList v-model:active-id="activeTagId" :tag-list="tagList" />
     </div>
-    <div grid grid-cols-2 lg:grid-cols-3 gap-8>
-      <n-card v-for="(tool, index) in 20" :key="index" h-40 rounded-2xl mr-4 bg-gray>
-        {{ tool }}
-      </n-card>
+
+    <div grid grid-cols="1 lg:2 xl:3" gap-8>
+      <template v-for="prompt in 50" :key="prompt">
+        <PromptCard :prompt-info="info" />
+      </template>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { CardType, TagType } from '~/components/Layout/Layout'
 import { getCards, getTags } from '~/api'
+import type { CardInfo } from '~/components/card/type'
+import type { TagInfo } from '~/components/layout/type'
 
 defineOptions({ name: 'IndexPage' })
 
 const router = useRouter()
 
-const searchVal = ref('')
-
-// Tag
-const tags = ref<TagType[]>([])
+const tagList = ref<TagInfo[]>([
+  { id: 0, name: '全部' },
+  { id: 1, name: 'AI文本' },
+  { id: 2, name: 'AI绘画' },
+])
+const activeTagId = ref(0)
 const fetchTags = async () => {
-  const { data } = await getTags()
-  const temp = [{
-    id: 0,
-    name: '全部应用',
-    active: true,
-  }]
-  if (Array.isArray(data?.tagList)) {
-    data?.tagList.forEach((item) => {
-      temp.push({
-        id: item.id,
-        name: item.name,
-        active: false,
-      })
-    })
+  try {
+    const data = await getTags(0)
+    tagList.value = data || []
   }
-  tags.value = temp
-}
-const tagChange = (id: number) => {
-  let shouldFresh = true
-  tags.value.forEach((tag) => {
-    if (tag.id === id) {
-      if (tag.active) shouldFresh = false
-      tag.active = true
-    }
-    else {
-      tag.active = false
-    }
-  })
-  shouldFresh && fetchCards()
+  catch (e) {
+    console.warn(e)
+  }
 }
 
-// List
-const listData = ref<CardType[]>([])
-async function fetchCards() {
-  const query = searchVal.value
-  const tag = tags.value.find(i => i.active)?.id
-  const { data } = await getCards({ query, tag })
-  if (data?.cardList) {
-    listData.value = data?.cardList
+watch(() => activeTagId.value,
+  () => {
+    fetchPrompts()
+  })
+
+const info = {
+  id: 0,
+  name: '论文大纲',
+  brief: '我希望你扮演一个专业的作家。你将需要研究一个给定的主题，制定论文陈述，并创建一个既信息丰富又引人入胜的有说服力的工作',
+  iconUrl: '../assets/images/avator.png',
+  pageView: 1121,
+  hot: false,
+  tags: [1, 2],
+}
+
+const tools = ref<CardInfo[]>([])
+async function fetchTools() {
+  try {
+    const data = await getCards({ context: '', tagId: 0, type: 1 })
+    tools.value = data || []
+  }
+  catch (e) {
+    console.warn(e)
+  }
+}
+const prompts = ref<CardInfo[]>([])
+async function fetchPrompts() {
+  try {
+    const data = await getCards({ context: '', tagId: activeTagId.value, type: 0 })
+    prompts.value = data || []
+  }
+  catch (e) {
+    console.warn(e)
   }
 }
 
 onMounted(() => {
-//   fetchTags()
-//   fetchCards()
+  fetchTags()
+  fetchTools()
+  fetchPrompts()
 })
 </script>
 

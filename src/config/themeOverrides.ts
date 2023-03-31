@@ -24,4 +24,9 @@ export const appTheme = {
     borderFocus: 'none',
     borderRadiusMedium: '16px',
   },
+  Card: {
+    textColor: '#FFFFFF',
+    paddingSmall: '0',
+    paddingMedium: '0',
+  },
 }

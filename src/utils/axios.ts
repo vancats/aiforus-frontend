@@ -3,7 +3,7 @@ import axios from 'axios'
 import router from '../router'
 import { convertObjectKeysToCamelCase, convertObjectKeysToSnakeCase, getLocalItem, removeLocalItem } from '.'
 import naiveui from '~/utils/naiveui'
-import { FILE_URL } from '~/api'
+import { FILE_URL } from '~/api/common'
 
 // 定义请求响应参数，不含data
 interface Result {

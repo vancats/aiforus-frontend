@@ -5,7 +5,9 @@
       style="font-family: AlibabaPuHuiTi-ExtraBold"
       @click="goHome"
     >
-      AI FOR US
+      <n-gradient-text :gradient="{ from: '#5779FF', to: '#A47FFA', deg: '90' }">
+        AI FOR US
+      </n-gradient-text>
     </span>
     <n-input
       ref="inputRef"

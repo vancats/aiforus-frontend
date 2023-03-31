@@ -92,3 +92,12 @@ export const removeLocalItem = (key: string) => {
 export const clearLocalItem = () => {
   localStorage.clear()
 }
+
+export const handleError = async (fn: Function) => {
+  try {
+    await fn()
+  }
+  catch (e) {
+    console.warn(e)
+  }
+}

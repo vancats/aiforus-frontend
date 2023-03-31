@@ -1,42 +1,22 @@
-import type { CardType } from '~/components/Layout/Layout'
+import type { CardInfo } from '~/components/card/type'
+import type { TagInfo } from '~/components/layout/type'
 import axios from '~/utils/axios'
 
-export const FILE_URL = '/file/upload'
-export const uploadFile = async (formData: FormData) => {
-  return await axios.post<{ url: string }>(FILE_URL, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  }).then(res => res?.data)
-}
-
-namespace SearchPage {
-  // 用户返回标签
-  export interface TagResData {
-    tagList: Array<{
-      id: number
-      name: string
-    }>
-  }
-
-  // 用户返回卡片信息
+namespace IndexPage {
   export interface CardReqFrom {
-    query?: string
-    tag?: number
-  }
-  export interface CardResData {
-    cardList: Array<CardType>
+    context: string
+    tagId: number
+    type: number
   }
 }
 
-// 标签
-export const getTags = () => {
-  // 返回的数据格式可以和服务端约定
-  return axios.get<SearchPage.TagResData>('/tag')
+// 0 是 prompt 1 是 tool
+export const getTags = async (type: number) => {
+  return await axios.post<Array<TagInfo>>('/tag/query', { type })
+    .then(res => res?.data)
 }
 
-// 卡片
-export const getCards = (params: SearchPage.CardReqFrom) => {
-  // 返回的数据格式可以和服务端约定
-  return axios.get<SearchPage.CardResData>('/cardBySearchAndTag', params)
+export const getCards = async (params: IndexPage.CardReqFrom) => {
+  return await axios.post<Array<CardInfo>>('/card/query', params)
+    .then(res => res?.data)
 }

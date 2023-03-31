@@ -24,12 +24,8 @@ export default defineConfig({
     ['flex-center-between-row', 'flex-center-between flex-row'],
     ['flex-center-center-col', 'flex-center-center flex-col'],
 
-    // adapt
-    ['layout', 'px-5vw sm:px-20vw'],
-    ['layout-content', 'layout relative rounded-t-3'],
-
     // sidebar
-    ['side-icon', 'wh-20 mb-2 rounded-lg cursor flex-center-center-col hover:bg-gradient-to-r from-#5779FF to-#A47FFA color-#9C9CA9 hover:color-#FFFFFF'],
+    ['side-icon', 'wh-20 mb-2 rounded-lg cursor flex-center-center-col color-#9C9CA9 hover:color-#FFFFFF'],
 
     ['web-only', 'hidden sm:block'], // 移动端不展示
     ['mobile-only', 'block sm:hidden'], // 移动端不展示
