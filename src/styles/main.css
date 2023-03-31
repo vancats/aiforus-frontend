@@ -11,8 +11,8 @@ body,
 
 /* 滚动条 */
 ::-webkit-scrollbar{
-    width: 16px;
-    background-color: transparent;
+    width: 0;
+    height: 0px;
 }
 /*定义滚动条轨道：内阴影+圆角*/
 ::-webkit-scrollbar-track {
@@ -23,4 +23,7 @@ body,
     border-radius: 8px;
     background-color: #555;
 }
-
+::-webkit-scrollbar-corner {
+    width: 0;
+    height: 0;
+}

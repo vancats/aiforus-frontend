@@ -1,17 +1,23 @@
 <template>
   <div overflow-y-scroll pr-14>
-    <div text-xl pb-4>
-      AI小工具
+    <div title-tags>
+      <span mr-6>AI小工具</span>
+      <TagList v-model:active-id="activeToolTag" :tag-list="promptTagList" />
     </div>
-    <div grid grid-cols="1 lg:2 xl:3" gap-8>
+
+    <div prompt-layout>
       <template v-for="prompt in 50" :key="prompt">
-        <PromptCard :prompt-info="promptInfo" />
+        <PromptCard :prompt-info="promptInfo" :tag-list="promptTagList" />
       </template>
     </div>
+
+    <Footer />
   </div>
 </template>
 
 <script setup lang='ts'>
+import { getTags } from '~/api'
+import type { TagInfo } from '~/components/layout/type'
 defineOptions({ name: 'PromptPage' })
 
 const promptInfo = {
@@ -23,8 +29,21 @@ const promptInfo = {
   hot: false,
   tags: [1, 2],
 }
+const promptTagList = ref<TagInfo[]>([
+  { id: 0, name: '全部' },
+  { id: 1, name: 'AI文本' },
+  { id: 2, name: 'AI绘画' },
+])
+const activeToolTag = ref(0)
+const fetchTags = async () => {
+  try {
+    getTags(0).then(res => promptTagList.value = res || [])
+  }
+  catch (e) {
+    console.warn(e)
+  }
+}
+onMounted(() => {
+//   fetchTags()
+})
 </script>
-
-<style>
-
-</style>

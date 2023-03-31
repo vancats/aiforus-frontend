@@ -12,6 +12,8 @@ export default defineConfig({
   shortcuts: [
     // normal
     ['cursor', 'cursor-pointer select-none'],
+    ['web-only', 'hidden sm:block'], // 移动端不展示
+    ['mobile-only', 'block sm:hidden'], // 移动端不展示
 
     // Flex flex + align-items + justify-content + flex-direction
     ['flex-col', 'flex flex-col'],
@@ -27,9 +29,24 @@ export default defineConfig({
     // sidebar
     ['side-icon', 'wh-20 mb-2 rounded-lg cursor flex-center-center-col color-#9C9CA9 hover:color-#FFFFFF'],
 
-    ['web-only', 'hidden sm:block'], // 移动端不展示
-    ['mobile-only', 'block sm:hidden'], // 移动端不展示
+    // title
+    ['title-tags', 'flex-center pb-4 text-xl'],
+    ['title-tag', 'title-brief px-6 py-4 rounded-3xl bg-transparent'],
 
+    // tool
+    ['tool-layout', 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8'],
+
+    // prompt
+    ['prompt-layout', 'grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8'],
+
+    // card
+    ['card-more', 'w-20 mr-4 rounded-2xl flex-shrink-0 cursor bg-#2B2C3E hover:bg-#393A52'],
+    ['card-tool', 'card-more w-50 h-76'],
+    ['card-prompt', 'h-44 rounded-2xl cursor bg-#2B2C3E hover:bg-#393A52'],
+    ['card-detail', 'h-40 mb-4 rounded-2xl cursor bg-#2B2C3E hover:bg-#393A52'],
+
+    ['card-tag', 'px-2 mr-2 text-sm rounded-lg text-#FFFFFF bg-#1F1E2C'],
+    ['title-brief', 'text-sm text-#9C9CA9'],
   ],
 
   rules: [

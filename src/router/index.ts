@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '~/pages/index.vue'
-import ToolPage from '~/pages/tool/index.vue'
-import PromptPage from '~/pages/prompt/index.vue'
-// import FeedbackPage from '~/pages/feedback/index.vue'
+const _import = (path: string, name = 'index') => () => import(`~/pages/${path}/${name}.vue`)
 
 const routes = [
   { name: 'Home', path: '/', component: Layout },
-  { name: 'Tool', path: '/tool', component: ToolPage },
-  { name: 'Prompt', path: '/prompt', component: PromptPage },
-  { name: 'Feedback', path: '/feedback', component: Layout },
+  { name: 'Tool', path: '/tool', component: _import('tool') },
+  { name: 'Prompt', path: '/prompt', component: _import('prompt') },
+  { name: 'Search', path: '/search', component: _import('search') },
+  { name: 'ToolDetail', path: '/detail/tool', component: _import('detail', 'tool') },
+  { name: 'PromptDetail', path: '/detail/prompt', component: _import('detail', 'prompt') },
 ]
 
 const router = createRouter({

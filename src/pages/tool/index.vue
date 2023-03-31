@@ -1,17 +1,24 @@
 <template>
   <div overflow-y-scroll pr-14>
-    <div text-xl pb-4>
-      AI应用
+    <div title-tags>
+      <span mr-6>AI应用</span>
+      <TagList v-model:active-id="activeToolTag" :tag-list="toolTagList" />
     </div>
-    <div grid grid-cols="1 sm:2 md:3 lg:4 xl:5 2xl:6">
+
+    <div tool-layout>
       <template v-for="tool in 50" :key="tool">
-        <ToolCard :tool-info="toolInfo" />
+        <ToolCard :tool-info="toolInfo" :tag-list="toolTagList" />
       </template>
     </div>
+
+    <Footer />
   </div>
 </template>
 
 <script setup lang='ts'>
+import type { TagInfo } from '~/components/layout/type'
+import { getTags } from '~/api'
+
 defineOptions({ name: 'ToolPage' })
 
 const toolInfo = {
@@ -21,10 +28,23 @@ const toolInfo = {
   iconUrl: '../assets/images/avator.png',
   pageView: 1121,
   hot: false,
-  tags: [1, 2],
+  tags: [1],
 }
+const toolTagList = ref<TagInfo[]>([
+  { id: 0, name: '全部' },
+  { id: 1, name: 'AI文本' },
+  { id: 2, name: 'AI绘画' },
+])
+const activeToolTag = ref(0)
+const fetchTags = async () => {
+  try {
+    getTags(1).then(res => toolTagList.value = res || [])
+  }
+  catch (e) {
+    console.warn(e)
+  }
+}
+onMounted(() => {
+//   fetchTags()
+})
 </script>
-
-<style>
-
-</style>

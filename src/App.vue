@@ -20,7 +20,3 @@
 import { appTheme } from './config/themeOverrides'
 defineOptions({ name: 'AppPage' })
 </script>
-
-<style scoped>
-
-</style>

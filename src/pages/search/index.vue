@@ -1,10 +1,11 @@
+<!-- eslint-disable no-console -->
 <template>
   <div pr-14 overflow-y-scroll>
     <div title-tags>
       热门应用
     </div>
-
-    <div flex overflow-x-scroll>
+    <Feedback keyword="hello" />
+    <div flex overflow-scroll>
       <template v-for="tool in 20" :key="tool">
         <ToolCard :tool-info="info" :tag-list="toolTagList" />
       </template>
@@ -25,6 +26,8 @@
       <TagList v-model:active-id="activePromptTag" :tag-list="promptTagList" />
     </div>
 
+    <Feedback keyword="hello" />
+
     <div prompt-layout>
       <template v-for="prompt in 50" :key="prompt">
         <PromptCard :prompt-info="info" :tag-list="promptTagList" />
@@ -40,7 +43,7 @@ import { getCards, getTags } from '~/api'
 import type { CardInfo } from '~/components/card/type'
 import type { TagInfo } from '~/components/layout/type'
 
-defineOptions({ name: 'IndexPage' })
+defineOptions({ name: 'SearchPage' })
 
 const router = useRouter()
 
@@ -101,7 +104,7 @@ async function fetchPrompts() {
 }
 
 onMounted(async () => {
-//   fetchTags()
+  //   fetchTags()
   fetchTools()
   fetchPrompts()
 })

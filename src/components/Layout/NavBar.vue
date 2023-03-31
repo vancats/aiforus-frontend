@@ -9,6 +9,7 @@
         AI FOR US
       </n-gradient-text>
     </span>
+
     <n-input
       ref="inputRef"
       v-model:value="searchVal"
@@ -16,33 +17,38 @@
       h="12"
       placeholder="搜索" clearable
       @keyup.enter="onSearch"
-      @click="onChange"
     >
       <template #prefix>
         <span i-carbon:search text-white />
       </template>
     </n-input>
-    <n-button ml-10 h-12 p-4>
+
+    <n-button type="primary" ml-10 h-12 p-4 @click="onLogin">
       登录/注册
     </n-button>
   </div>
 </template>
 
-<script setup lang="ts" generic="T extends any, O extends any">
+<script setup lang="ts">
+import { login } from '~/api/login'
+
 defineOptions({ name: 'NavBar' })
 
 const router = useRouter()
 const goHome = () => router.push('/')
 const searchVal = ref('')
-const searchFocus = ref(false)
 
-const inputRef = ref(null)
-onClickOutside(inputRef, () => searchFocus.value = false)
-const onChange = () => searchFocus.value = true
+// const searchFocus = ref(false)
+// const inputRef = ref(null)
+// onClickOutside(inputRef, () => searchFocus.value = false)
+
 const onSearch = () => {
-  sessionStorage.setItem('feedback-search', searchVal.value)
-  router.push({ name: 'Feedback' })
+//   sessionStorage.setItem('feedback-search', searchVal.value)
+  router.push('/search')
   searchVal.value = ''
-  searchFocus.value = false
+}
+
+const onLogin = async () => {
+  await login()
 }
 </script>
