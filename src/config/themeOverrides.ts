@@ -7,7 +7,7 @@ export const appTheme = {
     textColor: '#FFFFFF',
     placeholderColor: 'rgba(253, 253, 253, 0.4)',
     color: '#2B2C3E',
-    colorFocus: '#2B2C3E',
+    colorFocus: '#3F415B',
     clearColor: '#FFFFFF',
   },
   Button: {
@@ -42,6 +42,7 @@ export const appTheme = {
     textColor: '#FFFFFF',
     paddingSmall: '0',
     paddingMedium: '0',
+    paddingHuge: '16px 24px 16px',
     titleTextColor: '#FFFFFF',
   },
 

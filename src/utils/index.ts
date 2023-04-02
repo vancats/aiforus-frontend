@@ -1,5 +1,7 @@
 import type { DataTableColumn } from 'naive-ui'
 import type { Action } from './type'
+import type { TagInfo } from '~/utils/type'
+import type { CardInfo } from '~/components/card/type'
 
 export const convertObjectKeysToCamelCase = <T>(obj: T): T => {
   const convertedObj: any = Array.isArray(obj) ? [] : {}
@@ -99,5 +101,23 @@ export const handleError = async (fn: Function) => {
   }
   catch (e) {
     console.warn(e)
+  }
+}
+
+export function getActualTag(cards: CardInfo[], tagList: TagInfo[]) {
+  const set: Set<number> = new Set()
+  cards.forEach(prompt => {
+    prompt.tagList.forEach(tag => set.add(tag.id))
+  })
+  return handleAllTag(tagList.filter(tag => set.has(tag.id)))
+}
+
+export function handleAllTag(tags: TagInfo[] | undefined) {
+  if (tags?.length) {
+    const all = { id: 0, name: '全部' }
+    return [all, ...tags]
+  }
+  else {
+    return []
   }
 }

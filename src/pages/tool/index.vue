@@ -1,50 +1,64 @@
 <template>
   <div overflow-y-scroll pr-14>
     <div title-tags>
-      <span mr-6>AI应用</span>
-      <TagList v-model:active-id="activeToolTag" :tag-list="toolTagList" />
+      <span w-30 mr-6>AI应用</span>
+      <TagList v-model:active-tag="activeTag" :tag-list="filterTags" />
     </div>
 
     <div tool-layout>
-      <template v-for="tool in 50" :key="tool">
-        <ToolCard :tool-info="toolInfo" :tag-list="toolTagList" />
+      <template v-for="tool in tools" :key="tool.id">
+        <ToolCard :tool-info="tool" />
       </template>
     </div>
-
-    <Footer />
   </div>
 </template>
 
 <script setup lang='ts'>
-import type { TagInfo } from '~/components/layout/type'
-import { getTags } from '~/api'
-
+import { getToolCards, getToolTags } from '~/api/tool'
+import type { TagInfo } from '~/utils/type'
+import type { CardInfo } from '~/components/card/type'
+import { getActualTag } from '~/utils'
 defineOptions({ name: 'ToolPage' })
 
-const toolInfo = {
-  id: 0,
-  name: '论文大纲',
-  brief: '我希望你扮演一个专业的作家。你将需要研究一个给定的主题，制定论文陈述，并创建一个既信息丰富又引人入胜的有说服力的工作',
-  iconUrl: '../assets/images/avator.png',
-  pageView: 1121,
-  hot: false,
-  tags: [1],
-}
-const toolTagList = ref<TagInfo[]>([
-  { id: 0, name: '全部' },
-  { id: 1, name: 'AI文本' },
-  { id: 2, name: 'AI绘画' },
-])
-const activeToolTag = ref(0)
+const tagList = ref<TagInfo[]>([])
 const fetchTags = async () => {
   try {
-    getTags(1).then(res => toolTagList.value = res || [])
+    const res = await getToolTags()
+    tagList.value = res || []
   }
   catch (e) {
     console.warn(e)
   }
 }
+
+const activeTag = ref(0)
+watch(() => activeTag.value, () => fetchTools())
+
+const tools = ref<CardInfo[]>([])
+async function fetchTools() {
+  try {
+    const data = await getToolCards(activeTag.value)
+    tools.value = data || []
+  }
+  catch (e) {
+    console.warn(e)
+  }
+}
+
+const cachedTags = ref<TagInfo[]>([])
+const filterTags = computed(() => {
+  if (activeTag.value === 0) {
+    const res = getActualTag(tools.value, tagList.value)
+    cachedTags.value = res
+    return res
+  }
+  else {
+    return cachedTags.value
+  }
+})
+
 onMounted(() => {
-//   fetchTags()
+  fetchTags()
+  fetchTools()
 })
 </script>

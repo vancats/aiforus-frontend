@@ -30,6 +30,7 @@ declare module '@vue/runtime-core' {
     NInput: typeof import('naive-ui')['NInput']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NModal: typeof import('naive-ui')['NModal']
+    NPopover: typeof import('naive-ui')['NPopover']
     NSpace: typeof import('naive-ui')['NSpace']
     NTag: typeof import('naive-ui')['NTag']
     PromptCard: typeof import('./src/components/card/PromptCard.vue')['default']

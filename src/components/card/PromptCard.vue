@@ -1,9 +1,12 @@
 <template>
-  <n-card class="prompt-card" card-prompt :bordered="false" hoverable @click="router.push('/detail/tool')">
+  <n-card
+    class="prompt-card" card-prompt :bordered="false"
+    @click="router.push(`/detail/prompt/${promptInfo.id}`)"
+  >
     <div flex>
-      <img :src="avator" wh-44 rounded-l-2xl alt="123">
+      <img :src="promptInfo.iconUrl" wh-44 rounded-l-2xl alt="123">
 
-      <div p-4 rounded-r-xl>
+      <div p-4 w-full rounded-r-xl>
         <div flex-center-between mb-2>
           <div text-5.5>
             {{ promptInfo.name }}
@@ -18,26 +21,16 @@
           {{ promptInfo.brief }}
         </n-ellipsis>
 
-        <CardTag :tags="tags" />
+        <CardTag :tags="promptInfo.tagList" />
       </div>
     </div>
   </n-card>
 </template>
 
 <script setup lang='ts'>
-import avator from '../../assets/images/avatar.png'
-import type { TagInfo } from '../layout/type'
 import type { CardInfo } from './type'
-
-const { promptInfo, tagList } = defineProps<{
-  promptInfo: CardInfo
-  tagList: Array<TagInfo>
-}>()
+defineProps<{ promptInfo: CardInfo }>()
 const router = useRouter()
-
-const tags = computed(() => {
-  return tagList.filter(tag => promptInfo.tags.includes(tag.id)).map(i => i.name)
-})
 </script>
 
 <style>

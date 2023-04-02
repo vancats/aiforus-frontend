@@ -7,8 +7,15 @@ const routes = [
   { name: 'Tool', path: '/tool', component: _import('tool') },
   { name: 'Prompt', path: '/prompt', component: _import('prompt') },
   { name: 'Search', path: '/search', component: _import('search') },
-  { name: 'ToolDetail', path: '/detail/tool', component: _import('detail', 'tool') },
-  { name: 'PromptDetail', path: '/detail/prompt', component: _import('detail', 'prompt') },
+  {
+    name: 'Detail',
+    path: '/detail',
+    component: _import('detail'),
+    children: [
+      { name: 'ToolDetail', path: '/detail/tool/:id', component: _import('detail', 'tool') },
+      { name: 'PromptDetail', path: '/detail/prompt/:id', component: _import('detail', 'prompt') },
+    ],
+  },
 ]
 
 const router = createRouter({

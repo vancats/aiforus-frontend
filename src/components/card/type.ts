@@ -1,3 +1,5 @@
+import type { TagInfo } from '~/utils/type'
+
 export interface CardInfo {
   id: number
   name: string
@@ -6,4 +8,6 @@ export interface CardInfo {
   pageView: number
   hot: boolean
   tags: number[]
+  type: number
+  tagList: Array<TagInfo>
 }

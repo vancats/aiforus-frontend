@@ -19,10 +19,13 @@ export default defineConfig({
     ['flex-col', 'flex flex-col'],
     ['flex-wrap', 'flex flex-wrap'],
     ['flex-center', 'flex items-center'],
+    ['flex-start', 'flex items-start'],
     ['flex-center-row', 'flex-center flex-row'],
     ['flex-center-between', 'flex-center justify-between'],
+    ['flex-start-between', 'flex-start justify-between'],
     ['flex-center-center', 'flex-center justify-center'],
     ['flex-center-between-col', 'flex-center-between flex-col'],
+    ['flex-start-between-col', 'flex-start-between flex-col'],
     ['flex-center-between-row', 'flex-center-between flex-row'],
     ['flex-center-center-col', 'flex-center-center flex-col'],
 

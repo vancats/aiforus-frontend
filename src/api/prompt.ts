@@ -1,17 +1,20 @@
-import type { PromptInfo } from '~/pages/prompt'
+import type { TagInfo } from '~/utils/type'
 import axios from '~/utils/axios'
+import type { CardInfo } from '~/components/card/type'
+import type { PromptInfo } from '~/pages/detail/type'
 
-namespace PromptPage {
-
-  export interface PromptReqFrom {
-    id: number
-    click: boolean
-  }
-  export interface PromptResData {
-    toolPageInfo: PromptInfo
-  }
+// 0 是 prompt 1 是 tool
+export const getPromptTags = async () => {
+  return await axios.post<Array<TagInfo>>('/tag/query', { type: 0 })
+    .then(res => res?.data)
 }
 
-export const getPromptInfo = (params: PromptPage.PromptReqFrom) => {
-  return axios.post<PromptPage.PromptResData>('/promptPageInfo', params)
+export const getPromptCards = async (tagId = 0, context = '') => {
+  return await axios.post<Array<CardInfo>>('/card/query', { context, tagId, type: 0 })
+    .then(res => res?.data)
+}
+
+export const getPromptInfo = async (id: number, refresh: boolean) => {
+  return await axios.post<PromptInfo>('/card/detail', { id, refresh, type: 0 })
+    .then(res => res?.data)
 }

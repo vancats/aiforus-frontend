@@ -31,11 +31,12 @@
 
 <script setup lang="ts">
 import { login } from '~/api/login'
-
+import { useSearchStore } from '~/store'
 defineOptions({ name: 'NavBar' })
 
 const router = useRouter()
 const goHome = () => router.push('/')
+const useStore = useSearchStore()
 const searchVal = ref('')
 
 // const searchFocus = ref(false)
@@ -43,9 +44,8 @@ const searchVal = ref('')
 // onClickOutside(inputRef, () => searchFocus.value = false)
 
 const onSearch = () => {
-//   sessionStorage.setItem('feedback-search', searchVal.value)
+  useStore.searchVal = searchVal.value
   router.push('/search')
-  searchVal.value = ''
 }
 
 const onLogin = async () => {
