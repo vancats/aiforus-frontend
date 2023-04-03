@@ -1,11 +1,14 @@
 <template>
-  <div flex overflow-y-scroll pb-4 pr-12>
-    <div pr-2 mr-4 w-140 overflow-y-scroll>
-      <template v-for="card in cards" :key="card.id">
+  <div flex pb-4 pr-12 overflow-y-scroll>
+    <div w-140 mr-4 pr-2 overflow-y-scroll>
+      <template v-for="card in cards.slice(0, 20)" :key="card.id">
         <DetailCard :card-info="card" />
       </template>
-      <n-card card-detail h-14 :bordered="false" @click="router.push('/prompt')">
-        <div text-5 text-center leading-13>
+      <n-card
+        card-detail h-14 :bordered="false"
+        @click="router.push('/prompt')"
+      >
+        <div text="5 center" leading-13>
           更多应用
         </div>
       </n-card>
@@ -15,15 +18,18 @@
 </template>
 
 <script setup lang='ts'>
+import { getPromptCards } from '~/api/prompt'
 import { getToolCards } from '~/api/tool'
 import type { CardInfo } from '~/components/card/type'
 defineOptions({ name: 'DetailPage' })
 const router = useRouter()
 
+const route = useRoute()
 const cards = ref<CardInfo[]>([])
 async function fetchCards() {
   try {
-    const data = await getToolCards()
+    const action = route.matched[1]?.name === 'PromptDetail' ? getPromptCards : getToolCards
+    const data = await action()
     cards.value = data || []
   }
   catch (e) {

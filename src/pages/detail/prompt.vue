@@ -1,44 +1,44 @@
 <template>
-  <div overflow-y-scroll w-full p-12 pt-8 rounded-2xl bg="#2B2C3E">
-    <div flex-center>
-      <img :src="avator" wh-40 mr-6 rounded-2xl alt="">
-      <n-space>
-        <n-space flex-center>
-          <div text-5.5>
-            论文大纲
+  <template v-if="promptInfo">
+    <div w-full p-12 pt-8 rounded-2xl bg="#2B2C3E" overflow-y-scroll>
+      <div flex-center>
+        <img :src="promptInfo.iconUrl" wh-40 mr-6 rounded-2xl alt="icon">
+        <div h-40 flex-start-between-col>
+          <div>
+            <n-space flex-center>
+              <div text-5.5>
+                {{ promptInfo.name }}
+              </div>
+              <CardTag v-if="promptInfo" :tags="promptInfo.tagList" />
+              <div flex-center>
+                <ai-card-fire mr-1 />
+                <div>{{ promptInfo.pageView }}</div>
+              </div>
+            </n-space>
+
+            <n-ellipsis title-brief block my-2 :line-clamp="3" :tooltip="false">
+              {{ promptInfo.brief }}
+            </n-ellipsis>
           </div>
-          <n-tag px-2 h-6 rounded text="#FFFFFF" bg="#1F1E2C" :bordered="false">
-            学习
-          </n-tag>
-          <div flex-center>
-            <ai-card-fire mr-1 />
-            <div>1123</div>
-          </div>
-        </n-space>
-        <n-ellipsis title-brief mb-2 :line-clamp="3" :tooltip="false">
-          我希望你扮演一个专业的作家。你将需要研究一个给定的主题，制定论文陈述，并创建一个既信息丰富又引人入胜的有说服力的工作我希望你扮演一个专业的作家。你将需要研究一个给定的主题，制定论文陈述，并创建一个既信息。
-        </n-ellipsis>
-        <n-space justify="space-between">
-          <n-button>
-            去官网使用
-          </n-button>
-          <n-button>
-            去扫码使用
-          </n-button>
-        </n-space>
-      </n-space>
+        </div>
+      </div>
     </div>
-    <div text-5.5 mt-4 pt-6 pb-3 border="t-1 #1F1E2C">
-      使用教程
-    </div>
-    <div title-brief mb-4>
-      我希望你扮演一个专业的作家。你将需要研究一个给定的主题，制定论文陈述，并创建一个既信息丰富又引人入胜的有说服力的工作我希望你扮演一个专业的作家。你将需要研究一个给定的主题，制定论文陈述，并创建一个既信息丰富又引人入胜的有说服力的工作我希望你扮演一个专业的作家。你将需要研究一个给定的主题，制定论文陈述。富又引人入胜的有说服力的工作我希望你扮演一个专业的作家。你将需要研究一个给定的主题，制定论文陈述，并创建一个既信息丰富又引人入胜的有说服力的工作我希望你扮演一个专业的作家。你将需要研究一个给定的主题，制定论文陈述。
-    </div>
-    <img :src="usage" w-full alt="">
-  </div>
+  </template>
 </template>
 
 <script setup lang='ts'>
-import avator from '../../assets/images/avatar.png'
-import usage from '../../assets/images/usage.jpg'
+import { getLocalItem, removeLocalItem } from '../../utils/index'
+import type { PromptInfo } from './type'
+import { getPromptInfo } from '~/api/prompt'
+
+const route = useRoute()
+const promptInfo = ref<PromptInfo>()
+const fetchInfo = async () => {
+  const refresh = Boolean(getLocalItem('refresh'))
+  removeLocalItem('refresh')
+  const res = await getPromptInfo(Number(route.params.id), refresh)
+  promptInfo.value = res
+}
+watch(() => route.params, () => fetchInfo())
+onMounted(() => fetchInfo())
 </script>

@@ -1,25 +1,27 @@
 <template>
   <n-card
     class="detail-card" card-detail :bordered="false"
-    @click="router.push(`/detail/${cardInfo.type === 0 ? 'prompt' : 'tool'}/${cardInfo.id}`)"
+    @click="goCardDetail"
   >
     <div flex>
       <img :src="cardInfo.iconUrl" w-30 h-30 rounded-l-2xl alt="123">
 
-      <div p-4 w-70 rounded-r-xl>
-        <div flex-center-between mb-2>
-          <div text-5.5>
-            {{ cardInfo.name }}
+      <div flex-start-between-col w-70 h-40 p-4 rounded-r-xl>
+        <div w-full>
+          <div flex-center-between>
+            <div text-5.5>
+              {{ cardInfo.name }}
+            </div>
+            <div flex-center>
+              <ai-card-fire />
+              <span pl-1>{{ cardInfo.pageView }}</span>
+            </div>
           </div>
-          <div flex-center>
-            <ai-card-fire />
-            <span pl-1>{{ cardInfo.pageView }}</span>
-          </div>
-        </div>
 
-        <n-ellipsis title-brief :line-clamp="3" :tooltip="false">
-          {{ cardInfo.brief }}
-        </n-ellipsis>
+          <n-ellipsis title-brief :line-clamp="3" :tooltip="false">
+            {{ cardInfo.brief }}
+          </n-ellipsis>
+        </div>
 
         <CardTag :tags="cardInfo.tagList" />
       </div>
@@ -28,9 +30,14 @@
 </template>
 
 <script setup lang='ts'>
+import { setLocalItem } from '../../utils/index'
 import type { CardInfo } from './type'
 const { cardInfo } = defineProps<{ cardInfo: CardInfo }>()
 const router = useRouter()
+const goCardDetail = () => {
+  setLocalItem('refresh', 'true')
+  router.push(`/detail/${cardInfo.type === 0 ? 'prompt' : 'tool'}/${cardInfo.id}`)
+}
 </script>
 
 <style>

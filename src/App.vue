@@ -6,7 +6,10 @@
     <dialog-api />
   </n-dialog-provider>
   <n-config-provider :theme-overrides="appTheme">
-    <main w-full flex style="font-family: AlibabaPuHuiTi-Regular">
+    <main
+      w-full flex
+    >
+      <!-- style="font-family: AlibabaPuHuiTi-Regular" -->
       <SideBar />
       <div w-full flex-col pl-14 pt-8 overflow-hidden h-screen>
         <NavBar />

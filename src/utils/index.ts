@@ -3,6 +3,7 @@ import type { Action } from './type'
 import type { TagInfo } from '~/utils/type'
 import type { CardInfo } from '~/components/card/type'
 
+// 接口参数标准化
 export const convertObjectKeysToCamelCase = <T>(obj: T): T => {
   const convertedObj: any = Array.isArray(obj) ? [] : {}
 
@@ -26,7 +27,6 @@ export const convertObjectKeysToCamelCase = <T>(obj: T): T => {
     return key.replace(/(_\w)/g, match => match[1].toUpperCase())
   }
 }
-
 export const convertObjectKeysToSnakeCase = <T>(obj: T): T => {
   const convertedObj: any = Array.isArray(obj) ? [] : {}
   for (const key in obj) {
@@ -49,9 +49,7 @@ export const convertObjectKeysToSnakeCase = <T>(obj: T): T => {
   }
 }
 
-/**
- * 建立表格
- */
+// 表格相关
 export const createColumn = <T>(key: string, title: string, render?: (row: T) => VNode) => ({
   key,
   title,
@@ -75,35 +73,22 @@ export const createAction = ({ row, action, title, style = 'text-blue cursor' }:
   )
 }
 
-/**
- * 缓存相关
- */
+// 缓存相关
 const localPrefix = 'aiforus_'
 export const setLocalItem = (key: string, value: string) => {
   localStorage.setItem(localPrefix + key, value)
 }
-
 export const getLocalItem = (key: string) => {
   return localStorage.getItem(localPrefix + key)
 }
-
 export const removeLocalItem = (key: string) => {
   localStorage.removeItem(localPrefix + key)
 }
-
 export const clearLocalItem = () => {
   localStorage.clear()
 }
 
-export const handleError = async (fn: Function) => {
-  try {
-    await fn()
-  }
-  catch (e) {
-    console.warn(e)
-  }
-}
-
+// 标签相关
 export function getActualTag(cards: CardInfo[], tagList: TagInfo[]) {
   const set: Set<number> = new Set()
   cards.forEach(prompt => {

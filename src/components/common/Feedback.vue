@@ -1,9 +1,9 @@
 <template>
-  <div text="center" my-16>
+  <div text-center my-16>
     <div text-xl>
       老板，没有“{{ useStore.searchVal }}”相关的{{ typeName }}，换个关键词试试
     </div>
-    <div mt-10 mb-17 cursor text="#3A50FF" @click="openModal">
+    <div mt-10 cursor text="#3A50FF" @click="openModal">
       没有找到可用ai应用？点击向我们反馈
     </div>
   </div>
@@ -11,18 +11,12 @@
   <n-modal v-model:show="showModal">
     <n-card
       style="width: 480px; background: #2b2c3d; border-radius: 12px"
-      title="问题与反馈"
-      size="huge"
-      :bordered="false"
-      role="dialog"
-      aria-modal="true"
+      title="问题与反馈" size="huge" :bordered="false" role="dialog" aria-modal="true"
     >
       <n-input
         v-model:value="feedbackVal"
-        type="textarea"
-        placeholder="请输入你的问题"
-        bg="#3F415B"
-        rounded-xl
+        type="textarea" placeholder="请输入你的问题"
+        bg="#3F415B" rounded-xl
         :autosize="{ minRows: 8, maxRows: 8 }"
       />
       <template #footer>

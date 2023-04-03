@@ -1,7 +1,5 @@
 <template>
   <div flex-col p-2 pt-40 bg="#242635">
-    <!-- <ai-side-planet fixed top="6" left="5" wh-14 cursor @click="router.push('/')" /> -->
-
     <div side-icon :style="getStyle('/')" @click="router.push('/')">
       <ai-side-home wh-8 />
       <div pt-2 text-sm>

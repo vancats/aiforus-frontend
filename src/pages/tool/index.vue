@@ -1,7 +1,7 @@
 <template>
   <div overflow-y-scroll pr-14>
     <div title-tags>
-      <span w-30 mr-6>AI应用</span>
+      <span mr-6>AI应用</span>
       <TagList v-model:active-tag="activeTag" :tag-list="filterTags" />
     </div>
 

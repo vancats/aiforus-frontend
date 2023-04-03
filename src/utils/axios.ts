@@ -3,7 +3,6 @@ import axios from 'axios'
 import router from '../router'
 import { convertObjectKeysToCamelCase, convertObjectKeysToSnakeCase, getLocalItem, removeLocalItem } from '.'
 import naiveui from '~/utils/naiveui'
-import { FILE_URL } from '~/api/common'
 
 // 定义请求响应参数，不含data
 interface Result {
@@ -34,6 +33,11 @@ const config = {
   withCredentials: true,
 }
 
+export const CHECK_LOGIN = '/user/check-login'
+export const FILE_URL = '/file/upload'
+const RES_WHITE_LIST = [CHECK_LOGIN]
+const REQ_WHITE_LIST = [FILE_URL]
+
 class RequestHttp {
   // 定义成员变量并指定类型
   service: AxiosInstance
@@ -45,7 +49,7 @@ class RequestHttp {
       (config: InternalAxiosRequestConfig) => {
         const token = getLocalItem('token') || ''
         if (token) config.headers.set('Authorization', `Bearer ${token}`)
-        if (config.url !== FILE_URL) {
+        if (!REQ_WHITE_LIST.includes(config.url || '')) {
           // 将接口的 key 转为 snake case
           config.data = convertObjectKeysToSnakeCase(config.data)
         }
@@ -60,7 +64,7 @@ class RequestHttp {
     // 响应拦截器
     this.service.interceptors.response.use(
       (response: AxiosResponse) => {
-        const { data } = response // 解构
+        const { data, config } = response // 解构
         if (data.code === RequestEnums.OVERDUE) {
           // 登录信息失效，应跳转到登录页面，并清空本地的token
           removeLocalItem('token')
@@ -68,7 +72,7 @@ class RequestHttp {
           return Promise.reject(data)
         }
         // 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）
-        if (data?.code !== RequestEnums.SUCCESS) {
+        if (data?.code !== RequestEnums.SUCCESS && !RES_WHITE_LIST.includes(config.url || '')) {
           naiveui.message.warning('请求失败')
           return Promise.reject(data)
         }

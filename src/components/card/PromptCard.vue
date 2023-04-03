@@ -1,25 +1,27 @@
 <template>
   <n-card
     class="prompt-card" card-prompt :bordered="false"
-    @click="router.push(`/detail/prompt/${promptInfo.id}`)"
+    @click="goCardDetail"
   >
-    <div flex>
-      <img :src="promptInfo.iconUrl" wh-44 rounded-l-2xl alt="123">
+    <div flex h-full>
+      <img :src="promptInfo.iconUrl" wh-44 rounded-l-2xl alt="icon">
 
-      <div p-4 w-full rounded-r-xl>
-        <div flex-center-between mb-2>
-          <div text-5.5>
-            {{ promptInfo.name }}
+      <div flex-start-between-col w-full p-4>
+        <div w-full rounded-r-xl>
+          <div flex-center-between mb-2>
+            <div text-5.5>
+              {{ promptInfo.name }}
+            </div>
+            <div flex-center>
+              <ai-card-fire />
+              <span pl-1>{{ promptInfo.pageView }}</span>
+            </div>
           </div>
-          <div flex-center>
-            <ai-card-fire />
-            <span pl-1>{{ promptInfo.pageView }}</span>
-          </div>
+
+          <n-ellipsis title-brief mb-2 :line-clamp="3" :tooltip="false">
+            {{ promptInfo.brief }}
+          </n-ellipsis>
         </div>
-
-        <n-ellipsis title-brief mb-2 :line-clamp="3" :tooltip="false">
-          {{ promptInfo.brief }}
-        </n-ellipsis>
 
         <CardTag :tags="promptInfo.tagList" />
       </div>
@@ -28,9 +30,14 @@
 </template>
 
 <script setup lang='ts'>
+import { setLocalItem } from '../../utils/index'
 import type { CardInfo } from './type'
-defineProps<{ promptInfo: CardInfo }>()
+const { promptInfo } = defineProps<{ promptInfo: CardInfo }>()
 const router = useRouter()
+const goCardDetail = () => {
+  setLocalItem('refresh', 'true')
+  router.push(`/detail/prompt/${promptInfo.id}`)
+}
 </script>
 
 <style>

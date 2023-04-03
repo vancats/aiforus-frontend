@@ -10,16 +10,23 @@ export interface ToolInfo {
   usageVideoUrl: string
   qrcodeUrl: string
   iconUrl: string
-  pageView: string
+  pageView: number
   tagList: Array<TagInfo>
   type: number
+  hot: boolean
 }
 
 export interface PromptInfo {
   id: number
   name: string
   brief: string
+  prompt: string
+  input: string
+  variableList: Array<string>
   iconUrl: string
-  promptContext: string
-  pageView: string
+  visible: boolean
+  hot: boolean
+  pageView: number
+  tagList: Array<TagInfo>
+  type: number
 }
