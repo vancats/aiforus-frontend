@@ -81,11 +81,13 @@ async function fetchPrompts() {
   }
 }
 
+const isFirst = ref(true)
 const cachedTags = ref<TagInfo[]>([])
 const filterTags = computed(() => {
-  if (activeTag.value === 0) {
+  if (prompts.value.length && tagList.value.length && isFirst.value) {
     const res = getActualTag(prompts.value, tagList.value)
     cachedTags.value = res
+    isFirst.value = false
     return res
   }
   else {

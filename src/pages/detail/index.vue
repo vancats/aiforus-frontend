@@ -6,7 +6,7 @@
       </template>
       <n-card
         card-detail h-14 :bordered="false"
-        @click="router.push('/prompt')"
+        @click="router.push(route.matched[1]?.name === 'PromptDetail' ? '/prompt' : '/tool')"
       >
         <div text="5 center" leading-13>
           更多应用

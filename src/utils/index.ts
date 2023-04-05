@@ -1,5 +1,6 @@
 import type { DataTableColumn } from 'naive-ui'
 import type { Action } from './type'
+import naiveui from '~/utils/naiveui'
 import type { TagInfo } from '~/utils/type'
 import type { CardInfo } from '~/components/card/type'
 
@@ -105,4 +106,28 @@ export function handleAllTag(tags: TagInfo[] | undefined) {
   else {
     return []
   }
+}
+
+export const clipboard = (val: string) => {
+  if (navigator.clipboard) {
+    // clipboard api 复制
+    navigator.clipboard.writeText(val)
+  }
+  else {
+    const textarea = document.createElement('textarea')
+    document.body.appendChild(textarea)
+    // 隐藏此输入框
+    textarea.style.position = 'fixed'
+    textarea.style.clip = 'rect(0 0 0 0)'
+    textarea.style.top = '10px'
+    // 赋值
+    textarea.value = val
+    // 选中
+    textarea.select()
+    // 复制
+    document.execCommand('copy', true)
+    // 移除输入框
+    document.body.removeChild(textarea)
+  }
+  naiveui.message.success('复制成功！')
 }

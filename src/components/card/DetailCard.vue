@@ -9,9 +9,12 @@
       <div flex-start-between-col w-70 h-40 p-4 rounded-r-xl>
         <div w-full>
           <div flex-center-between>
-            <div text-5.5>
+            <!-- <div text-5.5>
               {{ cardInfo.name }}
-            </div>
+            </div> -->
+            <n-ellipsis text-5.5 :line-clamp="1" :tooltip="false">
+              {{ cardInfo.name }}
+            </n-ellipsis>
             <div flex-center>
               <ai-card-fire />
               <span pl-1>{{ cardInfo.pageView }}</span>
@@ -35,7 +38,7 @@ import type { CardInfo } from './type'
 const { cardInfo } = defineProps<{ cardInfo: CardInfo }>()
 const router = useRouter()
 const goCardDetail = () => {
-  setLocalItem('refresh', 'true')
+  setLocalItem('refresh', 'false')
   router.push(`/detail/${cardInfo.type === 0 ? 'prompt' : 'tool'}/${cardInfo.id}`)
 }
 </script>

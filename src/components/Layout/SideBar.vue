@@ -15,7 +15,7 @@
     <div side-icon :style="getStyle('/prompt')" @click="router.push('/prompt')">
       <ai-side-prompt wh-8 />
       <div pt-2 text-sm>
-        Prompts
+        AI小工具
       </div>
     </div>
   </div>

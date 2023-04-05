@@ -35,7 +35,7 @@ import type { CardInfo } from './type'
 const { promptInfo } = defineProps<{ promptInfo: CardInfo }>()
 const router = useRouter()
 const goCardDetail = () => {
-  setLocalItem('refresh', 'true')
+  setLocalItem('refresh', 'false')
   router.push(`/detail/prompt/${promptInfo.id}`)
 }
 </script>

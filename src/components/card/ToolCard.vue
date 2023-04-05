@@ -34,7 +34,7 @@ const { toolInfo } = defineProps<{ toolInfo: CardInfo }>()
 const router = useRouter()
 
 const goCardDetail = () => {
-  setLocalItem('refresh', 'true')
+  setLocalItem('refresh', 'false')
   router.push(`/detail/tool/${toolInfo.id}`)
 }
 </script>

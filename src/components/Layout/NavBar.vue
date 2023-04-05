@@ -13,7 +13,7 @@
     <n-input
       ref="inputRef"
       v-model:value="searchVal"
-      px-2 py-2 rounded-2xl
+      px-2 py-2 rounded-xl
       h="12"
       placeholder="搜索" clearable
       @keyup.enter="onSearch"
@@ -150,6 +150,7 @@ const onLogin = async () => {
     qrcodeUrl.value = res?.qrcodeUrl || ''
     showModal.value = true
     checkedCnt.value = 0
+    isExpired.value = false
     startChecked()
   }
   catch (e) {

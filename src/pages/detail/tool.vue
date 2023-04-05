@@ -58,7 +58,7 @@ import { getToolInfo } from '~/api/tool'
 const route = useRoute()
 const toolInfo = ref<ToolInfo>()
 const fetchInfo = async () => {
-  const refresh = Boolean(getLocalItem('refresh'))
+  const refresh = getLocalItem('refresh') !== 'false'
   removeLocalItem('refresh')
   const res = await getToolInfo(Number(route.params.id), refresh)
   toolInfo.value = res

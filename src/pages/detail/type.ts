@@ -22,11 +22,17 @@ export interface PromptInfo {
   brief: string
   prompt: string
   input: string
-  variableList: Array<string>
+  variableList: Array<Variable>
   iconUrl: string
   visible: boolean
   hot: boolean
   pageView: number
   tagList: Array<TagInfo>
   type: number
+}
+
+export interface Variable {
+  variable: string
+  description: string
+  value: string
 }
