@@ -25,9 +25,25 @@
 
       <div mt-4 px-6 py-4 rounded-2xl bg="#37384E">
         <div v-if="promptInfo.variableList?.length">
-          <div mb-4 font-extrabold>
-            为了生成结果更准确，请填写你对AI机器人的要求
+          <div mb-4 flex-center-between>
+            <div font-extrabold>
+              为了生成结果更准确，请填写你对AI机器人的要求
+            </div>
+
+            <n-popover v-if="promptInfo.visible" trigger="hover" placement="bottom-end" max-w-100>
+              <template #trigger>
+                <div flex-center title-brief cursor>
+                  <ai-prompt-visible mr-1 />
+                  查看AI机器人预设信息
+                </div>
+              </template>
+              <div font-extrabold my-1>
+                Prompt
+              </div>
+              {{ promptInfo.prompt }}
+            </n-popover>
           </div>
+
           <n-space :size="12" vertical>
             <div v-for="(variableInfo, index) in promptInfo.variableList" :key="variableInfo.variable" flex-center>
               <div flex-center>
@@ -166,13 +182,7 @@ const getOptions = (str: string) => {
 const isConfirm = ref(false)
 const isProcessing = ref(false)
 const userVal = ref('')
-const messages = ref<string[]>([
-//   '我我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来们都会有美好的未来我我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来们都会有美好的未来我我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来们都会有美好的未来我我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来们都会有美好的未来',
-//   '我我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来们都会有美好的未来',
-//   '我我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来们都会有美好的未来',
-//   '我我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来们都会有美好的未来',
-//   '我我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来我们都会有美好的未来们都会有美好的未来',
-])
+const messages = ref<string[]>([])
 
 const promptPageEl = ref<HTMLElement | null>(null)
 const { y } = useScroll(promptPageEl, { behavior: 'smooth' })

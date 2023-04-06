@@ -41,6 +41,7 @@ export const appTheme = {
     borderFocusPrimary: 'none',
 
   },
+
   Card: {
     textColor: '#FFFFFF',
     paddingSmall: '0',
@@ -51,10 +52,6 @@ export const appTheme = {
 
   Dialog: {
     titleTextColor: '#FFFFFF',
-  },
-
-  Common: {
-    color: '#2B2C3E',
   },
 
   InternalSelection: {
@@ -78,5 +75,9 @@ export const appTheme = {
     optionColorPending: '#3F415B', // 当前鼠标悬停
     optionCheckColor: '#3A50FF', // 选中的旁边的钩
     optionColorActivePending: '#3F415B', // 选中并且悬停
+  },
+  Popover: {
+    color: '#2B2C3E',
+    textColor: '#FFFFFF',
   },
 }

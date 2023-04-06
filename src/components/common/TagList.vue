@@ -2,7 +2,7 @@
   <n-space>
     <n-tag
       v-for="tag in tagList" :key="tag.id"
-      title-tag :bordered="false"
+      title-tag :bordered="false" hover:color="#FFFFFF" hover:bg="#2B2C3E"
       :style="activeTag === tag.id ? 'color: #FFFFFF; background: #2B2C3E' : ''"
       @click="onClick(tag.id)"
     >

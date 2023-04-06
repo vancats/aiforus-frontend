@@ -4,7 +4,6 @@
       w-110 text-5xl cursor text="#A47FFA"
       @click="goHome"
     >
-      <!-- style="font-family: AlibabaPuHuiTi-ExtraBold" -->
       <n-gradient-text :gradient="{ from: '#5779FF', to: '#A47FFA', deg: '90' }">
         AI FOR US
       </n-gradient-text>

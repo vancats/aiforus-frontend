@@ -1,4 +1,3 @@
-<!-- eslint-disable no-console -->
 <template>
   <div pr-14 overflow-y-scroll>
     <template v-if="tools.length || prompts.length">
