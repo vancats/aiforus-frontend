@@ -11,7 +11,7 @@
               </div>
               <CardTag v-if="promptInfo" :tags="promptInfo.tagList" />
               <div flex-center>
-                <ai-card-fire mr-1 />
+                <ai-card-fire wh-4 mr-1 />
                 <div>{{ promptInfo.pageView }}</div>
               </div>
             </n-space>
@@ -78,30 +78,36 @@
       </div>
 
       <div v-if="isConfirm" ref="messageRef" h-150 mt-4 mb="-10" flex-start-between-col py-6 rounded-2xl relative bg="#37384E">
-        <div ref="chatEl" w-full overflow-y-scroll>
-          <div v-for="(message, index) in messages" :key="index" w-full>
-            <div mb-6 :class="index % 2 ? 'flex-start' : 'flex-start-end'">
-              <img v-if="index % 2" :src="promptInfo.iconUrl" wh-10 mx-6 rounded="100%">
-              <div w-full :class="index % 2 ? 'mr-22' : 'ml-22'" rounded-lg py-3 pl-3 pr-7 text="#001042" bg="#EFF1FC">
-                {{ message }}
-                <div v-if="index % 2" flex-center-between mt-3 text="#3A50FF">
+        <div ref="chatEl" overflow-y-scroll>
+          <div v-for="(messageInfo, index) in messages" :key="index" w-full>
+            <div v-if="messageInfo.role === 'user'" mb-6 flex-start>
+              <div w-full ml-22 rounded-lg py-3 pl-3 pr-7 text="#001042" bg="#EFF1FC">
+                {{ messageInfo.content }}
+              </div>
+              <div wh-10 mx-6 rounded="100%">
+                <ai-nav-avator wh-10 :src="promptInfo.iconUrl" />
+              </div>
+            </div>
+
+            <div v-if="messageInfo.role === 'assistant'" mb-6 flex-start-end>
+              <img :src="promptInfo.iconUrl" wh-10 mx-6 rounded="100%">
+              <div w-full mr-22 rounded-lg py-3 pl-3 pr-7 text="#001042" bg="#EFF1FC">
+                {{ messageInfo.content }}
+                <div flex-center-between mt-3 text="#3A50FF">
                   <div>
-                    <div
-                      v-if="index === messages.length - 1" flex-center cursor
-                      @click="stopOrRegenerate"
-                    >
-                      <template v-if="isProcessing">
+                    <div v-if="index === messages.length - 1" flex-center cursor>
+                      <div v-if="isProcessing" flex-center @click="stopGenerate">
                         <ai-prompt-stop mr-1 />
                         <span>
                           停止生成
                         </span>
-                      </template>
-                      <template v-else>
+                      </div>
+                      <div v-else flex-center @click="regenerate">
                         <ai-prompt-refresh mr-1 />
                         <span>
                           重新生成
                         </span>
-                      </template>
+                      </div>
                     </div>
                   </div>
                   <div flex-center>
@@ -109,16 +115,19 @@
                       <ai-prompt-continue mr-1 />
                       继续
                     </div>
-                    <div v-if="index !== messages.length - 1 || !isProcessing" flex-center cursor @click="clipboard(messages[index])">
+                    <div v-if="index !== messages.length - 1 || !isProcessing" flex-center cursor @click="clipboard(messages[index].content)">
                       <ai-prompt-copy ml-4 mr-1 />
                       复制
                     </div>
                   </div>
                 </div>
               </div>
-              <div v-if="!(index % 2)" wh-10 mx-6 rounded="100%">
-                <ai-nav-avator wh-10 :src="promptInfo.iconUrl" />
-              </div>
+            </div>
+
+            <div v-if="messageInfo.role === 'division'" mx-22 mb-6 flex-center-center>
+              <n-divider>
+                您已成功修改具体描述，以下是新的对话信息
+              </n-divider>
             </div>
           </div>
         </div>
@@ -182,7 +191,7 @@ const getOptions = (str: string) => {
 const isConfirm = ref(false)
 const isProcessing = ref(false)
 const userVal = ref('')
-const messages = ref<string[]>([])
+const messages = ref<Array<{ role: string; content: string }>>([])
 
 const promptPageEl = ref<HTMLElement | null>(null)
 const { y } = useScroll(promptPageEl, { behavior: 'smooth' })
@@ -195,14 +204,15 @@ const scrollToBottom = () => {
 }
 const scrollChatToBottom = () => {
   setTimeout(() => {
-    chatY.value += 100
+    chatY.value += 1000
   })
 }
 
 const useSocketStore = useWebSocketStore()
 const wsUri = 'ws://175.178.218.120/gpt/chat'
 const initWebSocket = (res: string) => {
-  useSocketStore.ws = new WebSocket(wsUri)
+  const headers = getLocalItem('token') ? [`Bearer ${getLocalItem('token')}`] : []
+  useSocketStore.ws = new WebSocket(wsUri, headers)
   useSocketStore.ws.onopen = () => {
     useSocketStore.ws?.send(res)
   }
@@ -210,11 +220,11 @@ const initWebSocket = (res: string) => {
   useSocketStore.ws.onmessage = (res) => {
     if (JSON.parse(res.data) === '#Done#') {
       isProcessing.value = false
-      return
     }
-    if (isProcessing.value) {
+    else {
+      isProcessing.value = true
+      messages.value[messages.value.length - 1].content += JSON.parse(res.data)
       scrollChatToBottom()
-      messages.value[messages.value.length - 1] += JSON.parse(res.data)
     }
   }
 
@@ -231,7 +241,7 @@ function sendMessage() {
   if (isProcessing.value) return
   isProcessing.value = true
   const res = processData()
-  messages.value.push('')
+  messages.value.push({ role: 'assistant', content: '' })
   if (!useSocketStore.ws || useSocketStore.ws.readyState !== 1) {
     initWebSocket(res)
   }
@@ -242,10 +252,23 @@ function sendMessage() {
 
 const startChat = async () => {
   isConfirm.value = true
-  messages.value.push(userPrompt.value || promptInfo.value!.input)
+
+  if (messages.value.length) {
+    messages.value.push({
+      role: 'division',
+      content: '您已成功修改具体描述，以下是新的对话信息',
+    })
+  }
+
+  messages.value.push({
+    role: 'user',
+    content: userPrompt.value || promptInfo.value!.input,
+  })
+
+  userVal.value = ''
+
   sendMessage()
 
-  // TODO Hack
   scrollToBottom()
 }
 
@@ -254,16 +277,18 @@ const doContinue = () => {
   sendMessage()
 }
 
-const stopOrRegenerate = () => {
+const stopGenerate = () => {
   useSocketStore.ws?.close()
-  if (isProcessing.value) {
-    isProcessing.value = false
-  }
-  else {
+  isProcessing.value = false
+}
+
+const regenerate = () => {
+  useSocketStore.ws?.close()
+  setTimeout(() => {
     messages.value.pop()
     userVal.value = ''
     sendMessage()
-  }
+  })
 }
 
 function processData() {
@@ -275,20 +300,19 @@ function processData() {
   })
 
   if (userVal.value) {
-    messages.value.push(userVal.value)
+    messages.value.push({
+      role: 'user',
+      content: userVal.value,
+    })
     userVal.value = ''
   }
 
   const context = []
-  for (let i = messages.value.length - 1; i > 0 && i > messages.value.length - 5; i--) {
-    const role = i % 2 ? 'assistant' : 'user'
-    context.unshift({
-      role,
-      content: messages.value[i],
-    })
+  for (let i = messages.value.length - 1; i > 0 && i > messages.value.length - 5 && messages.value[i].role !== 'division'; i--) {
+    context.unshift(messages.value[i])
   }
 
-  context.unshift({ role: 'user', content: messages.value[0] })
+  context.unshift(messages.value[0])
 
   return JSON.stringify({
     prompt_id: promptInfo.value!.id,

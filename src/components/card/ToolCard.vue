@@ -3,12 +3,14 @@
     class="tool-card" card-tool :bordered="false"
     @click="goCardDetail"
   >
-    <img :src="toolInfo.iconUrl" h-36 rounded-t-2xl alt="123">
+    <img :src="toolInfo.iconUrl" h-36 w-50 object-cover rounded-t-2xl alt="123">
 
     <div h-40 p-4 pt-2.5 rounded-b-xl flex-start-between-col>
       <div>
-        <div text-5.5>
-          {{ toolInfo.name }}
+        <div>
+          <n-ellipsis text-5.5 :line-clamp="1" :tooltip="false">
+            {{ toolInfo.name }}
+          </n-ellipsis>
         </div>
 
         <n-ellipsis title-brief :line-clamp="3" :tooltip="false">
@@ -16,10 +18,10 @@
         </n-ellipsis>
       </div>
 
-      <div flex-center-between mt-2 w-full>
+      <div flex-center-between w-full>
         <CardTag :tags="toolInfo.tagList" />
         <div flex-center>
-          <ai-card-fire />
+          <ai-card-fire wh-4 />
           <span pl-1>{{ toolInfo.pageView }}</span>
         </div>
       </div>

@@ -11,7 +11,7 @@
               </div>
               <CardTag v-if="toolInfo" :tags="toolInfo.tagList" />
               <div flex-center>
-                <ai-card-fire mr-1 />
+                <ai-card-fire wh-4 mr-1 />
                 <div>{{ toolInfo.pageView }}</div>
               </div>
             </n-space>

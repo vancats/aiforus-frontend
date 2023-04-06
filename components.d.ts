@@ -34,6 +34,7 @@ declare module '@vue/runtime-core' {
     NCard: typeof import('naive-ui')['NCard']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
+    NDivider: typeof import('naive-ui')['NDivider']
     NEllipsis: typeof import('naive-ui')['NEllipsis']
     NGradientText: typeof import('naive-ui')['NGradientText']
     NInput: typeof import('naive-ui')['NInput']

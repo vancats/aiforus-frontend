@@ -4,20 +4,19 @@
     @click="goCardDetail"
   >
     <div flex>
-      <img :src="cardInfo.iconUrl" w-30 h-30 rounded-l-2xl alt="123">
+      <img :src="cardInfo.iconUrl" w-37 h-37 rounded-l-2xl alt="123">
 
-      <div flex-start-between-col w-70 h-40 p-4 rounded-r-xl>
+      <div flex-start-between-col w-full h-37 px-4 py-2 rounded-r-xl>
         <div w-full>
           <div flex-center-between>
-            <!-- <div text-5.5>
-              {{ cardInfo.name }}
-            </div> -->
             <n-ellipsis text-5.5 :line-clamp="1" :tooltip="false">
               {{ cardInfo.name }}
             </n-ellipsis>
-            <div flex-center>
-              <ai-card-fire />
-              <span pl-1>{{ cardInfo.pageView }}</span>
+            <div flex-center-end w-15 flex-shrink-0>
+              <ai-card-fire wh-4 mr-1 />
+              <div>
+                {{ cardInfo.pageView }}
+              </div>
             </div>
           </div>
 

@@ -1,14 +1,5 @@
 <template>
   <div text-center title-brief py-4>
-    <div>
-      免责协议《免责协议免责协议免责协议免责协议》
-    </div>
-    <div>
-      备案号：12321312321
-    </div>
+    备案号：京ICP备2021032068号-1
   </div>
 </template>
-
-<script setup lang='ts'>
-
-</script>

@@ -80,4 +80,8 @@ export const appTheme = {
     color: '#2B2C3E',
     textColor: '#FFFFFF',
   },
+  Divider: {
+    textColor: '#FFFFFF',
+    color: 'rgba(255, 255, 255, 0.5)',
+  },
 }

@@ -5,9 +5,9 @@
       <TagList v-model:active-tag="activeTag" :tag-list="filterTags" />
     </div>
 
-    <div tool-layout>
+    <div prompt-layout>
       <template v-for="tool in tools" :key="tool.id">
-        <ToolCard :tool-info="tool" />
+        <DetailCard :card-info="tool" />
       </template>
     </div>
   </div>

@@ -4,7 +4,7 @@
       热门应用
     </div>
 
-    <div flex overflow-x-scroll>
+    <div flex overflow-x-scroll overflow-y-hidden>
       <template v-for="tool in tools.slice(0, 20)" :key="tool.id">
         <ToolCard :tool-info="tool" />
       </template>
@@ -27,7 +27,7 @@
 
     <div prompt-layout>
       <template v-for="prompt in prompts" :key="prompt.id">
-        <PromptCard :prompt-info="prompt" />
+        <DetailCard :card-info="prompt" />
       </template>
     </div>
 

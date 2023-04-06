@@ -2,7 +2,7 @@
   <div flex pb-4 pr-12 overflow-y-scroll>
     <div w-140 mr-4 pr-2 overflow-y-scroll>
       <template v-for="card in cards.slice(0, 20)" :key="card.id">
-        <DetailCard :card-info="card" />
+        <DetailCard mb-4 :card-info="card" />
       </template>
       <n-card
         card-detail h-14 :bordered="false"

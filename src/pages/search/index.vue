@@ -5,7 +5,7 @@
         AI应用
       </div>
       <template v-if="tools.length">
-        <div flex overflow-x-scroll>
+        <div flex overflow-x-scroll overflow-y-hidden>
           <template v-for="tool in tools.slice(0, 20)" :key="tool.id">
             <ToolCard :tool-info="tool" />
           </template>

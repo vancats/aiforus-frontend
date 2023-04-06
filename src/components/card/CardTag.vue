@@ -8,8 +8,5 @@
 
 <script setup lang='ts'>
 import type { TagInfo } from '~/utils/type'
-
-defineProps<{
-  tags: Array<TagInfo>
-}>()
+defineProps<{ tags: Array<TagInfo> }>()
 </script>

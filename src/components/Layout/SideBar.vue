@@ -25,9 +25,7 @@
 const router = useRouter()
 const route = useRoute()
 const getStyle = (path: string) => {
-  if (path === route.path) {
-    return 'color: #FFFFFF; background: linear-gradient(#5779FF, #A47FFA)'
-  }
-  return ''
+  if (path !== route.path) return ''
+  return 'color: #FFFFFF; background: linear-gradient(#5779FF, #A47FFA)'
 }
 </script>
