@@ -1,6 +1,6 @@
 <template>
   <div flex>
-    <n-tag v-for="tag in tags" :key="tag.id" class="tag-card" card-tag :bordered="false">
+    <n-tag v-for="tag in tags" :key="tag.id" card-tag :bordered="false">
       {{ tag.name }}
     </n-tag>
   </div>

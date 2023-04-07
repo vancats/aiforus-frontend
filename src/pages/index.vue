@@ -41,9 +41,11 @@ import { getToolCards } from '~/api/tool'
 import type { CardInfo } from '~/components/card/type'
 import type { TagInfo } from '~/utils/type'
 import { getActualTag } from '~/utils'
+import { useSearchStore } from '~/store'
 defineOptions({ name: 'IndexPage' })
 
 const router = useRouter()
+const useStore = useSearchStore()
 
 const tagList = ref<TagInfo[]>([])
 const fetchTags = async () => {
@@ -57,7 +59,11 @@ const fetchTags = async () => {
 }
 
 const activeTag = ref(0)
-watch(() => activeTag.value, () => fetchPrompts())
+useStore.tagId = 0
+watch(() => activeTag.value, () => {
+  fetchPrompts()
+  useStore.tagId = activeTag.value
+})
 
 const tools = ref<CardInfo[]>([])
 async function fetchTools() {

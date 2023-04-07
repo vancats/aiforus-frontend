@@ -65,7 +65,11 @@ const fetchTags = async () => {
 }
 
 const activeTag = ref(0)
-watch(() => activeTag.value, () => fetchPrompts())
+useStore.tagId = 0
+watch(() => activeTag.value, () => {
+  fetchPrompts()
+  useStore.tagId = activeTag.value
+})
 
 const tools = ref<CardInfo[]>([])
 async function fetchTools() {

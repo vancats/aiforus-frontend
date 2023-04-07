@@ -1,6 +1,6 @@
 <template>
   <n-card
-    class="tool-card" card-tool :bordered="false"
+    class="group" card-tool :bordered="false"
     @click="goCardDetail"
   >
     <img :src="toolInfo.iconUrl" h-36 w-50 object-cover rounded-t-2xl alt="123">
@@ -40,9 +40,3 @@ const goCardDetail = () => {
   router.push(`/detail/tool/${toolInfo.id}`)
 }
 </script>
-
-<style>
-.tool-card:hover .tag-card{
-    background: #3D3F58;
-}
-</style>

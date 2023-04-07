@@ -1,6 +1,6 @@
 <template>
   <n-card
-    class="prompt-card" card-prompt :bordered="false"
+    class="group" card-prompt :bordered="false"
     @click="goCardDetail"
   >
     <div flex h-full>
@@ -42,9 +42,3 @@ const goCardDetail = () => {
   router.push(`/detail/prompt/${promptInfo.id}`)
 }
 </script>
-
-<style>
-.prompt-card:hover .tag-card{
-    background: #3D3F58;
-}
-</style>

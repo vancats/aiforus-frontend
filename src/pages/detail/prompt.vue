@@ -69,6 +69,7 @@
           type="textarea" :placeholder="promptInfo.input"
           my-4 bg="#3F415B" rounded-xl
           :autosize="{ minRows: 5, maxRows: 5 }"
+          @click="showText"
         />
         <div flex-center-end>
           <n-button type="primary" :disabled="isProcessing" px-7 @click="startChat">
@@ -77,12 +78,14 @@
         </div>
       </div>
 
-      <div v-if="isConfirm" ref="messageRef" h-150 mt-4 mb="-10" flex-start-between-col py-6 rounded-2xl relative bg="#37384E">
-        <div ref="chatEl" overflow-y-scroll>
+      <div v-if="isConfirm" ref="messageRef" h-150 w-full mt-4 mb="-10" flex-start-between-col py-6 rounded-2xl relative bg="#37384E">
+        <div ref="chatEl" w-full overflow-y-scroll>
           <div v-for="(messageInfo, index) in messages" :key="index" w-full>
             <div v-if="messageInfo.role === 'user'" mb-6 flex-start>
               <div w-full ml-22 rounded-lg py-3 pl-3 pr-7 text="#001042" bg="#EFF1FC">
-                {{ messageInfo.content }}
+                <span style="white-space: pre-wrap;">
+                  {{ messageInfo.content }}
+                </span>
               </div>
               <div wh-10 mx-6 rounded="100%">
                 <ai-nav-avator wh-10 :src="promptInfo.iconUrl" />
@@ -92,7 +95,10 @@
             <div v-if="messageInfo.role === 'assistant'" mb-6 flex-start-end>
               <img :src="promptInfo.iconUrl" wh-10 mx-6 rounded="100%">
               <div w-full mr-22 rounded-lg py-3 pl-3 pr-7 text="#001042" bg="#EFF1FC">
-                {{ messageInfo.content }}
+                <span style="white-space: pre-wrap;">
+                  {{ messageInfo.content }}
+                </span>
+
                 <div flex-center-between mt-3 text="#3A50FF">
                   <div>
                     <div v-if="index === messages.length - 1" flex-center cursor>
@@ -132,25 +138,39 @@
           </div>
         </div>
 
-        <div w-full h-11 px-5>
+        <div w-full px-5>
           <n-input
             v-model:value="userVal"
-            h-11 py-1
+            type="textarea"
             :disabled="isProcessing"
             :placeholder="isProcessing ? '内容正在加速生成...' : '请输入'"
-            @keyup.enter="sendMessage"
+            :autosize="{ minRows: 1, maxRows: 5 }"
+            @keyup.enter="onSendMessage"
           >
-            >
             <template #suffix>
-              <ai-prompt-send
-                cursor
-                @click="sendMessage"
-              />
+              <ai-prompt-send cursor @click="sendMessage" />
             </template>
           </n-input>
         </div>
       </div>
     </div>
+
+    <n-modal v-model:show="showWechat">
+      <n-card
+        style="width: 400px; background: #2b2c3d; border-radius: 12px"
+        size="huge" :bordered="false" role="dialog" aria-modal="true" closable
+        :on-close="() => showWechat = false"
+      >
+        <template #header>
+          <div flex-center>
+            <ai-nav-warning mr-2 />
+            次数不足
+          </div>
+        </template>
+        您今日的 3{{ getLocalItem('token') ? '0' : '' }} 次使用次数已经用完，请{{ getLocalItem('token') ? '' : '登陆或' }}扫描群二维码，联系群管理员获取更多次数
+        <img wh-60 m-auto my-6 :src="avator">
+      </n-card>
+    </n-modal>
   </template>
 </template>
 
@@ -159,6 +179,7 @@ import { clipboard, getLocalItem, removeLocalItem } from '../../utils/index'
 import { useWebSocketStore } from '../../store/index'
 import type { PromptInfo } from './type'
 import { getPromptInfo } from '~/api/prompt'
+import avator from '~/assets/images/avatar.png'
 
 const route = useRoute()
 
@@ -166,6 +187,7 @@ const promptInfo = ref<PromptInfo>()
 
 const selectValueArr = ref<string[]>([])
 const userPrompt = ref('')
+const showWechat = ref(false)
 const fetchInfo = async () => {
   const refresh = getLocalItem('refresh') !== 'false'
   removeLocalItem('refresh')
@@ -203,27 +225,36 @@ const scrollToBottom = () => {
   })
 }
 const scrollChatToBottom = () => {
-  setTimeout(() => {
-    chatY.value += 1000
-  })
+  chatY.value += 1000
 }
 
 const useSocketStore = useWebSocketStore()
-const wsUri = 'ws://175.178.218.120/gpt/chat'
 const initWebSocket = (res: string) => {
-  const headers = getLocalItem('token') ? [`Bearer ${getLocalItem('token')}`] : []
-  useSocketStore.ws = new WebSocket(wsUri, headers)
+  const token = getLocalItem('token')
+  let wsUri = 'ws://175.178.218.120/gpt/chat'
+  if (token) {
+    wsUri += `?token=${token}`
+  }
+  useSocketStore.ws = new WebSocket(wsUri)
   useSocketStore.ws.onopen = () => {
     useSocketStore.ws?.send(res)
   }
 
+  let prev = ''
   useSocketStore.ws.onmessage = (res) => {
-    if (JSON.parse(res.data) === '#Done#') {
+    if (res.data === '#DONE#') {
       isProcessing.value = false
     }
+    else if (res.data === '#NOUSAGE#') {
+      isProcessing.value = false
+      showWechat.value = true
+      messages.value.pop()
+    }
     else {
+      if (prev === '\n' && res.data === '\n') return
+      prev = res.data
       isProcessing.value = true
-      messages.value[messages.value.length - 1].content += JSON.parse(res.data)
+      messages.value[messages.value.length - 1].content += res.data
       scrollChatToBottom()
     }
   }
@@ -234,6 +265,8 @@ const initWebSocket = (res: string) => {
 
   useSocketStore.ws.onerror = (e) => {
     isProcessing.value = false
+    showWechat.value = true
+    messages.value.pop()
   }
 }
 
@@ -265,11 +298,19 @@ const startChat = async () => {
     content: userPrompt.value || promptInfo.value!.input,
   })
 
+  showText()
+
   userVal.value = ''
 
   sendMessage()
 
   scrollToBottom()
+}
+
+const onSendMessage = (e: KeyboardEvent) => {
+  if (!e.shiftKey) {
+    sendMessage()
+  }
 }
 
 const doContinue = () => {
@@ -318,6 +359,7 @@ function processData() {
     prompt_id: promptInfo.value!.id,
     variable_list: variableList,
     context,
+    token: getLocalItem('token') || '',
   })
 }
 
@@ -327,6 +369,12 @@ watch(() => route.params, () => {
   messages.value = []
   fetchInfo()
 })
+
+function showText() {
+  if (!userPrompt.value) {
+    userPrompt.value = promptInfo.value?.input || ''
+  }
+}
 </script>
 
 <style>

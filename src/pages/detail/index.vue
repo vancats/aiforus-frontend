@@ -21,15 +21,18 @@
 import { getPromptCards } from '~/api/prompt'
 import { getToolCards } from '~/api/tool'
 import type { CardInfo } from '~/components/card/type'
-defineOptions({ name: 'DetailPage' })
-const router = useRouter()
+import { useSearchStore } from '~/store'
 
+defineOptions({ name: 'DetailPage' })
+
+const useStore = useSearchStore()
+const router = useRouter()
 const route = useRoute()
 const cards = ref<CardInfo[]>([])
 async function fetchCards() {
   try {
     const action = route.matched[1]?.name === 'PromptDetail' ? getPromptCards : getToolCards
-    const data = await action()
+    const data = await action(useStore.tagId, useStore.searchVal)
     cards.value = data || []
   }
   catch (e) {

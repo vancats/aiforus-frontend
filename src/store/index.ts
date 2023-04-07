@@ -4,7 +4,8 @@ import { getLocalItem } from '~/utils'
 export const useSearchStore = defineStore('search', () => {
   const searchVal = ref('')
   const username = ref(getLocalItem('username') || '')
-  return { searchVal, username }
+  const tagId = ref(0)
+  return { searchVal, username, tagId }
 })
 
 export const useWebSocketStore = defineStore('webSocket', () => {

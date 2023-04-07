@@ -1,13 +1,8 @@
 <template>
   <div flex-center-between-row mb-8 pr-14>
-    <span
-      w-110 text-5xl cursor text="#A47FFA"
-      @click="goHome"
-    >
-      <n-gradient-text :gradient="{ from: '#5779FF', to: '#A47FFA', deg: '90' }">
-        AI FOR US
-      </n-gradient-text>
-    </span>
+    <div w-60 h-10 mr-6>
+      <ai-nav-title w-60 h-10 @click="goHome" />
+    </div>
 
     <n-input
       ref="inputRef"

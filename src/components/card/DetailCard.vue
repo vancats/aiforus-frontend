@@ -1,6 +1,6 @@
 <template>
   <n-card
-    class="detail-card" card-detail :bordered="false"
+    class="group" card-detail :bordered="false"
     @click="goCardDetail"
   >
     <div flex>
@@ -12,7 +12,7 @@
             <n-ellipsis text-5.5 :line-clamp="1" :tooltip="false">
               {{ cardInfo.name }}
             </n-ellipsis>
-            <div flex-center-end w-15 flex-shrink-0>
+            <div flex-center-end flex-shrink-0 w-15>
               <ai-card-fire wh-4 mr-1 />
               <div>
                 {{ cardInfo.pageView }}
@@ -41,9 +41,3 @@ const goCardDetail = () => {
   router.push(`/detail/${cardInfo.type === 0 ? 'prompt' : 'tool'}/${cardInfo.id}`)
 }
 </script>
-
-<style>
-.detail-card:hover .tag-card{
-    background: #3D3F58;
-}
-</style>
