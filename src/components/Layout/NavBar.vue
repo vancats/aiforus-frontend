@@ -66,13 +66,14 @@
 
 <script setup lang="ts">
 import { removeLocalItem } from '../../utils/index'
-import { useNormalStore } from '~/store'
+import { useNormalStore, useWebSocketStore } from '~/store'
 import naiveui from '~/utils/naiveui'
 defineOptions({ name: 'NavBar' })
 
 const router = useRouter()
 const goHome = () => router.push('/')
 const useStore = useNormalStore()
+const useWebSocket = useWebSocketStore()
 const searchVal = ref('')
 
 const onSearch = () => {
@@ -85,6 +86,7 @@ const logout = () => {
   removeLocalItem('token')
   removeLocalItem('username')
   naiveui.message.success('您已退出登陆')
+  useWebSocket.ws?.close()
   useStore.username = ''
   showLogoutModal.value = false
 }

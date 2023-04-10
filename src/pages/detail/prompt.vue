@@ -225,20 +225,20 @@ const scrollChatToBottom = () => {
   chatY.value += 1000
 }
 
-const useSocketStore = useWebSocketStore()
+const useWebSocket = useWebSocketStore()
 const initWebSocket = (res: string) => {
   const token = getLocalItem('token')
   let wsUri = 'ws://175.178.218.120/gpt/chat'
   if (token) {
     wsUri += `?token=${token}`
   }
-  useSocketStore.ws = new WebSocket(wsUri)
-  useSocketStore.ws.onopen = () => {
-    useSocketStore.ws?.send(res)
+  useWebSocket.ws = new WebSocket(wsUri)
+  useWebSocket.ws.onopen = () => {
+    useWebSocket.ws?.send(res)
   }
 
   let prev = ''
-  useSocketStore.ws.onmessage = (res) => {
+  useWebSocket.ws.onmessage = (res) => {
     if (res.data === '#DONE#') {
       isProcessing.value = false
     }
@@ -263,11 +263,11 @@ const initWebSocket = (res: string) => {
     }
   }
 
-  useSocketStore.ws.onclose = (e) => {
+  useWebSocket.ws.onclose = (e) => {
     isProcessing.value = false
   }
 
-  useSocketStore.ws.onerror = (e) => {
+  useWebSocket.ws.onerror = (e) => {
     isProcessing.value = false
     messages.value.pop()
     const token = getLocalItem('token') || ''
@@ -284,11 +284,11 @@ function sendMessage() {
   if (isProcessing.value) return
   const res = processData()
   messages.value.push({ role: 'assistant', content: '' })
-  if (!useSocketStore.ws || useSocketStore.ws.readyState !== 1) {
+  if (!useWebSocket.ws || useWebSocket.ws.readyState !== 1) {
     initWebSocket(res)
   }
   else {
-    useSocketStore.ws.send(res)
+    useWebSocket.ws.send(res)
   }
   setTimeout(() => {
     isProcessing.value = true
@@ -331,12 +331,12 @@ const doContinue = () => {
 }
 
 const stopGenerate = () => {
-  useSocketStore.ws?.close()
+  useWebSocket.ws?.close()
   isProcessing.value = false
 }
 
 const regenerate = () => {
-  useSocketStore.ws?.close()
+  useWebSocket.ws?.close()
   setTimeout(() => {
     messages.value.pop()
     userVal.value = ''
@@ -379,6 +379,7 @@ watch(() => route.params, () => {
   isConfirm.value = false
   userPrompt.value = ''
   messages.value = []
+  useWebSocket.ws?.close()
   fetchInfo()
 })
 
