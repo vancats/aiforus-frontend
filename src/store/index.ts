@@ -1,11 +1,16 @@
 import { defineStore } from 'pinia'
 import { getLocalItem } from '~/utils'
 
-export const useSearchStore = defineStore('search', () => {
+export const useNormalStore = defineStore('search', () => {
   const searchVal = ref('')
   const username = ref(getLocalItem('username') || '')
   const tagId = ref(0)
-  return { searchVal, username, tagId }
+
+  const showLoginModal = ref(false)
+
+  const showDrainageModal = ref(true)
+  const wechatQRCode = ref('')
+  return { searchVal, username, tagId, showLoginModal, showDrainageModal, wechatQRCode }
 })
 
 export const useWebSocketStore = defineStore('webSocket', () => {

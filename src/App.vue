@@ -12,11 +12,26 @@
         <NavBar />
         <RouterView />
       </div>
+      <DrainageModal />
+      <LoginModal />
     </main>
   </n-config-provider>
 </template>
 
 <script setup lang="ts">
-import { appTheme } from './config/themeOverrides'
+import { useNormalStore } from '~/store'
+import { appTheme } from '~/config/themeOverrides'
+import { getQRCode } from '~/api/common'
 defineOptions({ name: 'AppPage' })
+
+const useStore = useNormalStore()
+
+onMounted(() => {
+  getQRCode().then(
+    res => {
+      if (res?.qrcodeUrl) {
+        useStore.wechatQRCode = res.qrcodeUrl
+      }
+    })
+})
 </script>

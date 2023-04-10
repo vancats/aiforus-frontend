@@ -10,7 +10,7 @@ export const getPromptTags = async () => {
 }
 
 export const getPromptCards = async (tagId = 0, context = '') => {
-  return await axios.post<Array<CardInfo>>('/card/query', { context, tagId, type: 0 })
+  return await axios.post<Array<CardInfo>>('/card/query', { context, tagId, feed: 1, type: 0 })
     .then(res => res?.data)
 }
 

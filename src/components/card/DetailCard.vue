@@ -15,7 +15,7 @@
             <div flex-center-end flex-shrink-0 w-15>
               <ai-card-fire wh-4 mr-1 />
               <div>
-                {{ cardInfo.pageView }}
+                {{ cardInfo.heat }}
               </div>
             </div>
           </div>

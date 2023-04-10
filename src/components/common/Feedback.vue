@@ -34,11 +34,11 @@
 </template>
 
 <script setup lang='ts'>
-import { useSearchStore } from '~/store'
+import { useNormalStore } from '~/store'
 import { searchFeedback } from '~/api/feedback'
 import naiveui from '~/utils/naiveui'
 defineProps<{ typeName: string }>()
-const useStore = useSearchStore()
+const useStore = useNormalStore()
 const showModal = ref(false)
 
 const feedbackVal = ref('')

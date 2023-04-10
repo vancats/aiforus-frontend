@@ -33,42 +33,10 @@
       </div>
     </n-popover>
 
-    <n-button v-else type="primary" ml-10 h-12 p-4 @click="onLogin">
+    <n-button v-else type="primary" ml-10 h-12 p-4 @click="useStore.showLoginModal = true">
       登录/注册
     </n-button>
   </div>
-
-  <n-modal
-    v-model:show="showModal" preset="card" size="huge" :bordered="false"
-    w-84 h-95 rounded-2xl :style="{ background: '#3D3E59' }"
-  >
-    <template #header>
-      <div flex-center-center>
-        <ai-nav-wechat />
-        <div text-5.5 ml-2>
-          微信扫码登录
-        </div>
-      </div>
-    </template>
-
-    <div flex-center-center wh-64 relative m-auto text-white>
-      <img :src="qrcodeUrl" wh-64 rounded-2xl alt="加载二维码失败，请刷新">
-      <div v-if="isExpired" absolute flex-center-center wh-64 rounded-2xl bg="#000" bg-opacity-70>
-        <span i-mingcute:refresh-1-fill wh-16 cursor @click="onLogin" />
-      </div>
-    </div>
-
-    <template #footer>
-      <div text-center>
-        <span v-if="isExpired">
-          二维码已过期，点击刷新按扭重新生成
-        </span>
-        <span v-else>
-          登录畅享更多AI应用
-        </span>
-      </div>
-    </template>
-  </n-modal>
 
   <n-modal v-model:show="showLogoutModal">
     <n-card
@@ -98,58 +66,18 @@
 
 <script setup lang="ts">
 import { removeLocalItem } from '../../utils/index'
-import { checkLoginStatus, login } from '~/api/login'
-import { useSearchStore } from '~/store'
-import { setLocalItem } from '~/utils'
+import { useNormalStore } from '~/store'
 import naiveui from '~/utils/naiveui'
 defineOptions({ name: 'NavBar' })
 
 const router = useRouter()
 const goHome = () => router.push('/')
-const useStore = useSearchStore()
+const useStore = useNormalStore()
 const searchVal = ref('')
 
 const onSearch = () => {
   useStore.searchVal = searchVal.value
   router.push('/search')
-}
-
-const showModal = ref(false)
-const qrcodeUrl = ref('')
-const isExpired = ref(false)
-const checkedCnt = ref(0)
-
-const startChecked = async () => {
-  checkedCnt.value++
-  const res = await checkLoginStatus()
-  if (res.data?.token) {
-    setLocalItem('token', res.data.token)
-    setLocalItem('username', res.data.userId)
-    showModal.value = false
-    useStore.username = res.data.userId
-  }
-  else if (res.code === 400 && checkedCnt.value < 16) {
-    setTimeout(() => {
-      startChecked()
-    }, 2000)
-  }
-  else {
-    isExpired.value = true
-  }
-}
-
-const onLogin = async () => {
-  try {
-    const res = await login()
-    qrcodeUrl.value = res?.qrcodeUrl || ''
-    showModal.value = true
-    checkedCnt.value = 0
-    isExpired.value = false
-    startChecked()
-  }
-  catch (e) {
-    console.warn(e)
-  }
 }
 
 const showLogoutModal = ref(false)

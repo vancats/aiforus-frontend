@@ -2,8 +2,9 @@
 .vite-ssg-dist
 .vite-ssg-temp
 *.local
-dist
+# dist
 dist-ssr
 node_modules
 .idea/
 *.log
+distFolder/

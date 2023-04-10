@@ -7,3 +7,8 @@ export const uploadFile = async (formData: FormData) => {
     },
   }).then(res => res?.data)
 }
+
+export const getQRCode = async () => {
+  return await axios.get<{ qrcodeUrl: string }>('/qrcode/community/query')
+    .then(res => res?.data)
+}

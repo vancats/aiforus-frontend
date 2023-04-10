@@ -12,7 +12,7 @@
               <CardTag v-if="promptInfo" :tags="promptInfo.tagList" />
               <div flex-center>
                 <ai-card-fire wh-4 mr-1 />
-                <div>{{ promptInfo.pageView }}</div>
+                <div>{{ promptInfo.heat }}</div>
               </div>
             </n-space>
 
@@ -23,28 +23,26 @@
         </div>
       </div>
 
-      <div mt-4 px-6 py-4 rounded-2xl bg="#37384E">
-        <div v-if="promptInfo.variableList?.length">
-          <div mb-4 flex-center-between>
-            <div font-extrabold>
-              为了生成结果更准确，请填写你对AI机器人的要求
+      <div mt-4 px-6 py-4 rounded-2xl bg="#37384E" relative>
+        <n-popover v-if="promptInfo.visible" trigger="hover" placement="bottom-end" max-w-100>
+          <template #trigger>
+            <div absolute top-4 right-4 flex-center title-brief cursor>
+              <ai-prompt-visible mr-1 />
+              查看AI机器人预设信息
             </div>
+          </template>
+          <div font-extrabold my-1>
+            Prompt
+          </div>
+          {{ promptInfo.prompt }}
+        </n-popover>
 
-            <n-popover v-if="promptInfo.visible" trigger="hover" placement="bottom-end" max-w-100>
-              <template #trigger>
-                <div flex-center title-brief cursor>
-                  <ai-prompt-visible mr-1 />
-                  查看AI机器人预设信息
-                </div>
-              </template>
-              <div font-extrabold my-1>
-                Prompt
-              </div>
-              {{ promptInfo.prompt }}
-            </n-popover>
+        <div v-if="promptInfo.variableList?.length">
+          <div mb-4 font-extrabold>
+            为了生成结果更准确，请填写你对AI机器人的要求
           </div>
 
-          <n-space :size="12" vertical>
+          <n-space :size="12" vertical mb-4>
             <div v-for="(variableInfo, index) in promptInfo.variableList" :key="variableInfo.variable" flex-center>
               <div flex-center>
                 <span mr-4>{{ variableInfo.description }}</span>
@@ -61,7 +59,7 @@
           </n-space>
         </div>
 
-        <div font-extrabold mt-4>
+        <div font-extrabold>
           为了生成结果更准确，请填写你对AI机器人的具体描述
         </div>
         <n-input
@@ -155,11 +153,11 @@
       </div>
     </div>
 
-    <n-modal v-model:show="showWechat">
+    <n-modal v-model:show="showModal">
       <n-card
         style="width: 400px; background: #2b2c3d; border-radius: 12px"
         size="huge" :bordered="false" role="dialog" aria-modal="true" closable
-        :on-close="() => showWechat = false"
+        @close="() => showModal = false"
       >
         <template #header>
           <div flex-center>
@@ -167,8 +165,8 @@
             次数不足
           </div>
         </template>
-        您今日的 3{{ getLocalItem('token') ? '0' : '' }} 次使用次数已经用完，请{{ getLocalItem('token') ? '' : '登陆或' }}扫描群二维码，联系群管理员获取更多次数
-        <img wh-60 m-auto my-6 :src="avator">
+        您今日的 30 次使用次数已经用完,请扫描群二维码，联系群管理员获取更多次数
+        <img wh-60 m-auto my-6 :src="useStore.wechatQRCode" alt="二维码">
       </n-card>
     </n-modal>
   </template>
@@ -176,18 +174,17 @@
 
 <script setup lang='ts'>
 import { clipboard, getLocalItem, removeLocalItem } from '../../utils/index'
-import { useWebSocketStore } from '../../store/index'
+import { useNormalStore, useWebSocketStore } from '../../store/index'
 import type { PromptInfo } from './type'
 import { getPromptInfo } from '~/api/prompt'
-import avator from '~/assets/images/avatar.png'
 
 const route = useRoute()
-
+const useStore = useNormalStore()
 const promptInfo = ref<PromptInfo>()
 
 const selectValueArr = ref<string[]>([])
 const userPrompt = ref('')
-const showWechat = ref(false)
+const showModal = ref(false)
 const fetchInfo = async () => {
   const refresh = getLocalItem('refresh') !== 'false'
   removeLocalItem('refresh')
@@ -247,8 +244,15 @@ const initWebSocket = (res: string) => {
     }
     else if (res.data === '#NOUSAGE#') {
       isProcessing.value = false
-      showWechat.value = true
       messages.value.pop()
+
+      const token = getLocalItem('token') || ''
+      if (token) {
+        showModal.value = true
+      }
+      else {
+        useStore.showLoginModal = true
+      }
     }
     else {
       if (prev === '\n' && res.data === '\n') return
@@ -265,14 +269,19 @@ const initWebSocket = (res: string) => {
 
   useSocketStore.ws.onerror = (e) => {
     isProcessing.value = false
-    showWechat.value = true
     messages.value.pop()
+    const token = getLocalItem('token') || ''
+    if (token) {
+      showModal.value = true
+    }
+    else {
+      useStore.showLoginModal = true
+    }
   }
 }
 
 function sendMessage() {
   if (isProcessing.value) return
-  isProcessing.value = true
   const res = processData()
   messages.value.push({ role: 'assistant', content: '' })
   if (!useSocketStore.ws || useSocketStore.ws.readyState !== 1) {
@@ -281,6 +290,9 @@ function sendMessage() {
   else {
     useSocketStore.ws.send(res)
   }
+  setTimeout(() => {
+    isProcessing.value = true
+  })
 }
 
 const startChat = async () => {
@@ -359,13 +371,13 @@ function processData() {
     prompt_id: promptInfo.value!.id,
     variable_list: variableList,
     context,
-    token: getLocalItem('token') || '',
   })
 }
 
 watch(() => route.params, () => {
   isProcessing.value = false
   isConfirm.value = false
+  userPrompt.value = ''
   messages.value = []
   fetchInfo()
 })

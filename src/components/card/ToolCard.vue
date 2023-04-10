@@ -22,7 +22,7 @@
         <CardTag :tags="toolInfo.tagList" />
         <div flex-center>
           <ai-card-fire wh-4 />
-          <span pl-1>{{ toolInfo.pageView }}</span>
+          <span pl-1>{{ toolInfo.heat }}</span>
         </div>
       </div>
     </div>

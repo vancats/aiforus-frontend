@@ -21,11 +21,11 @@
 import { getPromptCards } from '~/api/prompt'
 import { getToolCards } from '~/api/tool'
 import type { CardInfo } from '~/components/card/type'
-import { useSearchStore } from '~/store'
+import { useNormalStore } from '~/store'
 
 defineOptions({ name: 'DetailPage' })
 
-const useStore = useSearchStore()
+const useStore = useNormalStore()
 const router = useRouter()
 const route = useRoute()
 const cards = ref<CardInfo[]>([])

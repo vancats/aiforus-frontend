@@ -46,12 +46,12 @@ import { getPromptCards, getPromptTags } from '~/api/prompt'
 import { getToolCards } from '~/api/tool'
 import type { CardInfo } from '~/components/card/type'
 import type { TagInfo } from '~/utils/type'
-import { useSearchStore } from '~/store'
+import { useNormalStore } from '~/store'
 import { getActualTag } from '~/utils'
 defineOptions({ name: 'SearchPage' })
 
 const router = useRouter()
-const useStore = useSearchStore()
+const useStore = useNormalStore()
 
 const tagList = ref<TagInfo[]>([])
 const fetchTags = async () => {

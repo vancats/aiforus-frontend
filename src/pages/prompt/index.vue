@@ -14,14 +14,14 @@
 </template>
 
 <script setup lang='ts'>
-import { useSearchStore } from '../../store/index'
+import { useNormalStore } from '../../store/index'
 import { getPromptCards, getPromptTags } from '~/api/prompt'
 import type { CardInfo } from '~/components/card/type'
 import type { TagInfo } from '~/utils/type'
 import { getActualTag } from '~/utils'
 defineOptions({ name: 'PromptPage' })
 
-const useStore = useSearchStore()
+const useStore = useNormalStore()
 const tagList = ref<TagInfo[]>([])
 const fetchTags = async () => {
   try {

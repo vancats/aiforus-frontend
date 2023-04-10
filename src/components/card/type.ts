@@ -10,4 +10,9 @@ export interface CardInfo {
   tags: number[]
   type: number
   tagList: Array<TagInfo>
+  like: number
+  comment: number
+  collect: number
+  manualPriority: number
+  heat: number
 }

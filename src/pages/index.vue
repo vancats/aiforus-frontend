@@ -13,14 +13,14 @@
         card-more mr-0 :bordered="false"
         @click="router.push('/tool')"
       >
-        <div h-75 flex-center-center-col>
+        <div flex-center-center-col>
           <ai-card-arrow mb-4 />
           <div>更多</div>
         </div>
       </n-card>
     </div>
 
-    <div title-tags pt-8>
+    <div title-tags mt-8>
       <span mr-6>AI小工具</span>
       <TagList v-model:active-tag="activeTag" :tag-list="filterTags" />
     </div>
@@ -41,11 +41,11 @@ import { getToolCards } from '~/api/tool'
 import type { CardInfo } from '~/components/card/type'
 import type { TagInfo } from '~/utils/type'
 import { getActualTag } from '~/utils'
-import { useSearchStore } from '~/store'
+import { useNormalStore } from '~/store'
 defineOptions({ name: 'IndexPage' })
 
 const router = useRouter()
-const useStore = useSearchStore()
+const useStore = useNormalStore()
 
 const tagList = ref<TagInfo[]>([])
 const fetchTags = async () => {

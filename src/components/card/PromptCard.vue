@@ -16,7 +16,7 @@
             <div flex-center-end w-15 flex-shrink-0>
               <ai-card-fire wh-4 mr-1 />
               <span>
-                {{ promptInfo.pageView }}
+                {{ promptInfo.heat }}
               </span>
             </div>
           </div>

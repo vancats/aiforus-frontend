@@ -14,6 +14,11 @@ export interface ToolInfo {
   tagList: Array<TagInfo>
   type: number
   hot: boolean
+  like: number
+  comment: number
+  collect: number
+  manualPriority: number
+  heat: number
 }
 
 export interface PromptInfo {
@@ -29,6 +34,11 @@ export interface PromptInfo {
   pageView: number
   tagList: Array<TagInfo>
   type: number
+  like: number
+  comment: number
+  collect: number
+  manualPriority: number
+  heat: number
 }
 
 export interface Variable {

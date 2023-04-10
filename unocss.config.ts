@@ -35,7 +35,7 @@ export default defineConfig({
     ['side-icon', 'wh-20 mb-2 rounded-lg cursor flex-center-center-col color-#9C9CA9 hover:color-#FFFFFF'],
 
     // title
-    ['title-tags', 'flex-center pb-6 text-xl'],
+    ['title-tags', 'flex-center h-8 mb-6 text-5'],
     ['title-tag', 'title-brief px-6 py-4 rounded-5 bg-transparent'],
 
     // tool

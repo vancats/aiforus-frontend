@@ -14,14 +14,14 @@
 </template>
 
 <script setup lang='ts'>
-import { useSearchStore } from '../../store/index'
+import { useNormalStore } from '../../store/index'
 import { getToolCards, getToolTags } from '~/api/tool'
 import type { TagInfo } from '~/utils/type'
 import type { CardInfo } from '~/components/card/type'
 import { getActualTag } from '~/utils'
 defineOptions({ name: 'ToolPage' })
 
-const useStore = useSearchStore()
+const useStore = useNormalStore()
 
 const tagList = ref<TagInfo[]>([])
 const fetchTags = async () => {
