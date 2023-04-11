@@ -50,7 +50,7 @@ export default defineConfig({
     ['card-prompt', 'h-37 rounded-2xl cursor bg-#2B2C3E hover:bg-#393A52'],
     ['card-detail', 'h-37 rounded-2xl cursor bg-#2B2C3E hover:bg-#393A52'],
 
-    ['card-tag', 'px-2 mr-2 text-sm rounded-lg text-#FFFFFF bg-#1F1E2C group-hover-bg-#393A52'],
+    ['card-tag', 'px-2 mr-2 text-sm rounded-lg text-#FFFFFF bg-#1F1E2C group-hover-bg-#3D3F58'],
     ['title-brief', 'text-sm text-#9C9CA9'],
   ],
 

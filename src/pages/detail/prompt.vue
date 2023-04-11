@@ -1,9 +1,9 @@
 <template>
   <template v-if="promptInfo">
-    <div ref="promptPageEl" w-full p-12 pt-8 rounded-2xl bg="#2B2C3E" overflow-y-scroll>
+    <div ref="promptPageEl" w-full p-6 rounded-2xl bg="#2B2C3E" overflow-y-scroll>
       <div flex-center>
-        <img :src="promptInfo.iconUrl" wh-40 mr-6 rounded-2xl alt="icon">
-        <div h-40 flex-start-between-col>
+        <img :src="promptInfo.iconUrl" wh-35 mr-6 rounded-2xl alt="icon">
+        <div h-35 flex-start-between-col>
           <div>
             <n-space flex-center>
               <div text-5.5>
@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <div mt-4 px-6 py-4 rounded-2xl bg="#37384E" relative>
+      <div mt-6 px-6 py-4 rounded-2xl bg="#37384E" relative>
         <n-popover v-if="promptInfo.visible" trigger="hover" placement="bottom-end" max-w-100>
           <template #trigger>
             <div absolute top-4 right-4 flex-center title-brief cursor>
@@ -45,7 +45,7 @@
           <n-space :size="12" vertical mb-4>
             <div v-for="(variableInfo, index) in promptInfo.variableList" :key="variableInfo.variable" flex-center>
               <div flex-center>
-                <span mr-4>{{ variableInfo.description }}</span>
+                <span mr-4 text="#9999a5">{{ variableInfo.description }}</span>
                 <n-select
                   v-model:value="selectValueArr[index]"
                   w-50
@@ -76,7 +76,7 @@
         </div>
       </div>
 
-      <div v-if="isConfirm" ref="messageRef" h-150 w-full mt-4 mb="-10" flex-start-between-col py-6 rounded-2xl relative bg="#37384E">
+      <div v-if="isConfirm" ref="messageRef" h-150 w-full mt-6 mb="-10" flex-start-between-col py-6 rounded-2xl relative bg="#37384E">
         <div ref="chatEl" w-full overflow-y-scroll>
           <div v-for="(messageInfo, index) in messages" :key="index" w-full>
             <div v-if="messageInfo.role === 'user'" mb-6 flex-start>
@@ -180,6 +180,7 @@ import { getPromptInfo } from '~/api/prompt'
 
 const route = useRoute()
 const useStore = useNormalStore()
+const useWebSocket = useWebSocketStore()
 const promptInfo = ref<PromptInfo>()
 
 const selectValueArr = ref<string[]>([])
@@ -197,7 +198,10 @@ const fetchInfo = async () => {
   }
 }
 
-onMounted(() => fetchInfo())
+onMounted(() => {
+  fetchInfo()
+  useWebSocket.ws?.close()
+})
 
 const getOptions = (str: string) => {
   const arr = str.split(',')
@@ -225,7 +229,6 @@ const scrollChatToBottom = () => {
   chatY.value += 1000
 }
 
-const useWebSocket = useWebSocketStore()
 const initWebSocket = (res: string) => {
   const token = getLocalItem('token')
   let wsUri = 'ws://175.178.218.120/gpt/chat'

@@ -1,6 +1,6 @@
 <template>
   <template v-if="toolInfo">
-    <div w-full p-12 pt-8 rounded-2xl bg="#2B2C3E" overflow-y-scroll>
+    <div w-full p-6 rounded-2xl bg="#2B2C3E" overflow-y-scroll>
       <div flex-center>
         <img :src="toolInfo.iconUrl" wh-40 mr-6 rounded-2xl alt="icon">
         <div h-40 flex-start-between-col>
