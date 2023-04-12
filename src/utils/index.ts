@@ -50,30 +50,6 @@ export const convertObjectKeysToSnakeCase = <T>(obj: T): T => {
   }
 }
 
-// 表格相关
-export const createColumn = <T>(key: string, title: string, render?: (row: T) => VNode) => ({
-  key,
-  title,
-  render,
-}) as DataTableColumn<T>
-
-export const createOptionalColumn
-= <T>(key: string, title: string, params?: Partial<DataTableColumn<T>>) => ({
-  title,
-  key,
-  ...params,
-}) as DataTableColumn<T>
-
-export const createAction = ({ row, action, title, style = 'text-blue cursor' }: Action) => {
-  return h('span',
-    {
-      className: style,
-      onClick: () => action(row),
-    },
-    { default: () => title },
-  )
-}
-
 // 缓存相关
 const localPrefix = 'aiforus_'
 export const setLocalItem = (key: string, value: string) => {
@@ -108,6 +84,7 @@ export function handleAllTag(tags: TagInfo[] | undefined) {
   }
 }
 
+// 剪切板
 export const clipboard = (val: string) => {
   if (navigator.clipboard) {
     // clipboard api 复制
@@ -130,4 +107,28 @@ export const clipboard = (val: string) => {
     document.body.removeChild(textarea)
   }
   naiveui.message.success('复制成功！')
+}
+
+// 表格相关
+export const createColumn = <T>(key: string, title: string, render?: (row: T) => VNode) => ({
+  key,
+  title,
+  render,
+}) as DataTableColumn<T>
+
+export const createOptionalColumn
+  = <T>(key: string, title: string, params?: Partial<DataTableColumn<T>>) => ({
+    title,
+    key,
+    ...params,
+  }) as DataTableColumn<T>
+
+export const createAction = ({ row, action, title, style = 'text-blue cursor' }: Action) => {
+  return h('span',
+    {
+      className: style,
+      onClick: () => action(row),
+    },
+    { default: () => title },
+  )
 }

@@ -1,27 +1,7 @@
 <template>
   <template v-if="promptInfo">
     <div ref="promptPageEl" w-full p-6 rounded-2xl bg="#2B2C3E" overflow-y-scroll>
-      <div flex-center>
-        <img :src="promptInfo.iconUrl" wh-35 mr-6 rounded-2xl alt="icon">
-        <div h-35 flex-start-between-col>
-          <div>
-            <n-space flex-center>
-              <div text-5.5>
-                {{ promptInfo.name }}
-              </div>
-              <CardTag v-if="promptInfo" :tags="promptInfo.tagList" />
-              <div flex-center>
-                <ai-card-fire wh-4 mr-1 />
-                <div>{{ promptInfo.heat }}</div>
-              </div>
-            </n-space>
-
-            <n-ellipsis title-brief block my-2 :line-clamp="3" :tooltip="false">
-              {{ promptInfo.brief }}
-            </n-ellipsis>
-          </div>
-        </div>
-      </div>
+      <DetailHeader :detail-info="promptInfo" />
 
       <div mt-6 px-6 py-4 rounded-2xl bg="#37384E" relative>
         <n-popover v-if="promptInfo.visible" trigger="hover" placement="bottom-end" max-w-100>
@@ -44,17 +24,7 @@
 
           <n-space :size="12" vertical mb-4>
             <div v-for="(variableInfo, index) in promptInfo.variableList" :key="variableInfo.variable" flex-center>
-              <div flex-center>
-                <span mr-4 text="#9999a5">{{ variableInfo.description }}</span>
-                <n-select
-                  v-model:value="selectValueArr[index]"
-                  w-50
-                  class="prompt-select"
-                  placeholder="请选择"
-                  filterable tag
-                  :options="getOptions(variableInfo.value)"
-                />
-              </div>
+              <DetailSelect v-model:select="selectValueArr[index]" :variable-info="variableInfo" />
             </div>
           </n-space>
         </div>
@@ -76,7 +46,7 @@
         </div>
       </div>
 
-      <div v-if="isConfirm" ref="messageRef" h-150 w-full mt-6 mb="-10" flex-start-between-col py-6 rounded-2xl relative bg="#37384E">
+      <div v-if="allowConversation" ref="messageRef" h-150 w-full mt-6 mb="-10" flex-start-between-col py-6 rounded-2xl relative bg="#37384E">
         <div ref="chatEl" w-full overflow-y-scroll>
           <div v-for="(messageInfo, index) in messages" :key="index" w-full>
             <div v-if="messageInfo.role === 'user'" mb-6 flex-start>
@@ -203,15 +173,7 @@ onMounted(() => {
   useWebSocket.ws?.close()
 })
 
-const getOptions = (str: string) => {
-  const arr = str.split(',')
-  return arr.map(item => ({
-    label: item,
-    value: item,
-  }))
-}
-
-const isConfirm = ref(false)
+const allowConversation = ref(false)
 const isProcessing = ref(false)
 const userVal = ref('')
 const messages = ref<Array<{ role: string; content: string }>>([])
@@ -219,7 +181,7 @@ const messages = ref<Array<{ role: string; content: string }>>([])
 const promptPageEl = ref<HTMLElement | null>(null)
 const { y } = useScroll(promptPageEl, { behavior: 'smooth' })
 const chatEl = ref<HTMLElement | null>(null)
-const { y: chatY } = useScroll(chatEl, { behavior: 'smooth' })
+const { y: chatY } = useScroll(chatEl)
 const scrollToBottom = () => {
   setTimeout(() => {
     y.value += 1000
@@ -260,6 +222,7 @@ const initWebSocket = (res: string) => {
     else {
       if (prev === '\n' && res.data === '\n') return
       prev = res.data
+      allowConversation.value = true
       isProcessing.value = true
       messages.value[messages.value.length - 1].content += res.data
       scrollChatToBottom()
@@ -267,19 +230,18 @@ const initWebSocket = (res: string) => {
   }
 
   useWebSocket.ws.onclose = (e) => {
-    isProcessing.value = false
   }
 
   useWebSocket.ws.onerror = (e) => {
     isProcessing.value = false
     messages.value.pop()
+    if (!allowConversation.value) {
+      // 对话框未显示状态，未连接成功直接清空信息
+      messages.value = []
+    }
     const token = getLocalItem('token') || ''
-    if (token) {
-      showModal.value = true
-    }
-    else {
-      useStore.showLoginModal = true
-    }
+    if (token) showModal.value = true
+    else useStore.showLoginModal = true
   }
 }
 
@@ -299,8 +261,6 @@ function sendMessage() {
 }
 
 const startChat = async () => {
-  isConfirm.value = true
-
   if (messages.value.length) {
     messages.value.push({
       role: 'division',
@@ -314,13 +274,15 @@ const startChat = async () => {
   })
 
   showText()
-
   userVal.value = ''
-
   sendMessage()
-
-  scrollToBottom()
 }
+
+watch(() => allowConversation.value, () => {
+  if (allowConversation.value) {
+    scrollToBottom()
+  }
+})
 
 const onSendMessage = (e: KeyboardEvent) => {
   if (!e.shiftKey) {
@@ -379,7 +341,7 @@ function processData() {
 
 watch(() => route.params, () => {
   isProcessing.value = false
-  isConfirm.value = false
+  allowConversation.value = false
   userPrompt.value = ''
   messages.value = []
   useWebSocket.ws?.close()
@@ -392,9 +354,3 @@ function showText() {
   }
 }
 </script>
-
-<style>
-.prompt-select .n-base-selection .n-base-selection-label .n-base-selection-input {
-    cursor:text;
-}
-</style>

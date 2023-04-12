@@ -16,5 +16,6 @@
 
 <script setup lang='ts'>
 import { useNormalStore } from '~/store/index'
+
 const useStore = useNormalStore()
 </script>

@@ -4,7 +4,7 @@
       热门应用
     </div>
 
-    <div flex overflow-x-scroll overflow-y-hidden>
+    <div flex overflow-x-scroll overflow-y-hidden pb-2>
       <template v-for="tool in tools.slice(0, 20)" :key="tool.id">
         <ToolCard :tool-info="tool" />
       </template>
@@ -13,17 +13,14 @@
         card-more mr-0 :bordered="false"
         @click="router.push('/tool')"
       >
-        <div flex-center-center-col>
+        <div flex-center-center-col h-75>
           <ai-card-arrow mb-4 />
           <div>更多</div>
         </div>
       </n-card>
     </div>
 
-    <div title-tags mt-8>
-      <span mr-6>AI小工具</span>
-      <TagList v-model:active-tag="activeTag" :tag-list="filterTags" />
-    </div>
+    <TagList v-model:active-tag="activeTag" :tag-list="filterTags" title="AI小工具" mt-8 />
 
     <div prompt-layout>
       <template v-for="prompt in prompts" :key="prompt.id">

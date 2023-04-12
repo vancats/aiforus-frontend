@@ -37,10 +37,11 @@
 import { useNormalStore } from '~/store'
 import { searchFeedback } from '~/api/feedback'
 import naiveui from '~/utils/naiveui'
+
 defineProps<{ typeName: string }>()
 const useStore = useNormalStore()
-const showModal = ref(false)
 
+const showModal = ref(false)
 const feedbackVal = ref('')
 const openModal = () => {
   feedbackVal.value = ''

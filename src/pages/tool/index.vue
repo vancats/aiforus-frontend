@@ -1,9 +1,6 @@
 <template>
   <div overflow-y-scroll pr-14>
-    <div title-tags>
-      <span mr-6>AI应用</span>
-      <TagList v-model:active-tag="activeTag" :tag-list="filterTags" />
-    </div>
+    <TagList v-model:active-tag="activeTag" :tag-list="filterTags" title="AI应用" />
 
     <div prompt-layout>
       <template v-for="tool in tools" :key="tool.id">

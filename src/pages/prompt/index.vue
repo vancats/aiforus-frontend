@@ -1,13 +1,10 @@
 <template>
   <div overflow-y-scroll pr-14>
-    <div title-tags>
-      <span mr-6>AI小工具</span>
-      <TagList v-model:active-tag="activeTag" :tag-list="filterTags" />
-    </div>
+    <TagList v-model:active-tag="activeTag" :tag-list="filterTags" title="AI小工具" />
 
     <div prompt-layout>
       <template v-for="prompt in prompts" :key="prompt.id">
-        <PromptCard :prompt-info="prompt" />
+        <DetailCard :card-info="prompt" />
       </template>
     </div>
   </div>

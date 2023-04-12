@@ -1,10 +1,7 @@
 <template>
-  <n-card
-    class="group" card-detail :bordered="false"
-    @click="goCardDetail"
-  >
+  <n-card class="group" card-detail :bordered="false" @click="goCardDetail">
     <div flex>
-      <img :src="cardInfo.iconUrl" w-37 h-37 rounded-l-2xl alt="123">
+      <img :src="cardInfo.iconUrl" wh-37 rounded-l-2xl alt="icon">
 
       <div flex-start-between-col w-full h-37 px-3 py-2 rounded-r-xl>
         <div w-full>
@@ -34,6 +31,7 @@
 <script setup lang='ts'>
 import { setLocalItem } from '../../utils/index'
 import type { CardInfo } from './type'
+
 const { cardInfo } = defineProps<{ cardInfo: CardInfo }>()
 const router = useRouter()
 const goCardDetail = () => {

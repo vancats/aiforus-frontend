@@ -22,12 +22,12 @@ import { getPromptCards } from '~/api/prompt'
 import { getToolCards } from '~/api/tool'
 import type { CardInfo } from '~/components/card/type'
 import { useNormalStore } from '~/store'
-
 defineOptions({ name: 'DetailPage' })
 
-const useStore = useNormalStore()
 const router = useRouter()
 const route = useRoute()
+const useStore = useNormalStore()
+
 const cards = ref<CardInfo[]>([])
 async function fetchCards() {
   try {
@@ -39,7 +39,5 @@ async function fetchCards() {
     console.warn(e)
   }
 }
-onMounted(() => {
-  fetchCards()
-})
+onMounted(() => fetchCards())
 </script>

@@ -1,14 +1,13 @@
 <template>
   <div flex-center-between-row mb-8 pr-14>
     <div w-60 h-10 mr-6>
-      <ai-nav-title w-60 h-10 @click="goHome" />
+      <ai-nav-title w-60 h-10 cursor @click="goHome" />
     </div>
 
     <n-input
       ref="inputRef"
       v-model:value="searchVal"
-      px-2 py-2 rounded-xl
-      h="12"
+      px-2 py-2 rounded-xl h="12"
       placeholder="搜索" clearable
       @keyup.enter="onSearch"
     >
@@ -71,11 +70,12 @@ import naiveui from '~/utils/naiveui'
 defineOptions({ name: 'NavBar' })
 
 const router = useRouter()
-const goHome = () => router.push('/')
 const useStore = useNormalStore()
 const useWebSocket = useWebSocketStore()
-const searchVal = ref('')
 
+const goHome = () => router.push('/')
+
+const searchVal = ref('')
 const onSearch = () => {
   useStore.searchVal = searchVal.value
   router.push('/search')

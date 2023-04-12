@@ -5,7 +5,7 @@
         AI应用
       </div>
       <template v-if="tools.length">
-        <div flex overflow-x-scroll overflow-y-hidden>
+        <div flex overflow-x-scroll overflow-y-hidden pb-2>
           <template v-for="tool in tools.slice(0, 20)" :key="tool.id">
             <ToolCard :tool-info="tool" />
           </template>
@@ -23,15 +23,12 @@
       </template>
       <Feedback v-else type-name="AI应用" />
 
-      <div title-tags pt-8>
-        <span mr-6>AI小工具</span>
-        <TagList v-if="prompts.length" v-model:active-tag="activeTag" :tag-list="filterTags" />
-      </div>
+      <TagList v-if="prompts.length" v-model:active-tag="activeTag" :tag-list="filterTags" title="AI小工具" mt-8 />
 
       <template v-if="prompts.length">
         <div prompt-layout>
           <template v-for="prompt in prompts" :key="prompt.id">
-            <PromptCard :prompt-info="prompt" />
+            <DetailCard :card-info="prompt" />
           </template>
         </div>
       </template>

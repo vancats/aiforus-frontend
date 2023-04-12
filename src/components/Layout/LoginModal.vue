@@ -15,7 +15,7 @@
 
     <div flex-center-center wh-64 relative m-auto text-white>
       <img :src="loginQRCode" wh-64 rounded-2xl alt="加载二维码失败，请刷新">
-      <div v-if="isExpired" absolute flex-center-center wh-64 rounded-2xl bg="#000" bg-opacity-70>
+      <div v-if="isExpired" absolute flex-center-center wh-64 rounded-2xl bg="#000 opacity-70">
         <span i-mingcute:refresh-1-fill wh-16 cursor @click="onLogin" />
       </div>
     </div>
@@ -64,9 +64,7 @@ const startChecked = async () => {
 }
 
 const isFetchEnd = ref(false)
-const showModal = computed(() => {
-  return isFetchEnd.value && useStore.showLoginModal
-})
+const showModal = computed(() => isFetchEnd.value && useStore.showLoginModal)
 const onLogin = async () => {
   try {
     isFetchEnd.value = false

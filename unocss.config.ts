@@ -36,7 +36,7 @@ export default defineConfig({
 
     // title
     ['title-tags', 'flex-center h-8 mb-6 text-5'],
-    ['title-tag', 'title-brief px-6 py-4 rounded-5 bg-transparent'],
+    ['title-tag', 'title-brief px-6 py-4 rounded-5 bg-transparent hover:color-#FFFFFF hover:bg-#2B2C3E'],
 
     // tool
     ['tool-layout', 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6'],
