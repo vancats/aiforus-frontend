@@ -15,6 +15,7 @@ declare module '@vue/runtime-core' {
     AiNavTitle: typeof import('~icons/ai/nav-title')['default']
     AiNavWarning: typeof import('~icons/ai/nav-warning')['default']
     AiNavWechat: typeof import('~icons/ai/nav-wechat')['default']
+    AiPromptArrow: typeof import('~icons/ai/prompt-arrow')['default']
     AiPromptContinue: typeof import('~icons/ai/prompt-continue')['default']
     AiPromptCopy: typeof import('~icons/ai/prompt-copy')['default']
     AiPromptRefresh: typeof import('~icons/ai/prompt-refresh')['default']
