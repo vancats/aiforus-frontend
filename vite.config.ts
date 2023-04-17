@@ -18,7 +18,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://175.178.218.120',
+        target: 'https://www.aiforus.cn',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, ''),
       },
