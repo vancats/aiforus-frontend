@@ -193,7 +193,7 @@ const scrollChatToBottom = () => {
 
 const initWebSocket = (res: string) => {
   const token = getLocalItem('token')
-  let wsUri = 'wss://www.aiforus.cn/gpt/chat'
+  let wsUri = 'wss://aiforus.cn/gpt/chat'
   if (token) {
     wsUri += `?token=${token}`
   }

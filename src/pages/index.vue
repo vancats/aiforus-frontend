@@ -76,7 +76,7 @@ async function fetchTools() {
 const prompts = ref<CardInfo[]>([])
 async function fetchPrompts() {
   try {
-    const data = await getPromptCards(activeTag.value)
+    const data = await getPromptCards(activeTag.value, '', activeTag.value ? 1 : 2)
     prompts.value = data || []
   }
   catch (e) {

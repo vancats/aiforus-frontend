@@ -71,7 +71,7 @@ watch(() => activeTag.value, () => {
 const tools = ref<CardInfo[]>([])
 async function fetchTools() {
   try {
-    const data = await getToolCards(0, useStore.searchVal)
+    const data = await getToolCards(0, useStore.searchVal, 1)
     tools.value = data || []
   }
   catch (e) {
@@ -82,7 +82,7 @@ async function fetchTools() {
 const prompts = ref<CardInfo[]>([])
 async function fetchPrompts() {
   try {
-    const data = await getPromptCards(activeTag.value, useStore.searchVal)
+    const data = await getPromptCards(activeTag.value, useStore.searchVal, 1)
     prompts.value = data || []
   }
   catch (e) {

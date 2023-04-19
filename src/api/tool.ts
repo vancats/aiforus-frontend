@@ -9,8 +9,8 @@ export const getToolTags = async () => {
     .then(res => res?.data)
 }
 
-export const getToolCards = async (tagId = 0, context = '') => {
-  return await axios.post<Array<CardInfo>>('/card/query', { context, tagId, feed: 1, type: 1 })
+export const getToolCards = async (tagId = 0, context = '', feed = 2) => {
+  return await axios.post<Array<CardInfo>>('/card/query', { context, tagId, feed, type: 1 })
     .then(res => res?.data)
 }
 

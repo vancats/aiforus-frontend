@@ -1,7 +1,7 @@
 <template>
   <n-card class="group" card-tool :bordered="false" @click="goCardDetail">
     <img :src="toolInfo.iconUrl" w-50 h-36 object-cover rounded-t-2xl alt="icon">
-
+    <ai-card-new v-if="toolInfo.manualPriority > -1" absolute left-0 top-0 />
     <div flex-start-between-col h-40 p-4 pt-2.5 rounded-b-xl>
       <div>
         <div>
@@ -19,7 +19,8 @@
         <CardTag :tags="toolInfo.tagList" />
         <div flex-center>
           <ai-card-fire wh-4 />
-          <span pl-1>{{ toolInfo.heat }}</span>
+          <span pl-1>
+            {{ toolInfo.heat >= 1000 ? `${Math.floor(toolInfo.heat / 1000)}k` : toolInfo.heat }}</span>
         </div>
       </div>
     </div>

@@ -41,7 +41,7 @@ watch(() => activeTag.value, () => {
 const tools = ref<CardInfo[]>([])
 async function fetchTools() {
   try {
-    const data = await getToolCards(activeTag.value)
+    const data = await getToolCards(activeTag.value, '', activeTag.value ? 1 : 2)
     tools.value = data || []
   }
   catch (e) {

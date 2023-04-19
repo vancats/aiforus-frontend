@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AiCardArrow: typeof import('~icons/ai/card-arrow')['default']
     AiCardFire: typeof import('~icons/ai/card-fire')['default']
+    AiCardNew: typeof import('~icons/ai/card-new')['default']
     AiNavAvator: typeof import('~icons/ai/nav-avator')['default']
     AiNavTitle: typeof import('~icons/ai/nav-title')['default']
     AiNavWarning: typeof import('~icons/ai/nav-warning')['default']

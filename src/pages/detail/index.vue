@@ -32,7 +32,7 @@ const cards = ref<CardInfo[]>([])
 async function fetchCards() {
   try {
     const action = route.matched[1]?.name === 'PromptDetail' ? getPromptCards : getToolCards
-    const data = await action(useStore.tagId, useStore.searchVal)
+    const data = await action(useStore.tagId, useStore.searchVal, 1)
     cards.value = data || []
   }
   catch (e) {
