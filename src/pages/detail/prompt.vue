@@ -3,7 +3,7 @@
     <div ref="promptPageEl" w-full p-6 rounded-2xl bg="#2B2C3E" overflow-y-scroll>
       <DetailHeader :detail-info="promptInfo" />
 
-      <div mt-6 px-6 py-4 rounded-2xl bg="#37384E" relative>
+      <div v-if="!isRolePlay" mt-6 px-6 py-4 rounded-2xl bg="#37384E" relative>
         <n-popover v-if="promptInfo.visible" trigger="hover" placement="bottom-end" max-w-100>
           <template #trigger>
             <div absolute top-4 right-4 flex-center title-brief cursor>
@@ -111,12 +111,12 @@
             v-model:value="userVal"
             type="textarea"
             :disabled="isProcessing"
-            :placeholder="isProcessing ? '内容正在加速生成...' : '请输入'"
+            :placeholder="submitPlaceholder"
             :autosize="{ minRows: 1, maxRows: 5 }"
-            @keyup.enter="onSendMessage"
+            @keyup.enter="sendMessageByEnter"
           >
             <template #suffix>
-              <ai-prompt-send cursor @click="sendMessage" />
+              <ai-prompt-send cursor @click="sendMessageByClick" />
             </template>
           </n-input>
         </div>
@@ -156,6 +156,12 @@ const promptInfo = ref<PromptInfo>()
 const selectValueArr = ref<string[]>([])
 const userPrompt = ref('')
 const showModal = ref(false)
+const allowConversation = ref(false)
+
+const isRolePlay = computed(() => {
+  return !!promptInfo.value?.tagList.some(i => i.name === '角色扮演')
+})
+
 const fetchInfo = async () => {
   const refresh = getLocalItem('refresh') !== 'false'
   removeLocalItem('refresh')
@@ -166,6 +172,9 @@ const fetchInfo = async () => {
       return variableInfo.value.split(',')[0]
     })
   }
+  if (res?.tagList) {
+    allowConversation.value = isRolePlay.value
+  }
 }
 
 onMounted(() => {
@@ -173,7 +182,6 @@ onMounted(() => {
   useWebSocket.ws?.close()
 })
 
-const allowConversation = ref(false)
 const isProcessing = ref(false)
 const userVal = ref('')
 const messages = ref<Array<{ role: string; content: string }>>([])
@@ -284,8 +292,17 @@ watch(() => allowConversation.value, () => {
   }
 })
 
-const onSendMessage = (e: KeyboardEvent) => {
-  if (!e.shiftKey) {
+const sendMessageByEnter = (e: KeyboardEvent) => {
+  if (!e.shiftKey && userVal.value.trim()) {
+    sendMessage()
+  }
+}
+
+const sendMessageByClick = () => {
+  if (isRolePlay && !messages.value.length) {
+    userVal.value = promptInfo.value?.input || ''
+  }
+  if (userVal.value) {
     sendMessage()
   }
 }
@@ -353,4 +370,8 @@ function showText() {
     userPrompt.value = promptInfo.value?.input || ''
   }
 }
+
+const submitPlaceholder = computed(() => {
+  return (isRolePlay.value && !messages.value.length) ? promptInfo.value?.input : isProcessing.value ? '内容正在加速生成...' : '请输入'
+})
 </script>

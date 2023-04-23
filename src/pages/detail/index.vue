@@ -34,6 +34,10 @@ async function fetchCards() {
     const action = route.matched[1]?.name === 'PromptDetail' ? getPromptCards : getToolCards
     const data = await action(useStore.tagId, useStore.searchVal, 1)
     cards.value = data || []
+    const index = cards.value.findIndex(card => String(card.id) === route.params.id)
+    if (index !== -1) {
+      [cards.value[0], cards.value[index]] = [cards.value[index], cards.value[0]]
+    }
   }
   catch (e) {
     console.warn(e)

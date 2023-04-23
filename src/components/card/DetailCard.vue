@@ -23,7 +23,12 @@
           </n-ellipsis>
         </div>
 
-        <CardTag :tags="cardInfo.tagList" />
+        <div flex-center-between w-full>
+          <CardTag :tags="cardInfo.tagList" />
+          <n-tag v-if="isUsing" px-2 text-sm rounded-lg text-white bg="#3A50FF" :bordered="false">
+            使用中
+          </n-tag>
+        </div>
       </div>
     </div>
   </n-card>
@@ -35,8 +40,13 @@ import type { CardInfo } from './type'
 
 const { cardInfo } = defineProps<{ cardInfo: CardInfo }>()
 const router = useRouter()
+const route = useRoute()
 const goCardDetail = () => {
   setLocalItem('refresh', 'false')
   router.push(`/detail/${cardInfo.type === 0 ? 'prompt' : 'tool'}/${cardInfo.id}`)
 }
+
+const isUsing = computed(() => {
+  return route.matched[0]?.name === 'Detail' && route.params.id === String(cardInfo.id)
+})
 </script>
