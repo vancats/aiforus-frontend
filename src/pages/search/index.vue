@@ -1,5 +1,5 @@
 <template>
-  <div pr-14 overflow-y-scroll>
+  <div layout-right-bottom overflow-y-scroll>
     <template v-if="tools.length || prompts.length">
       <div title-tags>
         AI应用
@@ -11,10 +11,11 @@
           </template>
 
           <n-card
+            h-47 sm:h-76
             card-more mr-0 :bordered="false"
             @click="router.push('/tool')"
           >
-            <div h-75 flex-center-center-col>
+            <div flex-center-center-col h-47 sm:h-76>
               <ai-card-arrow mb-4 />
               <div>更多</div>
             </div>
@@ -23,7 +24,7 @@
       </template>
       <Feedback v-else type-name="AI应用" />
 
-      <TagList v-if="prompts.length" v-model:active-tag="activeTag" :tag-list="filterTags" title="AI小工具" mt-8 />
+      <TagList v-model:active-tag="activeTag" :tag-list="filterTags" title="AI小工具" mt-4 sm:mt-8 />
 
       <template v-if="prompts.length">
         <div prompt-layout>
@@ -93,11 +94,16 @@ async function fetchPrompts() {
 const isFirst = ref(true)
 const cachedTags = ref<TagInfo[]>([])
 const filterTags = computed(() => {
-  if (prompts.value.length && tagList.value.length && isFirst.value) {
-    const res = getActualTag(prompts.value, tagList.value)
-    cachedTags.value = res
-    isFirst.value = false
-    return res
+  if (isFirst.value) {
+    if (prompts.value.length && tagList.value.length) {
+      const res = getActualTag(prompts.value, tagList.value)
+      cachedTags.value = res
+      isFirst.value = false
+      return res
+    }
+    else {
+      return []
+    }
   }
   else {
     return cachedTags.value

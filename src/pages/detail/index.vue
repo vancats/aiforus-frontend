@@ -1,6 +1,10 @@
 <template>
-  <div flex pb-4 pr-12 overflow-y-scroll>
-    <div w-140 mr-4 pr-2 overflow-y-scroll>
+  <div mobile-only h-8 my-2>
+    <ai-common-back @click="goBack" />
+  </div>
+
+  <div flex pb-4 layout-right overflow-y-scroll>
+    <div web-only w-140 mr-4 pr-2 overflow-y-scroll>
       <template v-for="card in cards.slice(0, 20)" :key="card.id">
         <DetailCard mb-4 :card-info="card" />
       </template>
@@ -13,6 +17,7 @@
         </div>
       </n-card>
     </div>
+
     <RouterView />
   </div>
 </template>
@@ -44,4 +49,13 @@ async function fetchCards() {
   }
 }
 onMounted(() => fetchCards())
+
+const goBack = () => {
+  if (window.history.length > 1) {
+    router.back()
+  }
+  else {
+    router.push('/')
+  }
+}
 </script>

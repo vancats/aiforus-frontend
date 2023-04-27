@@ -1,5 +1,5 @@
 <template>
-  <div overflow-y-scroll pr-14>
+  <div layout-right-bottom overflow-y-scroll>
     <TagList v-model:active-tag="activeTag" :tag-list="filterTags" title="AI小工具" />
 
     <div prompt-layout>

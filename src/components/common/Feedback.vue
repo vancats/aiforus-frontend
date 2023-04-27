@@ -1,23 +1,24 @@
 <template>
   <div text-center my-16>
-    <div text-xl>
+    <div text-3 sm:text-xl>
       老板，没有“{{ useStore.searchVal }}”相关的{{ typeName }}，换个关键词试试
     </div>
-    <div mt-10 cursor text="#3A50FF" @click="openModal">
+    <div text-3 sm:text-sm mt-4 sm:mt-10 cursor text="#3A50FF" @click="openModal">
       没有找到可用ai应用？点击向我们反馈
     </div>
   </div>
 
   <n-modal v-model:show="showModal">
     <n-card
-      style="width: 480px; background: #2b2c3d; border-radius: 12px"
+      style="background: #2b2c3d; border-radius: 12px"
+      w-66 sm:w-120
       title="问题与反馈" size="huge" :bordered="false" role="dialog" aria-modal="true"
     >
       <n-input
         v-model:value="feedbackVal"
         type="textarea" placeholder="请输入你的问题"
         bg="#3F415B" rounded-xl
-        :autosize="{ minRows: 8, maxRows: 8 }"
+        :autosize="{ minRows: 6, maxRows: 6 }"
       />
       <template #footer>
         <div flex-center-center>
@@ -48,6 +49,7 @@ const openModal = () => {
   showModal.value = true
 }
 const onFeedback = async () => {
+  if (!feedbackVal.value) return
   try {
     await searchFeedback(feedbackVal.value)
     showModal.value = false

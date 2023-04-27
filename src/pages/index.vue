@@ -1,5 +1,5 @@
 <template>
-  <div pr-14 overflow-y-scroll>
+  <div layout-right-bottom overflow-y-scroll>
     <div title-tags>
       热门应用
     </div>
@@ -10,17 +10,18 @@
       </template>
 
       <n-card
+        h-47 sm:h-76
         card-more mr-0 :bordered="false"
         @click="router.push('/tool')"
       >
-        <div flex-center-center-col h-75>
+        <div flex-center-center-col h-47 sm:h-76>
           <ai-card-arrow mb-4 />
           <div>更多</div>
         </div>
       </n-card>
     </div>
 
-    <TagList v-model:active-tag="activeTag" :tag-list="filterTags" title="AI小工具" mt-8 />
+    <TagList v-model:active-tag="activeTag" :tag-list="filterTags" title="AI小工具" mt-4 sm:mt-8 />
 
     <div prompt-layout>
       <template v-for="prompt in prompts" :key="prompt.id">

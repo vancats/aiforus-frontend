@@ -1,5 +1,6 @@
 <template>
-  <div flex-col p-2 pt-40 bg="#242635">
+  <div p-2 pt-40 bg="#242635">
+    <div flex-col />
     <div side-icon :style="getStyle('/')" @click="router.push('/')">
       <ai-side-home wh-8 />
       <div pt-2 text-sm>

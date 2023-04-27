@@ -1,16 +1,23 @@
 <template>
-  <div title-tags>
-    <span mr-6>{{ title }}</span>
-    <n-space :size="4">
-      <n-tag
-        v-for="tag in tagList" :key="tag.id"
-        title-tag :bordered="false"
-        :style="activeTag === tag.id ? 'color: #FFFFFF; background: #2B2C3E' : ''"
-        @click="onClick(tag.id)"
-      >
-        {{ tag.name }}
-      </n-tag>
-    </n-space>
+  <div>
+    <div mobile-only>
+      <div text-4 mb-2>
+        {{ title }}
+      </div>
+    </div>
+    <div title-tags>
+      <span web-only mr-6>{{ title }}</span>
+      <n-space :size="4">
+        <n-tag
+          v-for="tag in tagList" :key="tag.id"
+          title-tag :bordered="false"
+          :style="activeTag === tag.id ? 'color: #FFFFFF; background: #2B2C3E' : ''"
+          @click="onClick(tag.id)"
+        >
+          {{ tag.name }}
+        </n-tag>
+      </n-space>
+    </div>
   </div>
 </template>
 

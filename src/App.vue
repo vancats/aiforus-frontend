@@ -7,12 +7,15 @@
   </n-dialog-provider>
   <n-config-provider :theme-overrides="appTheme">
     <main w-full flex>
-      <SideBar />
-      <div w-full flex-col pl-10 pt-8 overflow-hidden h-screen>
-        <NavBar />
+      <SideBar web-only />
+      <div w-full h-screen flex-col layout-left sm:pt-8 overflow-hidden>
+        <SearchBar mobile-only />
+        <NavBar web-only />
         <RouterView />
       </div>
-      <DrainageModal />
+      <BottomBar mobile-only />
+      <DrainageModal web-only />
+
       <LoginModal />
     </main>
   </n-config-provider>

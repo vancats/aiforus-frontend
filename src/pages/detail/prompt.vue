@@ -1,14 +1,19 @@
 <template>
   <template v-if="promptInfo">
-    <div ref="promptPageEl" w-full p-6 rounded-2xl bg="#2B2C3E" overflow-y-scroll>
+    <div ref="promptPageEl" w-full p-3 sm:p-6 rounded-2xl bg="#2B2C3E" overflow-y-scroll>
       <DetailHeader :detail-info="promptInfo" />
 
-      <div v-if="!isRolePlay" mt-6 px-6 py-4 rounded-2xl bg="#37384E" relative>
-        <n-popover v-if="promptInfo.visible" trigger="hover" placement="bottom-end" max-w-100>
+      <div v-if="!isRolePlay" mt-6 sm:px-6 sm:py-4 rounded-2xl sm:bg="#37384E" relative>
+        <n-popover v-if="promptInfo.visible" trigger="hover" placement="bottom-end" max-w-70 sm:max-w-100>
           <template #trigger>
-            <div absolute top-4 right-4 flex-center title-brief cursor>
+            <div absolute top-0 right-0 sm:top-4 sm:right-4 flex-center title-brief cursor>
               <ai-prompt-visible mr-1 />
-              查看AI机器人预设信息
+              <span web-only>
+                查看AI机器人预设信息
+              </span>
+              <span mobile-only>
+                查看AI信息
+              </span>
             </div>
           </template>
           <div font-extrabold my-1>
@@ -18,9 +23,12 @@
         </n-popover>
 
         <div v-if="promptInfo.variableList?.length">
-          <div mb-4 font-extrabold>
+          <span web-only font-extrabold mb-4>
             为了生成结果更准确，请填写你对AI机器人的要求
-          </div>
+          </span>
+          <span mobile-only mb-4>
+            请填写你对AI机器人的要求
+          </span>
 
           <n-space :size="12" vertical mb-4>
             <div v-for="(variableInfo, index) in promptInfo.variableList" :key="variableInfo.variable" flex-center>
@@ -29,9 +37,12 @@
           </n-space>
         </div>
 
-        <div font-extrabold>
+        <span web-only font-extrabold>
           为了生成结果更准确，请填写你对AI机器人的具体描述
-        </div>
+        </span>
+        <span mobile-only>
+          请填写你对AI机器人的具体描述
+        </span>
         <n-input
           v-model:value="userPrompt"
           type="textarea" :placeholder="promptInfo.input"
@@ -40,35 +51,38 @@
           @click="showText"
         />
         <div flex-center-end>
-          <n-button type="primary" :disabled="isProcessing" px-7 @click="startChat">
+          <n-button
+            type="primary" :disabled="isProcessing" px-7
+            w-full sm:w-auto @click="startChat"
+          >
             确认
           </n-button>
         </div>
       </div>
 
-      <div v-if="allowConversation" ref="messageRef" h-150 w-full mt-6 mb="-10" flex-start-between-col py-6 rounded-2xl relative bg="#37384E">
+      <div v-if="allowConversation" ref="messageRef" h-120 sm:h-150 w-full mt-6 mb="-10" text-3 sm:text-4 flex-start-between-col py-3 sm:py-6 rounded-2xl relative bg="#37384E">
         <div ref="chatEl" w-full overflow-y-scroll>
           <div v-for="(messageInfo, index) in messages" :key="index" w-full>
-            <div v-if="messageInfo.role === 'user'" mb-6 flex-start>
-              <div w-full ml-22 rounded-lg py-3 pl-3 pr-7 text="#001042" bg="#EFF1FC">
+            <div v-if="messageInfo.role === 'user'" mb-3 sm:mb-6 flex-start>
+              <div w-full ml-12 sm:ml-22 rounded-lg p-2 sm:py-3 sm:pl-3 sm:pr-7 text="#001042" bg="#EFF1FC">
                 <span style="white-space: pre-wrap;">
                   {{ messageInfo.content }}
                 </span>
               </div>
-              <div wh-10 mx-6 rounded="100%">
-                <ai-nav-avator wh-10 :src="promptInfo.iconUrl" />
+              <div wh-8 mx-2 sm:wh-10 sm:mx-6 rounded="100%">
+                <ai-nav-avator wh-8 sm:wh-10 :src="promptInfo.iconUrl" />
               </div>
             </div>
 
-            <div v-if="messageInfo.role === 'assistant'" mb-6 flex-start-end>
-              <img :src="promptInfo.iconUrl" wh-10 mx-6 rounded="100%">
-              <div w-full mr-22 rounded-lg py-3 pl-3 pr-7 text="#001042" bg="#EFF1FC">
+            <div v-if="messageInfo.role === 'assistant'" mb-3 sm:mb-6 flex-start-end>
+              <img :src="promptInfo.iconUrl" wh-8 mx-2 sm:wh-10 sm:mx-6 rounded="100%">
+              <div w-full mr-12 sm:mr-22 rounded-lg p-2 sm:py-3 sm:pl-3 sm:pr-7 text="#001042" bg="#EFF1FC">
                 <span style="white-space: pre-wrap;">
                   {{ messageInfo.content }}
                 </span>
 
-                <div flex-center-between mt-3 text="#3A50FF">
-                  <div>
+                <div flex-center-between mt-1 sm:mt-3 text="#3A50FF">
+                  <div flex-shrink-0>
                     <div v-if="index === messages.length - 1" flex-center cursor>
                       <div v-if="isProcessing" flex-center @click="stopGenerate">
                         <ai-prompt-stop mr-1 />
@@ -84,13 +98,13 @@
                       </div>
                     </div>
                   </div>
-                  <div flex-center>
+                  <div flex-center flex-shrink-0>
                     <div v-if="index === messages.length - 1 && !isProcessing" flex-center cursor @click="doContinue">
                       <ai-prompt-continue mr-1 />
                       继续
                     </div>
                     <div v-if="index !== messages.length - 1 || !isProcessing" flex-center cursor @click="clipboard(messages[index].content)">
-                      <ai-prompt-copy ml-4 mr-1 />
+                      <ai-prompt-copy ml-2 sm:ml-4 mr-1 />
                       复制
                     </div>
                   </div>
@@ -98,9 +112,9 @@
               </div>
             </div>
 
-            <div v-if="messageInfo.role === 'division'" mx-22 mb-6 flex-center-center>
-              <n-divider>
-                您已成功修改具体描述，以下是新的对话信息
+            <div v-if="messageInfo.role === 'division'" mx-12 mb-3 sm:mx-22 sm:mb-6 flex-center-center>
+              <n-divider text-3>
+                您已修改要求，以下是新信息
               </n-divider>
             </div>
           </div>
@@ -108,6 +122,7 @@
 
         <div w-full px-5>
           <n-input
+            ref="searchEl"
             v-model:value="userVal"
             type="textarea"
             :disabled="isProcessing"
@@ -125,27 +140,30 @@
 
     <n-modal v-model:show="showModal">
       <n-card
-        style="width: 400px; background: #2b2c3d; border-radius: 12px"
+        style="background: #2b2c3d; border-radius: 12px"
+        w-50 sm:w-100
         size="huge" :bordered="false" role="dialog" aria-modal="true" closable
         @close="() => showModal = false"
       >
         <template #header>
           <div flex-center>
             <ai-nav-warning mr-2 />
-            次数不足
+            <span text-4 sm:text-5>次数不足</span>
           </div>
         </template>
-        您今日的 30 次使用次数已经用完,请扫描群二维码，联系群管理员获取更多次数
-        <img wh-60 m-auto my-6 :src="useStore.wechatQRCode" alt="二维码">
+        <span text-3 sm:text-4>
+          您今日的 30 次使用次数已经用完,请扫描群二维码，联系群管理员获取更多次数
+        </span>
+        <img wh-35 sm:wh-60 m-auto my-3 :src="useStore.wechatQRCode" alt="二维码">
       </n-card>
     </n-modal>
   </template>
 </template>
 
 <script setup lang='ts'>
-import { clipboard, getLocalItem, removeLocalItem } from '../../utils/index'
-import { useNormalStore, useWebSocketStore } from '../../store/index'
 import type { PromptInfo } from './type'
+import { clipboard, getLocalItem, removeLocalItem } from '~/utils/index'
+import { useNormalStore, useWebSocketStore } from '~/store/index'
 import { getPromptInfo } from '~/api/prompt'
 
 const route = useRoute()
@@ -190,6 +208,7 @@ const promptPageEl = ref<HTMLElement | null>(null)
 const { y } = useScroll(promptPageEl, { behavior: 'smooth' })
 const chatEl = ref<HTMLElement | null>(null)
 const { y: chatY } = useScroll(chatEl)
+const searchEl = ref<HTMLElement | null>(null)
 const scrollToBottom = () => {
   setTimeout(() => {
     y.value += 1000
@@ -304,6 +323,7 @@ const sendMessageByClick = () => {
   }
   if (userVal.value) {
     sendMessage()
+    searchEl.value?.blur()
   }
 }
 

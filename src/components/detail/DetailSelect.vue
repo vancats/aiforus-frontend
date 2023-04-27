@@ -1,17 +1,18 @@
 <template>
   <div flex-center>
-    <span mr-4 text="#9999a5">{{ variableInfo.description }}</span>
+    <span mr-2 text="#9999a5">{{ variableInfo.description }}</span>
     <n-select
       ref="selectEl"
       v-model:value="select"
-      w-50 class="prompt-select"
+      w-40 class="prompt-select"
       filterable tag
       :show="isShow"
+      size="small"
       :options="options"
       @create="createOption"
     >
       <template #arrow>
-        <ai-prompt-arrow @click="isShow = !isShow" />
+        <ai-prompt-arrow @click="showSelect" />
       </template>
     </n-select>
   </div>
@@ -40,6 +41,11 @@ onClickOutside(selectEl, () => {
 const createOption = (label: string) => {
   select.value = label
   return ({ label, value: label })
+}
+
+const showSelect = (e: Event) => {
+  e.stopPropagation()
+  isShow.value = !isShow.value
 }
 </script>
 
