@@ -165,6 +165,7 @@ import type { PromptInfo } from './type'
 import { clipboard, getLocalItem, removeLocalItem } from '~/utils/index'
 import { useNormalStore, useWebSocketStore } from '~/store/index'
 import { getPromptInfo } from '~/api/prompt'
+import { checkTokenValid } from '~/api/login'
 
 const route = useRoute()
 const useStore = useNormalStore()
@@ -267,8 +268,14 @@ const initWebSocket = (res: string) => {
       messages.value = []
     }
     const token = getLocalItem('token') || ''
-    if (token) showModal.value = true
-    else useStore.showLoginModal = true
+    if (token) {
+      checkTokenValid(token).then(res => {
+        if (res) showModal.value = true
+      })
+    }
+    else {
+      useStore.showLoginModal = true
+    }
   }
 }
 

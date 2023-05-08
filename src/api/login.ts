@@ -1,4 +1,4 @@
-import axios, { CHECK_LOGIN } from '~/utils/axios'
+import axios, { CHECK_LOGIN, CHECK_TOKEN } from '~/utils/axios'
 
 namespace LoginPage {
   export interface StatusResData {
@@ -15,4 +15,8 @@ export const login = async () => {
 
 export const checkLoginStatus = async () => {
   return await axios.get<LoginPage.StatusResData>(CHECK_LOGIN)
+}
+
+export const checkTokenValid = async (token: string) => {
+  return await axios.post(CHECK_TOKEN, { token })
 }

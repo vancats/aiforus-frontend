@@ -65,6 +65,11 @@ export const clearLocalItem = () => {
   localStorage.clear()
 }
 
+export const exitLogin = () => {
+  removeLocalItem('token')
+  removeLocalItem('username')
+}
+
 // 标签相关
 export function getActualTag(cards: CardInfo[], tagList: TagInfo[]) {
   const set: Set<number> = new Set()

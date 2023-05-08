@@ -1,7 +1,6 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import axios from 'axios'
-import router from '../router'
-import { convertObjectKeysToCamelCase, convertObjectKeysToSnakeCase, getLocalItem, removeLocalItem } from '.'
+import { convertObjectKeysToCamelCase, convertObjectKeysToSnakeCase, exitLogin, getLocalItem } from '.'
 import naiveui from '~/utils/naiveui'
 
 // 定义请求响应参数，不含data
@@ -35,7 +34,8 @@ const config = {
 
 export const CHECK_LOGIN = '/user/check-login'
 export const FILE_URL = '/file/upload'
-const RES_WHITE_LIST = [CHECK_LOGIN]
+export const CHECK_TOKEN = 'jwt/check'
+const RES_WHITE_LIST = [CHECK_LOGIN, CHECK_TOKEN]
 const REQ_WHITE_LIST = [FILE_URL]
 
 class RequestHttp {
@@ -67,8 +67,11 @@ class RequestHttp {
         const { data, config } = response // 解构
         if (data.code === RequestEnums.OVERDUE) {
           // 登录信息失效，应跳转到登录页面，并清空本地的token
-          removeLocalItem('token')
-          router.push('/login')
+          exitLogin()
+          naiveui.message.warning('登陆失效，请重新登陆')
+          setTimeout(() => {
+            location.reload()
+          }, 1000)
           return Promise.reject(data)
         }
         // 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）
@@ -93,8 +96,11 @@ class RequestHttp {
         naiveui.message.error('请求失败')
         break
       case RequestEnums.OVERDUE:
-        removeLocalItem('token')
-        router.push('/login')
+        exitLogin()
+        naiveui.message.warning('登陆失效，请重新登陆')
+        setTimeout(() => {
+          location.reload()
+        }, 1000)
         break
       default:
         naiveui.message.error('请求失败')

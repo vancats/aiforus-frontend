@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { removeLocalItem } from '../../utils/index'
+import { exitLogin } from '~/utils/index'
 import { useNormalStore, useWebSocketStore } from '~/store'
 import naiveui from '~/utils/naiveui'
 defineOptions({ name: 'NavBar' })
@@ -85,8 +85,7 @@ const onSearch = () => {
 
 const showLogoutModal = ref(false)
 const logout = () => {
-  removeLocalItem('token')
-  removeLocalItem('username')
+  exitLogin()
   naiveui.message.success('您已退出登陆')
   useWebSocket.ws?.close()
   useStore.username = ''
