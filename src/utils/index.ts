@@ -137,3 +137,7 @@ export const createAction = ({ row, action, title, style = 'text-blue cursor' }:
     { default: () => title },
   )
 }
+
+export const getHeat = (heat: number) => {
+  return heat >= 1000 ? `${Math.floor(heat / 1000)}k` : heat
+}

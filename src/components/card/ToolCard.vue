@@ -29,7 +29,8 @@
           <div flex-center>
             <ai-card-fire wh-3-4 mr-1 />
             <span text-3-sm>
-              {{ toolInfo.heat >= 1000 ? `${Math.floor(toolInfo.heat / 1000)}k` : toolInfo.heat }}</span>
+              {{ getHeat(toolInfo.heat) }}
+            </span>
           </div>
         </div>
       </div>
@@ -38,7 +39,7 @@
 </template>
 
 <script setup lang='ts'>
-import { setLocalItem } from '../../utils/index'
+import { getHeat, setLocalItem } from '../../utils/index'
 import type { CardInfo } from './type'
 
 const { toolInfo } = defineProps<{ toolInfo: CardInfo }>()

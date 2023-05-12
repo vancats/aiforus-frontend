@@ -5,14 +5,14 @@
     <div h-18-35 flex-start-between-col>
       <div>
         <n-space flex-center :size="4">
-          <n-ellipsis max-w-35 text-4-5.5 :line-clamp="1" :tooltip="false">
+          <n-ellipsis max-w-30 text-4-5.5 :line-clamp="1" :tooltip="false">
             {{ detailInfo.name }}
           </n-ellipsis>
           <CardTag v-if="detailInfo" :tags="detailInfo.tagList" />
           <div flex-center>
             <ai-card-fire wh-3-4 mr-1 />
             <div text-3-sm>
-              {{ detailInfo.heat }}
+              {{ getHeat(detailInfo.heat) }}
             </div>
           </div>
         </n-space>
@@ -34,6 +34,7 @@
 
 <script setup lang='ts'>
 import type { PromptInfo, ToolInfo } from '~/pages/detail/type'
+import { getHeat } from '~/utils'
 
 const { detailInfo } = defineProps<{ detailInfo: ToolInfo | PromptInfo }>()
 </script>

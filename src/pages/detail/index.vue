@@ -1,6 +1,13 @@
 <template>
-  <div mobile-only h-8 my-2>
-    <ai-common-back @click="goBack" />
+  <div class="nav-card" mobile-only flex-center my-3 mr-3>
+    <div h-8 mr-2>
+      <ai-common-back @click="goBack" />
+    </div>
+    <div flex h-8 overflow-x-scroll overflow-y-hidden>
+      <template v-for="card in cards.slice(0, 20)" :key="card.id">
+        <DetailNavCard :card-info="card" />
+      </template>
+    </div>
   </div>
 
   <div flex pb-4 layout-right overflow-y-scroll>
@@ -48,14 +55,27 @@ async function fetchCards() {
     console.warn(e)
   }
 }
-onMounted(() => fetchCards())
+
+// 保存前置路由以跳转
+const prevRoute = ref<any>(null)
+onMounted(() => {
+  fetchCards()
+  prevRoute.value = router.options.history.state.back
+})
 
 const goBack = () => {
-  if (window.history.length > 1) {
-    router.back()
+  if (window.history.length > 1 && route.path !== prevRoute.value) {
+    router.push(prevRoute.value)
   }
   else {
     router.push('/')
   }
 }
 </script>
+
+<style>
+/* 滚动条 */
+.nav-card ::-webkit-scrollbar{
+    height: 0;
+}
+</style>

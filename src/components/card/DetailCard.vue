@@ -14,7 +14,7 @@
             <div flex-center-end flex-shrink-0 w-15>
               <ai-card-fire wh-3-4 mr-1 />
               <div text-3-sm>
-                {{ cardInfo.heat >= 1000 ? `${Math.floor(cardInfo.heat / 1000)}k` : cardInfo.heat }}
+                {{ getHeat(cardInfo.heat) }}
               </div>
             </div>
           </div>
@@ -44,8 +44,8 @@
 </template>
 
 <script setup lang='ts'>
-import { setLocalItem } from '../../utils/index'
 import type { CardInfo } from './type'
+import { getHeat, setLocalItem } from '~/utils/index'
 
 const { cardInfo } = defineProps<{ cardInfo: CardInfo }>()
 const router = useRouter()

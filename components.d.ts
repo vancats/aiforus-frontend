@@ -31,6 +31,7 @@ declare module '@vue/runtime-core' {
     CardTag: typeof import('./src/components/card/CardTag.vue')['default']
     DetailCard: typeof import('./src/components/card/DetailCard.vue')['default']
     DetailHeader: typeof import('./src/components/detail/DetailHeader.vue')['default']
+    DetailNavCard: typeof import('./src/components/detail/DetailNavCard.vue')['default']
     DetailSelect: typeof import('./src/components/detail/DetailSelect.vue')['default']
     DialogApi: typeof import('./src/components/naiveAPI/dialogApi.vue')['default']
     DrainageModal: typeof import('./src/components/layout/DrainageModal.vue')['default']
