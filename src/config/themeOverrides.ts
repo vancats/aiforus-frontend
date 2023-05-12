@@ -1,4 +1,3 @@
-/// App
 export const appTheme = {
   Input: {
     border: 'none',

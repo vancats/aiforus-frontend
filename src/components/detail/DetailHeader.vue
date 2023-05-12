@@ -1,17 +1,17 @@
 <template>
   <div flex-center>
-    <img :src="detailInfo.iconUrl" wh-18 sm:wh-35 mr-3 sm:mr-6 rounded-2xl alt="icon">
+    <img :src="detailInfo.iconUrl" wh-18-35 mr-3-6 rounded-2xl alt="icon">
 
-    <div h-18 sm:h-35 flex-start-between-col>
+    <div h-18-35 flex-start-between-col>
       <div>
         <n-space flex-center :size="4">
-          <n-ellipsis max-w-35 text-4 sm:text-5.5 :line-clamp="1" :tooltip="false">
+          <n-ellipsis max-w-35 text-4-5.5 :line-clamp="1" :tooltip="false">
             {{ detailInfo.name }}
           </n-ellipsis>
           <CardTag v-if="detailInfo" :tags="detailInfo.tagList" />
           <div flex-center>
-            <ai-card-fire wh-3 sm:wh-4 mr-1 />
-            <div text-3 sm:text-sm>
+            <ai-card-fire wh-3-4 mr-1 />
+            <div text-3-sm>
               {{ detailInfo.heat }}
             </div>
           </div>

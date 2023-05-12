@@ -1,6 +1,6 @@
 <template>
   <template v-if="route.meta.showTabBar">
-    <div fixed left-0 right-0 bottom-0 p-2 bg="#242635">
+    <div fix-bottom p-2 bg="#242635">
       <div flex-center-around>
         <div side-icon :style="getStyle('/')" @click="router.push('/')">
           <ai-side-home wh-6 />

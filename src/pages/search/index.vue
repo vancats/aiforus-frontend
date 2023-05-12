@@ -11,11 +11,11 @@
           </template>
 
           <n-card
-            h-47 sm:h-76
+            h-47-76
             card-more mr-0 :bordered="false"
             @click="router.push('/tool')"
           >
-            <div flex-center-center-col h-47 sm:h-76>
+            <div flex-center-center-col h-47-76>
               <ai-card-arrow mb-4 />
               <div>更多</div>
             </div>
@@ -24,7 +24,7 @@
       </template>
       <Feedback v-else type-name="AI应用" />
 
-      <TagList v-model:active-tag="activeTag" :tag-list="filterTags" title="AI小工具" mt-4 sm:mt-8 />
+      <TagList v-model:active-tag="activeTag" :tag-list="filterTags" title="AI小工具" mt-4-8 />
 
       <template v-if="prompts.length">
         <div prompt-layout>

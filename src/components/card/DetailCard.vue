@@ -1,19 +1,19 @@
 <template>
   <n-card class="group" card-detail :bordered="false" @click="goCardDetail">
     <div flex>
-      <img :src="cardInfo.iconUrl" wh-20 sm:wh-37 rounded-l-2xl alt="icon">
+      <img :src="cardInfo.iconUrl" wh-20-37 rounded-l-2xl alt="icon">
 
-      <ai-card-new v-if="cardInfo.manualPriority > -1" absolute left-0 top-0 w-8 h-4 sm:w-12 sm:h-6 />
+      <ai-card-new v-if="cardInfo.manualPriority > -1" absolute left-0 top-0 w-8-12 h-4-6 />
 
-      <div flex-start-between-col w-full h-20 sm:h-37 px-3 py-2 rounded-r-xl>
+      <div flex-start-between-col w-full h-20-37 px-3 py-2 rounded-r-xl>
         <div w-full>
           <div flex-center-between sm:mb-2>
-            <n-ellipsis text-4 sm:text-4.5 :line-clamp="1" :tooltip="false">
+            <n-ellipsis text-4-4.5 :line-clamp="1" :tooltip="false">
               {{ cardInfo.name }}
             </n-ellipsis>
             <div flex-center-end flex-shrink-0 w-15>
-              <ai-card-fire wh-3 sm:wh-4 mr-1 />
-              <div text-3 sm:text-sm>
+              <ai-card-fire wh-3-4 mr-1 />
+              <div text-3-sm>
                 {{ cardInfo.heat >= 1000 ? `${Math.floor(cardInfo.heat / 1000)}k` : cardInfo.heat }}
               </div>
             </div>

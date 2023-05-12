@@ -1,6 +1,6 @@
 <template>
   <template v-if="toolInfo">
-    <div w-full p-3 sm:p-6 rounded-2xl bg="#2B2C3E" overflow-y-scroll>
+    <div w-full p-3-6 rounded-2xl bg="#2B2C3E" overflow-y-scroll>
       <DetailHeader :detail-info="toolInfo">
         <template #web-footer>
           <n-space justify="space-between">
@@ -24,7 +24,7 @@
         </template>
       </DetailHeader>
 
-      <div text-4 sm:text-5.5 mt-3 py-3 border="t-1 #1F1E2C">
+      <div text-4-5.5 mt-3 py-3 border="t-1 #1F1E2C">
         使用教程
       </div>
       <div v-if="toolInfo.usageContext" title-brief mb-2>

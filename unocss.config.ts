@@ -32,6 +32,8 @@ export default defineConfig({
     ['flex-center-between-row', 'flex-center-between flex-row'],
     ['flex-center-center-col', 'flex-center-center flex-col'],
 
+    ['fix-bottom', 'fixed left-0 right-0 bottom-0'],
+
     // sidebar
     ['side-icon', 'wh-15 sm:wh-20 sm:mb-2 rounded-lg cursor flex-center-center-col color-#9C9CA9 hover:color-#FFFFFF'],
 
@@ -61,6 +63,58 @@ export default defineConfig({
 
     ['title-brief', 'text-3 sm:text-sm text-#9C9CA9'],
 
+    // adaptor 可以使用 ruler 规则代替 数目不多，直接列出了
+    ['text-3-4', 'text-3 sm:text-4'],
+    ['text-3-sm', 'text-3 sm:text-sm'],
+    ['text-3-xl', 'text-3 sm:text-xl'],
+    ['text-4-4.5', 'text-4 sm:text-4.5'],
+    ['text-4-5', 'text-4 sm:text-5'],
+    ['text-4-5.5', 'text-4 sm:text-5.5'],
+    ['leading-4-6', 'leading-4 sm:leading-6'],
+
+    ['mt-1-3', 'mt-1 sm:mt-3'],
+    ['mt-4-8', 'mt-4 sm:mt-8'],
+    ['mt-4-10', 'mt-4 sm:mt-10'],
+
+    ['ml-2-4', 'ml-2 sm:ml-4'],
+    ['ml-12-22', 'ml-12 sm:ml-22'],
+
+    ['mr-3-6', 'mr-3 sm:mr-6'],
+    ['mr-12-22', 'mr-12 sm:mr-22'],
+
+    ['mb-3-6', 'mb-3 sm:mb-6'],
+
+    ['mx-2-6', 'mx-2 sm:mx-6'],
+    ['mx-12-22', 'mx-12 sm:mx-22'],
+
+    ['p-2-4', 'p-2 sm:p-4'],
+    ['p-3-6', 'p-3 sm:p-6'],
+
+    ['py-3-6', 'py-3 sm:py-6'],
+
+    ['w-8-12', 'w-8 sm:w-12'],
+    ['w-30-50', 'w-30 sm:w-50'],
+    ['w-50-100', 'w-50 sm:w-100'],
+    ['w-66-120', 'w-66 sm:w-120'],
+    ['w-full-auto', 'w-full sm:w-auto'],
+
+    ['h-4-6', 'h-4 sm:h-6'],
+    ['h-18-35', 'h-18 sm:h-35'],
+    ['h-20-37', 'h-20 sm:h-37'],
+    ['h-22-36', 'h-22 sm:h-36'],
+    ['h-25-40', 'h-25 sm:h-40'],
+    ['h-47-76', 'h-47 sm:h-76'],
+    ['h-120-150', 'h-120 sm:h-150'],
+
+    ['wh-3-4', 'wh-3 sm:wh-4'],
+    ['wh-8-10', 'wh-8 sm:wh-10'],
+    ['wh-18-35', 'wh-18 sm:wh-35'],
+    ['wh-20-37', 'wh-20 sm:wh-37'],
+    ['wh-35-60', 'wh-35 sm:wh-60'],
+    ['max-w-70-100', 'max-w-70 sm:max-w-100'],
+
+    ['top-0-4', 'top-0 sm:top-4'],
+    ['right-0-4', 'right-0 sm:right-4'],
   ],
 
   rules: [

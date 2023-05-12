@@ -1,12 +1,12 @@
 <template>
   <template v-if="promptInfo">
-    <div ref="promptPageEl" w-full p-3 sm:p-6 rounded-2xl bg="#2B2C3E" overflow-y-scroll>
+    <div ref="promptPageEl" w-full p-3-6 rounded-2xl bg="#2B2C3E" overflow-y-scroll>
       <DetailHeader :detail-info="promptInfo" />
 
-      <div v-if="!isRolePlay" mt-6 sm:px-6 sm:py-4 rounded-2xl sm:bg="#37384E" relative>
-        <n-popover v-if="promptInfo.visible" trigger="hover" placement="bottom-end" max-w-70 sm:max-w-100>
+      <div v-if="!isRolePlay" mt-6 rounded-2xl sm="px-6 py-4 bg-#37384E" relative>
+        <n-popover v-if="promptInfo.visible" trigger="hover" placement="bottom-end" max-w-70-100>
           <template #trigger>
-            <div absolute top-0 right-0 sm:top-4 sm:right-4 flex-center title-brief cursor>
+            <div absolute top-0-4 right-0-4 flex-center title-brief cursor>
               <ai-prompt-visible mr-1 />
               <span web-only>
                 查看AI机器人预设信息
@@ -48,40 +48,40 @@
           type="textarea" :placeholder="promptInfo.input"
           my-4 bg="#3F415B" rounded-xl
           :autosize="{ minRows: 5, maxRows: 5 }"
-          @click="showText"
+          @click="setUserPromptContent"
         />
         <div flex-center-end>
           <n-button
             type="primary" :disabled="isProcessing" px-7
-            w-full sm:w-auto @click="startChat"
+            w-full-auto @click="startChat"
           >
             确认
           </n-button>
         </div>
       </div>
 
-      <div v-if="allowConversation" ref="messageRef" h-120 sm:h-150 w-full mt-6 mb="-10" text-3 sm:text-4 flex-start-between-col py-3 sm:py-6 rounded-2xl relative bg="#37384E">
+      <div v-if="allowConversation" ref="messageRef" h-120-150 w-full mt-6 mb="-10" text-3-4 flex-start-between-col py-3-6 rounded-2xl relative bg="#37384E">
         <div ref="chatEl" w-full overflow-y-scroll>
           <div v-for="(messageInfo, index) in messages" :key="index" w-full>
-            <div v-if="messageInfo.role === 'user'" mb-3 sm:mb-6 flex-start>
-              <div w-full ml-12 sm:ml-22 rounded-lg p-2 sm:py-3 sm:pl-3 sm:pr-7 text="#001042" bg="#EFF1FC">
+            <div v-if="messageInfo.role === 'user'" mb-3-6 flex-start>
+              <div w-full ml-12-22 rounded-lg p-2 sm="py-3 pl-3 pr-7" text="#001042" bg="#EFF1FC">
                 <span style="white-space: pre-wrap;">
                   {{ messageInfo.content }}
                 </span>
               </div>
-              <div wh-8 mx-2 sm:wh-10 sm:mx-6 rounded="100%">
-                <ai-nav-avator wh-8 sm:wh-10 :src="promptInfo.iconUrl" />
+              <div wh-8-10 mx-2-6 rounded="100%">
+                <ai-nav-avator wh-8-10 :src="promptInfo.iconUrl" />
               </div>
             </div>
 
-            <div v-if="messageInfo.role === 'assistant'" mb-3 sm:mb-6 flex-start-end>
-              <img :src="promptInfo.iconUrl" wh-8 mx-2 sm:wh-10 sm:mx-6 rounded="100%">
-              <div w-full mr-12 sm:mr-22 rounded-lg p-2 sm:py-3 sm:pl-3 sm:pr-7 text="#001042" bg="#EFF1FC">
+            <div v-if="messageInfo.role === 'assistant'" mb-3-6 flex-start-end>
+              <img :src="promptInfo.iconUrl" wh-8-10 mx-2-6 rounded="100%">
+              <div w-full mr-12-22 rounded-lg p-2 sm="py-3 pl-3 pr-7" text="#001042" bg="#EFF1FC">
                 <span style="white-space: pre-wrap;">
                   {{ messageInfo.content }}
                 </span>
 
-                <div flex-center-between mt-1 sm:mt-3 text="#3A50FF">
+                <div flex-center-between mt-1-3 text="#3A50FF">
                   <div flex-shrink-0>
                     <div v-if="index === messages.length - 1" flex-center cursor>
                       <div v-if="isProcessing" flex-center @click="stopGenerate">
@@ -104,7 +104,7 @@
                       继续
                     </div>
                     <div v-if="index !== messages.length - 1 || !isProcessing" flex-center cursor @click="clipboard(messages[index].content)">
-                      <ai-prompt-copy ml-2 sm:ml-4 mr-1 />
+                      <ai-prompt-copy ml-2-4 mr-1 />
                       复制
                     </div>
                   </div>
@@ -112,7 +112,7 @@
               </div>
             </div>
 
-            <div v-if="messageInfo.role === 'division'" mx-12 mb-3 sm:mx-22 sm:mb-6 flex-center-center>
+            <div v-if="messageInfo.role === 'division'" mx-12-22 mb-3-6 flex-center-center>
               <n-divider text-3>
                 您已修改要求，以下是新信息
               </n-divider>
@@ -138,23 +138,23 @@
       </div>
     </div>
 
-    <n-modal v-model:show="showModal">
+    <n-modal v-model:show="showCountModal">
       <n-card
         style="background: #2b2c3d; border-radius: 12px"
-        w-50 sm:w-100
+        w-50-100
         size="huge" :bordered="false" role="dialog" aria-modal="true" closable
-        @close="() => showModal = false"
+        @close="() => showCountModal = false"
       >
         <template #header>
           <div flex-center>
             <ai-nav-warning mr-2 />
-            <span text-4 sm:text-5>次数不足</span>
+            <span text-4-5>次数不足</span>
           </div>
         </template>
-        <span text-3 sm:text-4>
+        <span text-3-4>
           您今日的 30 次使用次数已经用完,请扫描群二维码，联系群管理员获取更多次数
         </span>
-        <img wh-35 sm:wh-60 m-auto my-3 :src="useStore.wechatQRCode" alt="二维码">
+        <img wh-35-60 m-auto my-3 :src="useStore.wechatQRCode" alt="二维码">
       </n-card>
     </n-modal>
   </template>
@@ -170,18 +170,18 @@ import { checkTokenValid } from '~/api/login'
 const route = useRoute()
 const useStore = useNormalStore()
 const useWebSocket = useWebSocketStore()
+
 const promptInfo = ref<PromptInfo>()
-
 const selectValueArr = ref<string[]>([])
-const userPrompt = ref('')
-const showModal = ref(false)
-const allowConversation = ref(false)
 
+const allowConversation = ref(false)
+const userPrompt = ref('')
+const showCountModal = ref(false)
 const isRolePlay = computed(() => {
   return !!promptInfo.value?.tagList.some(i => i.name === '角色扮演')
 })
 
-const fetchInfo = async () => {
+async function fetchInfo() {
   const refresh = getLocalItem('refresh') !== 'false'
   removeLocalItem('refresh')
   const res = await getPromptInfo(Number(route.params.id), refresh)
@@ -196,15 +196,15 @@ const fetchInfo = async () => {
   }
 }
 
-onMounted(() => {
-  fetchInfo()
-  useWebSocket.ws?.close()
+const isProcessing = ref(false)
+const messages = ref<Array<{ role: string; content: string }>>([])
+const userVal = ref('')
+
+const submitPlaceholder = computed(() => {
+  return (isRolePlay.value && !messages.value.length) ? promptInfo.value?.input : isProcessing.value ? '内容正在加速生成...' : '请输入'
 })
 
-const isProcessing = ref(false)
-const userVal = ref('')
-const messages = ref<Array<{ role: string; content: string }>>([])
-
+// Scroll
 const promptPageEl = ref<HTMLElement | null>(null)
 const { y } = useScroll(promptPageEl, { behavior: 'smooth' })
 const chatEl = ref<HTMLElement | null>(null)
@@ -241,7 +241,7 @@ const initWebSocket = (res: string) => {
 
       const token = getLocalItem('token') || ''
       if (token) {
-        showModal.value = true
+        showCountModal.value = true
       }
       else {
         useStore.showLoginModal = true
@@ -270,7 +270,7 @@ const initWebSocket = (res: string) => {
     const token = getLocalItem('token') || ''
     if (token) {
       checkTokenValid(token).then(res => {
-        if (res) showModal.value = true
+        if (res) showCountModal.value = true
       })
     }
     else {
@@ -294,7 +294,8 @@ function sendMessage() {
   })
 }
 
-const startChat = async () => {
+// 点击上面的确定
+function startChat() {
   if (messages.value.length) {
     messages.value.push({
       role: 'division',
@@ -307,24 +308,20 @@ const startChat = async () => {
     content: userPrompt.value || promptInfo.value!.input,
   })
 
-  showText()
+  setUserPromptContent()
   userVal.value = ''
   sendMessage()
 }
 
-watch(() => allowConversation.value, () => {
-  if (allowConversation.value) {
-    scrollToBottom()
-  }
-})
-
-const sendMessageByEnter = (e: KeyboardEvent) => {
+// 输入框的回车
+function sendMessageByEnter(e: KeyboardEvent) {
   if (!e.shiftKey && userVal.value.trim()) {
     sendMessage()
   }
 }
 
-const sendMessageByClick = () => {
+// 点击发送图标
+function sendMessageByClick() {
   if (isRolePlay && !messages.value.length) {
     userVal.value = promptInfo.value?.input || ''
   }
@@ -334,17 +331,17 @@ const sendMessageByClick = () => {
   }
 }
 
-const doContinue = () => {
+function doContinue() {
   userVal.value = '继续'
   sendMessage()
 }
 
-const stopGenerate = () => {
+function stopGenerate() {
   useWebSocket.ws?.close()
   isProcessing.value = false
 }
 
-const regenerate = () => {
+function regenerate() {
   useWebSocket.ws?.close()
   setTimeout(() => {
     messages.value.pop()
@@ -383,6 +380,23 @@ function processData() {
   })
 }
 
+function setUserPromptContent() {
+  if (!userPrompt.value) {
+    userPrompt.value = promptInfo.value?.input || ''
+  }
+}
+
+onMounted(() => {
+  fetchInfo()
+  useWebSocket.ws?.close()
+})
+
+watch(() => allowConversation.value, () => {
+  if (allowConversation.value) {
+    scrollToBottom()
+  }
+})
+
 watch(() => route.params, () => {
   isProcessing.value = false
   allowConversation.value = false
@@ -390,15 +404,5 @@ watch(() => route.params, () => {
   messages.value = []
   useWebSocket.ws?.close()
   fetchInfo()
-})
-
-function showText() {
-  if (!userPrompt.value) {
-    userPrompt.value = promptInfo.value?.input || ''
-  }
-}
-
-const submitPlaceholder = computed(() => {
-  return (isRolePlay.value && !messages.value.length) ? promptInfo.value?.input : isProcessing.value ? '内容正在加速生成...' : '请输入'
 })
 </script>

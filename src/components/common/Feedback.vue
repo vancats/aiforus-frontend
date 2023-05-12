@@ -1,9 +1,9 @@
 <template>
   <div text-center my-16>
-    <div text-3 sm:text-xl>
+    <div text-3-xl>
       老板，没有“{{ useStore.searchVal }}”相关的{{ typeName }}，换个关键词试试
     </div>
-    <div text-3 sm:text-sm mt-4 sm:mt-10 cursor text="#3A50FF" @click="openModal">
+    <div text-3-sm mt-4-10 cursor text="#3A50FF" @click="openModal">
       没有找到可用ai应用？点击向我们反馈
     </div>
   </div>
@@ -11,7 +11,7 @@
   <n-modal v-model:show="showModal">
     <n-card
       style="background: #2b2c3d; border-radius: 12px"
-      w-66 sm:w-120
+      w-66-120
       title="问题与反馈" size="huge" :bordered="false" role="dialog" aria-modal="true"
     >
       <n-input
