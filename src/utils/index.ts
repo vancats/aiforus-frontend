@@ -141,3 +141,8 @@ export const createAction = ({ row, action, title, style = 'text-blue cursor' }:
 export const getHeat = (heat: number) => {
   return heat >= 1000 ? `${Math.floor(heat / 1000)}k` : heat
 }
+
+export function isWeChatBrowser() {
+  const ua = navigator.userAgent.toLowerCase()
+  return ua.includes('micromessenger')
+}

@@ -22,6 +22,8 @@
 </template>
 
 <script setup lang="ts">
+import { isWeChatBrowser, setLocalItem } from './utils/index'
+import { wechatLogin } from '~/api/login'
 import { useNormalStore } from '~/store'
 import { appTheme } from '~/config/themeOverrides'
 import { getQRCode } from '~/api/common'
@@ -29,12 +31,31 @@ defineOptions({ name: 'AppPage' })
 
 const useStore = useNormalStore()
 
-onMounted(() => {
+const fetchQRCode = () => {
   getQRCode().then(
     res => {
       if (res?.qrcodeUrl) {
         useStore.wechatQRCode = res.qrcodeUrl
       }
     })
+}
+
+const loginInWechat = async () => {
+  const code = location.search.slice(1).split('&').find(i => i.includes('code'))?.split('=')[1]
+  if (code) {
+    const res = await wechatLogin(code)
+    if (res.data?.token) {
+      setLocalItem('token', res.data.token)
+      setLocalItem('username', res.data.userId)
+      useStore.username = res.data.userId
+    }
+  }
+}
+
+onMounted(() => {
+  fetchQRCode()
+  if (isWeChatBrowser()) {
+    loginInWechat()
+  }
 })
 </script>

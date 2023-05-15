@@ -20,3 +20,7 @@ export const checkLoginStatus = async () => {
 export const checkTokenValid = async (token: string) => {
   return await axios.post(CHECK_TOKEN, { token })
 }
+
+export const wechatLogin = async (code: string) => {
+  return await axios.post<LoginPage.StatusResData>('/user/wx-login', { code, state: 'login' })
+}
