@@ -4,6 +4,8 @@ specifiers:
   '@antfu/eslint-config': ^0.36.0
   '@iconify-json/carbon': ^1.1.16
   '@iconify-json/mingcute': ^1.1.5
+  '@types/dompurify': ^3.0.2
+  '@types/marked': ^4.3.0
   '@types/node': ^18.14.6
   '@unocss/reset': ^0.50.3
   '@vitejs/plugin-vue': ^4.0.0
@@ -11,9 +13,11 @@ specifiers:
   '@vue/test-utils': ^2.3.0
   '@vueuse/core': ^9.13.0
   axios: ^1.3.4
+  dompurify: ^3.0.3
   eslint: ^8.35.0
   jsdom: ^21.1.0
   lint-staged: ^13.1.2
+  marked: ^5.0.2
   naive-ui: ^2.34.3
   pinia: ^2.0.33
   pnpm: ^7.28.0
@@ -35,6 +39,8 @@ specifiers:
 dependencies:
   '@vueuse/core': 9.13.0_vue@3.2.47
   axios: 1.3.4
+  dompurify: 3.0.3
+  marked: 5.0.2
   pinia: 2.0.33_hmuptsblhheur2tugfgucj7gc4
   vue: 3.2.47
   vue-router: 4.1.6_vue@3.2.47
@@ -43,6 +49,8 @@ devDependencies:
   '@antfu/eslint-config': 0.36.0_ycpbpc6yetojsgtrx3mwntkhsu
   '@iconify-json/carbon': 1.1.16
   '@iconify-json/mingcute': 1.1.5
+  '@types/dompurify': 3.0.2
+  '@types/marked': 4.3.0
   '@types/node': 18.14.6
   '@unocss/reset': 0.50.3
   '@vitejs/plugin-vue': 4.0.0_vite@4.1.4+vue@3.2.47
@@ -975,6 +983,12 @@ packages:
       '@types/ms': 0.7.31
     dev: true
 
+  /@types/dompurify/3.0.2:
+    resolution: {integrity: sha512-YBL4ziFebbbfQfH5mlC+QTJsvh0oJUrWbmxKMyEdL7emlHJqGR2Qb34TEFKj+VCayBvjKy3xczMFNhugThUsfQ==}
+    dependencies:
+      '@types/trusted-types': 2.0.3
+    dev: true
+
   /@types/estree/1.0.0:
     resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
     dev: true
@@ -1001,6 +1015,10 @@ packages:
     resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
     dev: true
 
+  /@types/marked/4.3.0:
+    resolution: {integrity: sha512-zK4gSFMjgslsv5Lyvr3O1yCjgmnE4pr8jbG8qVn4QglMwtpvPCf4YT2Wma7Nk95OxUUJI8Z+kzdXohbM7mVpGw==}
+    dev: true
+
   /@types/mdast/3.0.10:
     resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==}
     dependencies:
@@ -1021,6 +1039,10 @@ packages:
 
   /@types/semver/7.3.13:
     resolution: {integrity: sha512-21cFJr9z3g5dW8B0CVI9g2O9beqaThGQ6ZFBqHfwhzLDKUxaqTIy3vnfah/UPkfOiF2pLq+tGz+W8RyCskuslw==}
+    dev: true
+
+  /@types/trusted-types/2.0.3:
+    resolution: {integrity: sha512-NfQ4gyz38SL8sDNrSixxU2Os1a5xcdFxipAFxYEuLUlvU2uDwS4NUpsImcf1//SlWItCVMMLiylsxbmNMToV/g==}
     dev: true
 
   /@types/unist/2.0.6:
@@ -2583,6 +2605,10 @@ packages:
     dependencies:
       domelementtype: 2.3.0
     dev: true
+
+  /dompurify/3.0.3:
+    resolution: {integrity: sha512-axQ9zieHLnAnHh0sfAamKYiqXMJAVwu+LM/alQ7WDagoWessyWvMSFyW65CqF3owufNu8HBcE4cM2Vflu7YWcQ==}
+    dev: false
 
   /domutils/3.0.1:
     resolution: {integrity: sha512-z08c1l761iKhDFtfXO04C7kTdPBLi41zwOZl00WS8b5eiaebNpY00HKbztwBq+e3vyqWNwWF3mP9YLUeqIrF+Q==}
@@ -4393,6 +4419,12 @@ packages:
       - bluebird
       - supports-color
     dev: true
+
+  /marked/5.0.2:
+    resolution: {integrity: sha512-TXksm9GwqXCRNbFUZmMtqNLvy3K2cQHuWmyBDLOrY1e6i9UvZpOTJXoz7fBjYkJkaUFzV9hBFxMuZSyQt8R6KQ==}
+    engines: {node: '>= 18'}
+    hasBin: true
+    dev: false
 
   /mdast-util-from-markdown/0.8.5:
     resolution: {integrity: sha512-2hkTXtYYnr+NubD/g6KGBS/0mFmBcifAsI0yIWRiRo0PjVs6SSOSOdtzbp6kSGnShDN6G5aWZpKQ2lWRy27mWQ==}

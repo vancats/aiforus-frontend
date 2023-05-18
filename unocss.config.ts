@@ -87,6 +87,7 @@ export default defineConfig({
     ['mx-2-6', 'mx-2 sm:mx-6'],
     ['mx-12-22', 'mx-12 sm:mx-22'],
 
+    ['p-2-3', 'p-2 sm:p-3'],
     ['p-2-4', 'p-2 sm:p-4'],
     ['p-3-6', 'p-3 sm:p-6'],
 

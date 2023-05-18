@@ -64,10 +64,8 @@
         <div ref="chatEl" w-full overflow-y-scroll>
           <div v-for="(messageInfo, index) in messages" :key="index" w-full>
             <div v-if="messageInfo.role === 'user'" mb-3-6 flex-start>
-              <div w-full ml-12-22 rounded-lg p-2 sm="py-3 pl-3 pr-7" text="#001042" bg="#EFF1FC">
-                <span style="white-space: pre-wrap;">
-                  {{ messageInfo.content }}
-                </span>
+              <div w-full ml-12-22 rounded-lg p-2-3 text="#FFFFFF" bg="#3A50FF">
+                <div v-html="DOMPurify.sanitize(parseMarkDown(messageInfo.content))" />
               </div>
               <div wh-8-10 mx-2-6 rounded="100%">
                 <ai-nav-avator wh-8-10 :src="promptInfo.iconUrl" />
@@ -76,11 +74,8 @@
 
             <div v-if="messageInfo.role === 'assistant'" mb-3-6 flex-start-end>
               <img :src="promptInfo.iconUrl" wh-8-10 mx-2-6 rounded="100%">
-              <div w-full mr-12-22 rounded-lg p-2 sm="py-3 pl-3 pr-7" text="#001042" bg="#EFF1FC">
-                <span style="white-space: pre-wrap;">
-                  {{ messageInfo.content }}
-                </span>
-
+              <div w-full mr-12-22 rounded-lg p-2-3 text="#001042" bg="#EFF1FC">
+                <div v-html="DOMPurify.sanitize(parseMarkDown(messageInfo.content))" />
                 <div flex-center-between mt-1-3 text="#3A50FF">
                   <div flex-shrink-0>
                     <div v-if="index === messages.length - 1" flex-center cursor>
@@ -161,7 +156,12 @@
 </template>
 
 <script setup lang='ts'>
+import { marked } from 'marked'
+import DOMPurify from 'dompurify'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/agate.css'
 import type { PromptInfo } from './type'
+import { markedHighlight } from '~/utils/marked-highlight'
 import { clipboard, getLocalItem, removeLocalItem } from '~/utils/index'
 import { useNormalStore, usePromptDataStore, useWebSocketStore } from '~/store/index'
 import { getPromptInfo } from '~/api/prompt'
@@ -246,6 +246,7 @@ const initWebSocket = (res: string) => {
   useWebSocket.ws.onmessage = (res) => {
     if (res.data === '#DONE#') {
       isProcessing.value = false
+      addCopyCodeText()
     }
     else if (res.data === '#NOUSAGE#') {
       isProcessing.value = false
@@ -351,6 +352,7 @@ function doContinue() {
 function stopGenerate() {
   useWebSocket.ws?.close()
   isProcessing.value = false
+  addCopyCodeText()
 }
 
 function regenerate() {
@@ -398,6 +400,55 @@ function setUserPromptContent() {
   }
 }
 
+function parseMarkDown(content: string) {
+  return marked.parse(content)
+}
+
+function addMarkedConfig() {
+  const renderer = {
+    list(body: string, ordered: boolean) {
+      if (ordered) {
+        return `<ol>${body}</ol>`
+      }
+      return body
+    },
+    listitem(text: string) {
+      return `<li>${text}</li>`
+    },
+  }
+  marked.use({ renderer }, markedHighlight({
+    highlight(code: string, lang: string) {
+      const language = hljs.getLanguage(lang) ? lang : 'plaintext'
+      return hljs.highlight(code, { language }).value
+    },
+    langPrefix: 'hljs language-',
+    pedantic: false,
+    gfm: true,
+    breaks: false,
+    sanitize: false,
+    smartypants: false,
+    xhtml: false,
+  }), { headerIds: false, mangle: false })
+}
+
+function addCopyCodeText() {
+  const pres = document.querySelectorAll('pre')
+  Array.from(pres).forEach(item => {
+    // 防止重复添加
+    if (Array.from(item.classList).includes('copy')) return
+    item.classList.add('copy')
+
+    const copyNode = document.createElement('span')
+    copyNode.style.cssText = 'position: absolute; right: 4px; top: 4px; cursor: pointer; color: white; font-size: 12px'
+    copyNode.innerHTML = '复制代码'
+    copyNode.onclick = function () {
+      const copyData = item?.innerText
+      clipboard(copyData.slice(0, -4))
+    }
+    item.appendChild(copyNode)
+  })
+}
+
 function setPromptDataToMap() {
   usePromptData.setPromptDataToMap(routeId, {
     messages: messages.value,
@@ -410,6 +461,7 @@ function setPromptDataToMap() {
 onMounted(() => {
   fetchInfo()
   useWebSocket.ws?.close()
+  addMarkedConfig()
 })
 
 watch(() => allowConversation.value, () => {
@@ -437,3 +489,42 @@ onBeforeRouteLeave(() => {
   setPromptDataToMap()
 })
 </script>
+
+<style>
+pre {
+    white-space:break-spaces;
+    position: relative;
+}
+
+ul li {
+    list-style: disc;
+}
+
+ol li{
+    list-style:decimal inside;
+}
+
+li p {
+    display: inline;
+}
+
+table {
+    font-size:14px;
+    color:#333333;
+    width: 100%;
+    border: 2px solid #666666;
+}
+
+table th {
+    font-weight: bold;
+    padding: 8px;
+    border: 2px solid #666666;
+    background-color: #dedede;
+}
+
+table td {
+    padding: 8px;
+    border: 2px solid #666666;
+    border-collapse: collapse;
+}
+</style>
