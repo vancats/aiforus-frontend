@@ -98,6 +98,8 @@ export default defineConfig({
     ['w-66-120', 'w-66 sm:w-120'],
     ['w-full-auto', 'w-full sm:w-auto'],
 
+    ['max-w-30-full', 'max-w-30 sm:max-w-full'],
+
     ['h-4-6', 'h-4 sm:h-6'],
     ['h-18-35', 'h-18 sm:h-35'],
     ['h-20-37', 'h-20 sm:h-37'],

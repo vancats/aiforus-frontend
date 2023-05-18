@@ -5,7 +5,7 @@
     <div h-18-35 flex-start-between-col>
       <div>
         <n-space flex-center :size="4">
-          <n-ellipsis max-w-30 text-4-5.5 :line-clamp="1" :tooltip="false">
+          <n-ellipsis max-w-30-full text-4-5.5 :line-clamp="1" :tooltip="false">
             {{ detailInfo.name }}
           </n-ellipsis>
           <CardTag v-if="detailInfo" :tags="detailInfo.tagList" />

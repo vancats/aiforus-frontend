@@ -163,13 +163,15 @@
 <script setup lang='ts'>
 import type { PromptInfo } from './type'
 import { clipboard, getLocalItem, removeLocalItem } from '~/utils/index'
-import { useNormalStore, useWebSocketStore } from '~/store/index'
+import { useNormalStore, usePromptDataStore, useWebSocketStore } from '~/store/index'
 import { getPromptInfo } from '~/api/prompt'
 import { checkTokenValid } from '~/api/login'
 
 const route = useRoute()
 const useStore = useNormalStore()
 const useWebSocket = useWebSocketStore()
+const usePromptData = usePromptDataStore()
+let routeId = Number(route.params.id)
 
 const promptInfo = ref<PromptInfo>()
 const selectValueArr = ref<string[]>([])
@@ -180,21 +182,6 @@ const showCountModal = ref(false)
 const isRolePlay = computed(() => {
   return !!promptInfo.value?.tagList.some(i => i.name === '角色扮演')
 })
-
-async function fetchInfo() {
-  const refresh = getLocalItem('refresh') !== 'false'
-  removeLocalItem('refresh')
-  const res = await getPromptInfo(Number(route.params.id), refresh)
-  promptInfo.value = res
-  if (res?.variableList) {
-    selectValueArr.value = res.variableList.map(variableInfo => {
-      return variableInfo.value.split(',')[0]
-    })
-  }
-  if (res?.tagList) {
-    allowConversation.value = isRolePlay.value
-  }
-}
 
 const isProcessing = ref(false)
 const messages = ref<Array<{ role: string; content: string }>>([])
@@ -216,7 +203,32 @@ const scrollToBottom = () => {
   })
 }
 const scrollChatToBottom = () => {
-  chatY.value += 1000
+  chatY.value += 10000
+}
+
+async function fetchInfo() {
+  const refresh = getLocalItem('refresh') !== 'false'
+  removeLocalItem('refresh')
+  const res = await getPromptInfo(routeId, refresh)
+  promptInfo.value = res
+
+  const promptVal = usePromptData.promptMap.get(routeId)
+  if (promptVal) {
+    messages.value = promptVal.messages
+    userPrompt.value = promptVal.userPrompt
+    selectValueArr.value = promptVal.selectValueArr
+    allowConversation.value = promptVal.allowConversation
+  }
+  else {
+    if (res?.variableList) {
+      selectValueArr.value = res.variableList.map(variableInfo => {
+        return variableInfo.value.split(',')[0]
+      })
+    }
+    if (res?.tagList) {
+      allowConversation.value = isRolePlay.value
+    }
+  }
 }
 
 const initWebSocket = (res: string) => {
@@ -386,6 +398,15 @@ function setUserPromptContent() {
   }
 }
 
+function setPromptDataToMap() {
+  usePromptData.setPromptDataToMap(routeId, {
+    messages: messages.value,
+    selectValueArr: selectValueArr.value,
+    userPrompt: userPrompt.value,
+    allowConversation: allowConversation.value,
+  })
+}
+
 onMounted(() => {
   fetchInfo()
   useWebSocket.ws?.close()
@@ -394,15 +415,25 @@ onMounted(() => {
 watch(() => allowConversation.value, () => {
   if (allowConversation.value) {
     scrollToBottom()
+    setTimeout(() => {
+      scrollChatToBottom()
+    }, 500)
   }
 })
 
 watch(() => route.params, () => {
+  setPromptDataToMap()
+
+  routeId = Number(route.params.id)
   isProcessing.value = false
   allowConversation.value = false
   userPrompt.value = ''
   messages.value = []
   useWebSocket.ws?.close()
   fetchInfo()
+})
+
+onBeforeRouteLeave(() => {
+  setPromptDataToMap()
 })
 </script>

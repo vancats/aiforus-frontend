@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import type { PromptData } from './type'
 import { getLocalItem } from '~/utils'
 
 export const useNormalStore = defineStore('search', () => {
@@ -19,6 +20,10 @@ export const useWebSocketStore = defineStore('webSocket', () => {
 })
 
 export const usePromptDataStore = defineStore('promptData', () => {
-  const map: Map<number, any> = new Map()
-  return { map }
+  const promptMap: Map<number, PromptData> = new Map()
+
+  const setPromptDataToMap = (routeId: number, data: PromptData) => {
+    promptMap.set(routeId, data)
+  }
+  return { promptMap, setPromptDataToMap }
 })
