@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div mobile-only>
+    <div v-if="title" mobile-only>
       <div text-4 mb-2>
         {{ title }}
       </div>
     </div>
     <div title-tags>
-      <span web-only mr-6>{{ title }}</span>
+      <span v-if="title" web-only mr-6>{{ title }}</span>
       <n-space :size="4">
         <n-tag
           v-for="tag in tagList" :key="tag.id"
@@ -24,7 +24,7 @@
 <script setup lang='ts'>
 import type { TagInfo } from '~/utils/type'
 
-const { tagList, title } = defineProps<{ tagList: Array<TagInfo>; title: string }>()
+const { tagList, title } = defineProps<{ tagList: Array<TagInfo>; title?: string }>()
 const { activeTag } = defineModel<{ activeTag: number }>()
 const onClick = (id: number) => activeTag.value = id
 </script>

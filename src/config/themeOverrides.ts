@@ -38,7 +38,6 @@ export const appTheme = {
     borderPrimary: 'none',
     borderHoverPrimary: 'none',
     borderFocusPrimary: 'none',
-
   },
 
   Card: {
@@ -82,5 +81,12 @@ export const appTheme = {
   Divider: {
     textColor: '#FFFFFF',
     color: 'rgba(255, 255, 255, 0.5)',
+  },
+  Tabs: {
+    tabTextColorBar: 'rgba(255, 255, 255, 0.5)',
+    tabTextColorActiveBar: '#FFFFFF',
+    tabTextColorHoverBar: '#FFFFFF',
+    barColor: '#A47FFA',
+    tabPaddingLargeBar: '0.5rem',
   },
 }

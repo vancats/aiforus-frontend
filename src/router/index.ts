@@ -22,6 +22,12 @@ const routes = [
     meta: { showSearch: true, showTabBar: true },
   },
   {
+    name: 'User',
+    path: '/user',
+    component: _import('user'),
+    meta: { showSearch: true, showTabBar: true },
+  },
+  {
     name: 'Search',
     path: '/search',
     component: _import('search'),
