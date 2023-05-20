@@ -19,6 +19,12 @@
         AI小工具
       </div>
     </div>
+    <div side-icon :style="getStyle('/user')" @click="router.push('/user')">
+      <ai-side-user wh-8 />
+      <div pt-2 text-sm>
+        个人中心
+      </div>
+    </div>
   </div>
 </template>
 

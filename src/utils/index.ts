@@ -89,6 +89,13 @@ export function handleAllTag(tags: TagInfo[] | undefined) {
   }
 }
 
+export function getTargetTagCard(cards: CardInfo[], tagIdList: number[]) {
+  if (tagIdList?.length === 0 || tagIdList.includes(0)) return cards
+  return cards.filter((card) => {
+    return card.tagList.some(tag => tagIdList.includes(tag.id))
+  })
+}
+
 // 剪切板
 export const clipboard = (val: string) => {
   if (navigator.clipboard) {
