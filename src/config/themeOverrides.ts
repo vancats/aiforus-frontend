@@ -84,8 +84,11 @@ export const appTheme = {
   },
   Tabs: {
     tabTextColorBar: 'rgba(255, 255, 255, 0.5)',
+    tabTextColorLine: 'rgba(255, 255, 255, 0.5)',
     tabTextColorActiveBar: '#FFFFFF',
     tabTextColorHoverBar: '#FFFFFF',
+    tabTextColorActiveLine: '#FFFFFF',
+    tabTextColorHoverLine: '#FFFFFF',
     barColor: '#A47FFA',
     tabPaddingLargeBar: '0.5rem',
   },
