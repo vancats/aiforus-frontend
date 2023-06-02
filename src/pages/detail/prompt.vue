@@ -65,7 +65,7 @@
           <div v-for="(messageInfo, index) in messages" :key="index" w-full>
             <div v-if="messageInfo.role === 'user'" mb-3-6 flex-start>
               <div w-full ml-12-22 rounded-lg p-2-3 text="#FFFFFF" bg="#3A50FF">
-                <div class="overflow-auto whitespace-normal" v-html="DOMPurify.sanitize(parseMarkDown(messageInfo.content))" />
+                <div v-html="DOMPurify.sanitize(parseMarkDown(messageInfo.content))" />
               </div>
               <div wh-8-10 mx-2-6 rounded="100%">
                 <ai-nav-avator wh-8-10 :src="promptInfo.iconUrl" />
@@ -430,7 +430,7 @@ function addMarkedConfig() {
     langPrefix: 'hljs language-',
     pedantic: false,
     gfm: true,
-    breaks: true,
+    breaks: false,
     sanitize: false,
     smartypants: false,
     xhtml: false,
