@@ -65,7 +65,7 @@
           <div v-for="(messageInfo, index) in messages" :key="index" w-full>
             <div v-if="messageInfo.role === 'user'" mb-3-6 flex-start>
               <div w-full ml-12-22 rounded-lg p-2-3 text="#FFFFFF" bg="#3A50FF">
-                <div class="overflow-auto whitespace-normal" v-html="DOMPurify.sanitize(parseMarkDown(messageInfo.content))" />
+                <div v-html="DOMPurify.sanitize(parseMarkDown(messageInfo.content))" />
               </div>
               <div wh-8-10 mx-2-6 rounded="100%">
                 <ai-nav-avator wh-8-10 :src="promptInfo.iconUrl" />
@@ -75,12 +75,7 @@
             <div v-if="messageInfo.role === 'assistant'" mb-3-6 flex-start-end>
               <img :src="promptInfo.iconUrl" wh-8-10 mx-2-6 rounded="100%">
               <div w-full mr-12-22 rounded-lg p-2-3 text="#001042" bg="#EFF1FC">
-                <div
-                  v-html="DOMPurify.sanitize(parseMarkDown(messageInfo.content), {
-                    ADD_ATTR: ['class'], // 额外允许class属性
-                    ADD_TAGS: ['span'], // 额外允许<span>标签
-                  })"
-                />
+                <div v-html="DOMPurify.sanitize(parseMarkDown(messageInfo.content))" />
                 <div flex-center-between mt-1-3 text="#3A50FF">
                   <div flex-shrink-0>
                     <div v-if="index === messages.length - 1" flex-center cursor>
@@ -429,7 +424,7 @@ function addMarkedConfig() {
     langPrefix: 'hljs language-',
     pedantic: false,
     gfm: true,
-    breaks: true,
+    breaks: false,
     sanitize: false,
     smartypants: false,
     xhtml: false,
