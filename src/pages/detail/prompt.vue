@@ -76,6 +76,7 @@
               <img :src="promptInfo.iconUrl" wh-8-10 mx-2-6 rounded="100%">
               <div w-full mr-12-22 rounded-lg p-2-3 text="#001042" bg="#EFF1FC">
                 <div
+                  class="overflow-auto whitespace-normal"
                   v-html="DOMPurify.sanitize(parseMarkDown(messageInfo.content), {
                     ADD_ATTR: ['class'], // 额外允许class属性
                     ADD_TAGS: ['span'], // 额外允许<span>标签
