@@ -17,6 +17,9 @@
       <DrainageModal web-only />
 
       <LoginModal />
+      <MemberChargeModal />
+      <EnergyShortageModal />
+      <RedeemCodeModal />
     </main>
   </n-config-provider>
 </template>
@@ -27,8 +30,10 @@ import { wechatLogin } from '~/api/login'
 import { useNormalStore } from '~/store'
 import { appTheme } from '~/config/themeOverrides'
 import { getQRCode } from '~/api/common'
+import { useMemberStore } from '~/store/member'
 defineOptions({ name: 'AppPage' })
 
+const memberStore = useMemberStore()
 const useStore = useNormalStore()
 
 const fetchQRCode = () => {
@@ -56,6 +61,9 @@ onMounted(() => {
   fetchQRCode()
   if (isWeChatBrowser()) {
     loginInWechat()
+  }
+  if (useStore.username) {
+    memberStore.getMemberInfo(useStore.username)
   }
 })
 </script>

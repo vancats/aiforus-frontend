@@ -170,13 +170,14 @@ import type { PromptInfo } from './type'
 import { markedHighlight } from '~/utils/marked-highlight'
 import { clipboard, getLocalItem, removeLocalItem } from '~/utils/index'
 import { useNormalStore, usePromptDataStore, useWebSocketStore } from '~/store/index'
+import { useMemberStore } from '~/store/member'
 import { getPromptInfo } from '~/api/prompt'
 import { checkTokenValid } from '~/api/login'
-
 const route = useRoute()
 const useStore = useNormalStore()
 const useWebSocket = useWebSocketStore()
 const usePromptData = usePromptDataStore()
+const memberStore = useMemberStore()
 let routeId = Number(route.params.id)
 
 const promptInfo = ref<PromptInfo>()
@@ -261,6 +262,7 @@ const initWebSocket = (res: string) => {
       const token = getLocalItem('token') || ''
       if (token) {
         showCountModal.value = true
+        memberStore.showEnegyShortageModal = true
       }
       else {
         useStore.showLoginModal = true
