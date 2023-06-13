@@ -37,7 +37,8 @@
 import { checkLoginStatus, login } from '~/api/login'
 import { useNormalStore } from '~/store'
 import { setLocalItem } from '~/utils'
-
+import { useMemberStore } from '~/store/member'
+const memberStore = useMemberStore()
 const useStore = useNormalStore()
 
 const isExpired = ref(false)
@@ -52,6 +53,7 @@ const startChecked = async () => {
     setLocalItem('username', res.data.userId)
     useStore.showLoginModal = false
     useStore.username = res.data.userId
+    memberStore.getMemberInfo(useStore.username)
   }
   else if (res.code === 400 && checkedCnt.value < 16) {
     setTimeout(() => {

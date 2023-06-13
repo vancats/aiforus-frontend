@@ -8,7 +8,7 @@
       <n-input
         ref="inputRef"
         v-model:value="searchVal"
-        px-2 py-2 rounded-xl h="12"
+        px-2 py-2 rounded-xl h="14"
         placeholder="搜索" clearable
         @keyup.enter="onSearch"
       >
@@ -16,20 +16,26 @@
           <span i-carbon:search text-white />
         </template>
       </n-input>
-
-      <n-popover v-if="useStore.username" trigger="click" placement="bottom" raw :show-arrow="false">
+      <div px-6 py-3 rounded-2xl bg="#2B2C3E" w-36 flex-center mx-6>
+        <ai-member-energy wh-6 mr-2 />
+        <span text-5.5 font-400>{{ memberStore.userMemberInfo?.memberEnergy }}</span>
+      </div>
+      <n-popover v-if="useStore.username" trigger="click" placement="bottom-end" raw :show-arrow="false">
         <template #trigger>
-          <div flex-center-center w-55 h-12 ml-6 p-2 rounded-2xl cursor bg="#2B2C3E">
-            <ai-nav-avator wh-7 />
-            <span text-4.5 mx-2>
-              {{ useStore.username || 'AIS2688152' }}
-            </span>
-            <ai-card-arrow wh-4 />
+          <div>
+            <ai-nav-avator wh-14 />
           </div>
         </template>
-
-        <div flex-center-center h-8 px-13 rounded-2xl cursor text-white bg="#2B2C3E" @click="showLogoutModal = true">
-          退出登陆
+        <div bg="#2B2C3E" w-40 rounded-2xl mt-4 px-2 py-2>
+          <div flex-center-center mb-2 h-11 rounded-2xl cursor text-white hover:bg="#37384E" @click="memberStore.showMemberChargeModal = true">
+            会员充值
+          </div>
+          <div flex-center-center mb-2 h-11 rounded-2xl cursor text-white hover:bg="#37384E" @click="memberStore.showRedeemCodeModal = true">
+            兑换码
+          </div>
+          <div flex-center-center h-11 rounded-2xl cursor text-white hover:bg="#37384E" @click="showLogoutModal = true">
+            退出登陆
+          </div>
         </div>
       </n-popover>
 
@@ -68,11 +74,14 @@
 <script setup lang="ts">
 import { exitLogin } from '~/utils/index'
 import { useNormalStore, useWebSocketStore } from '~/store'
+import { useMemberStore } from '~/store/member'
 import naiveui from '~/utils/naiveui'
+
 defineOptions({ name: 'NavBar' })
 
 const router = useRouter()
 const useStore = useNormalStore()
+const memberStore = useMemberStore()
 const useWebSocket = useWebSocketStore()
 
 const goHome = () => router.push('/')
@@ -90,5 +99,6 @@ const logout = () => {
   useWebSocket.ws?.close()
   useStore.username = ''
   showLogoutModal.value = false
+  memberStore.resetMemberInfo()
 }
 </script>

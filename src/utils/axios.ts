@@ -35,7 +35,9 @@ const config = {
 export const CHECK_LOGIN = '/user/check-login'
 export const FILE_URL = '/file/upload'
 export const CHECK_TOKEN = 'jwt/check'
-const RES_WHITE_LIST = [CHECK_LOGIN, CHECK_TOKEN]
+export const CHECK_MEMBER_PAY = 'member/check-pay'
+
+const RES_WHITE_LIST = [CHECK_LOGIN, CHECK_TOKEN, CHECK_MEMBER_PAY]
 const REQ_WHITE_LIST = [FILE_URL]
 
 class RequestHttp {

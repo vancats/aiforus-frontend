@@ -1,0 +1,13 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="48" height="48" rx="16" fill="url(#paint0_radial_87_7650)"/>
+<path d="M32.456 19.736C32.456 17.688 31.432 16.92 28.904 16.92C27.208 16.92 25.512 17.24 23.816 17.848V13.4C25.608 12.792 27.688 12.472 30.056 12.472C35.176 12.472 38.056 14.648 38.056 18.744C37.96 22.52 37.128 24.152 30.92 29.176L29.448 30.36V30.584H38.408V35H22.536V30.392C25.128 28.28 27.112 26.616 28.488 25.4C31.208 22.936 32.456 21.272 32.456 19.736Z" fill="white"/>
+<path d="M10.462 25.629L6.414 19.58H11.014L13.13 23.283H13.268L15.43 19.58H19.961L15.936 25.629L20.191 32H15.545L13.268 28.067H13.13L10.784 32H6.161L10.462 25.629Z" fill="white"/>
+<defs>
+<radialGradient id="paint0_radial_87_7650" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(13.5 10) rotate(53.2594) scale(44.3001)">
+<stop stop-color="#FFE6AF"/>
+<stop offset="0.416667" stop-color="#FFA83C"/>
+<stop offset="0.838542" stop-color="#FFB843"/>
+<stop offset="1" stop-color="#FFD952"/>
+</radialGradient>
+</defs>
+</svg>

@@ -14,7 +14,6 @@ export default defineConfig({
     ['cursor', 'cursor-pointer select-none'],
     ['web-only', 'hidden sm:block'], // 移动端不展示
     ['mobile-only', 'block sm:hidden'], // 移动端不展示
-
     // Flex flex + align-items + justify-content + flex-direction
     ['flex-col', 'flex flex-col'],
     ['flex-wrap', 'flex flex-wrap'],
@@ -86,6 +85,27 @@ export default defineConfig({
         return { width: d, height: d }
       else
         return { width: `${Number(d) / 4}rem`, height: `${Number(d) / 4}rem` }
+    }],
+
+    // 三角形
+    [/^tri-(.*?)-(.*?)-(.*)$/, ([, p, d, c]) => {
+      let borderColor = ''
+      switch (p) {
+        case 't': borderColor = `${c} transparent transparent transparent`
+          break
+        case 'r': borderColor = `transparent ${c} transparent transparent`
+          break
+        case 'b': borderColor = `transparent transparent ${c} transparent`
+          break
+        case 'l': borderColor = `transparent transparent transparent ${c}`
+          break
+      }
+      return {
+        'width': 0,
+        'height': 0,
+        'border': `${Number(d) / 4}rem solid`,
+        'border-color': borderColor,
+      }
     }],
   ],
 
