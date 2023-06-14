@@ -251,6 +251,10 @@ const initWebSocket = (res: string) => {
 
   let prev = ''
   useWebSocket.ws.onmessage = (res) => {
+    // 无论请求结果如何 都刷新一下能量值
+    if (useStore.username) {
+      memberStore.getMemberInfo(useStore.username)
+    }
     if (res.data === '#DONE#') {
       isProcessing.value = false
       addCopyCodeText()
@@ -262,7 +266,7 @@ const initWebSocket = (res: string) => {
       const token = getLocalItem('token') || ''
       if (token) {
         showCountModal.value = true
-        memberStore.showEnegyShortageModal = true
+        memberStore.showEnergyShortageModal = true
       }
       else {
         useStore.showLoginModal = true

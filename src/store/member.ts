@@ -12,7 +12,7 @@ export const useMemberStore = defineStore('member', () => {
   const showMemberChargeModal = ref(false)
   const showPayModal = ref(false)
   const showRedeemCodeModal = ref(false)
-  const showEnegyShortageModal = ref(true)
+  const showEnergyShortageModal = ref(false)
   // 会员档位信息
   const memberTypeInfo = ref<TypeInfo[]>([])
   const currentTypeSelect = ref()
@@ -66,7 +66,7 @@ export const useMemberStore = defineStore('member', () => {
   return {
     userMemberInfo,
     userMemberExpire,
-    showEnegyShortageModal,
+    showEnergyShortageModal,
     currentTypeSelect,
     currentTypeFee,
     showPayModal,

@@ -1,6 +1,6 @@
 <template>
   <n-modal
-    v-model:show="memberStore.showEnegyShortageModal" preset="dialog" type="warning" size="huge" :bordered="false"
+    v-model:show="memberStore.showEnergyShortageModal" preset="dialog" type="warning" size="huge" :bordered="false"
     h-110-115 color="#fff" rounded-2xl :style="{ background: '#3D3E59' }"
   >
     <template #header>
@@ -38,11 +38,11 @@ const memberStore = useMemberStore()
 
 const toTask = () => {
   router.push('/user')
-  memberStore.showEnegyShortageModal = false
+  memberStore.showEnergyShortageModal = false
 }
 
 const toCharge = () => {
   memberStore.showMemberChargeModal = true
-  memberStore.showEnegyShortageModal = false
+  memberStore.showEnergyShortageModal = false
 }
 </script>
