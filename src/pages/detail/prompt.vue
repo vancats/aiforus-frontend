@@ -251,13 +251,13 @@ const initWebSocket = (res: string) => {
 
   let prev = ''
   useWebSocket.ws.onmessage = (res) => {
-    // 无论请求结果如何 都刷新一下能量值
-    if (useStore.username) {
-      memberStore.getMemberInfo(useStore.username)
-    }
     if (res.data === '#DONE#') {
       isProcessing.value = false
       addCopyCodeText()
+      // 无论请求结果如何 都刷新一下能量值
+      if (useStore.username) {
+        memberStore.getMemberInfo(useStore.username)
+      }
     }
     else if (res.data === '#NOUSAGE#') {
       isProcessing.value = false
