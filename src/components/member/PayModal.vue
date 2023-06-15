@@ -31,6 +31,7 @@
 import { useMemberStore } from '~/store/member'
 import { useNormalStore } from '~/store'
 import { checkPayStatus, memberPay } from '~/api/member'
+import naiveui from '~/utils/naiveui'
 const memberStore = useMemberStore()
 const useStore = useNormalStore()
 const isExpired = ref(false)
@@ -42,6 +43,8 @@ const startChecked = async () => {
   const res = await checkPayStatus(memberStore.payOrderId, memberStore.currentTypeSelect)
   if (res?.code === 200) {
     memberStore.showMemberChargeModal = false
+    memberStore.showPayModal = false
+    naiveui.message.success('支付成功')
     memberStore.getMemberInfo(useStore.username)
   }
   else if (res?.code === 400 && checkedCnt.value < 16) {
