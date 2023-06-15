@@ -39,7 +39,7 @@ const payQRCode = ref('')
 
 const startChecked = async () => {
   checkedCnt.value++
-  const res = await checkPayStatus(useStore.username, memberStore.currentTypeSelect)
+  const res = await checkPayStatus(memberStore.payOrderId, memberStore.currentTypeSelect)
   if (res?.code === 200) {
     memberStore.showMemberChargeModal = false
     memberStore.getMemberInfo(useStore.username)
@@ -61,6 +61,7 @@ const onPay = async () => {
   try {
     isFetchEnd.value = false
     const res = await memberPay(useStore.username, memberStore.currentTypeSelect)
+    memberStore.payOrderId = res?.orderId
     payQRCode.value = res?.qrcodeUrl || ''
     checkedCnt.value = 0
     isExpired.value = false

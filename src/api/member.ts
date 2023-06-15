@@ -10,16 +10,16 @@ export const fetchMemberPayType = async () => {
 }
 
 export const memberPay = async (userId: string, type: number) => {
-  return await axios.post<{ qrcodeUrl: string }>('/member/pay', {
+  return await axios.post<{ qrcodeUrl: string; orderId: string }>('/member/pay', {
     userId,
     type,
   }).then(res => res?.data)
 }
 
-export const checkPayStatus = async (userId: string, type: number) => {
+export const checkPayStatus = async (orderId: string, payType: number) => {
   return await axios.post<{ code: number }>(CHECK_MEMBER_PAY, {
-    userId,
-    type,
+    orderId,
+    payType,
   }).then(res => res)
 }
 

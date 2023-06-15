@@ -19,6 +19,7 @@ export const useMemberStore = defineStore('member', () => {
   const currentTypeFee = computed(() => {
     return memberTypeInfo.value.find(type => type.payType === currentTypeSelect.value)?.wholeFee || 0
   })
+  const payOrderId = ref()
   const getMemberTypeInfo = async () => {
     try {
       if (memberTypeInfo.value.length > 0) {
@@ -64,6 +65,7 @@ export const useMemberStore = defineStore('member', () => {
     userMemberInfo.value = undefined
   }
   return {
+    payOrderId,
     userMemberInfo,
     userMemberExpire,
     showEnergyShortageModal,
