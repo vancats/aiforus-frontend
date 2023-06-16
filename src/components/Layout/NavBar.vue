@@ -34,7 +34,7 @@
             兑换码
           </div>
           <div flex-center-center h-11 rounded-2xl cursor text-white hover:bg="#37384E" @click="showLogoutModal = true">
-            退出登陆
+            退出登录
           </div>
         </div>
       </n-popover>
@@ -52,10 +52,10 @@
         <template #header>
           <div flex-center>
             <ai-nav-warning mr-2 />
-            退出登陆
+            退出登录
           </div>
         </template>
-        退出登陆后访问AI应用可能受限，确定退出吗？
+        退出登录后访问AI应用可能受限，确定退出吗？
         <template #footer>
           <div flex-center-center>
             <n-button px-7 mr-4 @click="showLogoutModal = false">
@@ -95,7 +95,7 @@ const onSearch = () => {
 const showLogoutModal = ref(false)
 const logout = () => {
   exitLogin()
-  naiveui.message.success('您已退出登陆')
+  naiveui.message.success('您已退出登录')
   useWebSocket.ws?.close()
   useStore.username = ''
   showLogoutModal.value = false

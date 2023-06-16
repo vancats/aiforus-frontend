@@ -38,6 +38,8 @@ import { checkLoginStatus, login } from '~/api/login'
 import { useNormalStore } from '~/store'
 import { setLocalItem } from '~/utils'
 import { useMemberStore } from '~/store/member'
+import { userCheckIn } from '~/api/member'
+import naiveui from '~/utils/naiveui'
 const memberStore = useMemberStore()
 const useStore = useNormalStore()
 
@@ -53,7 +55,28 @@ const startChecked = async () => {
     setLocalItem('username', res.data.userId)
     useStore.showLoginModal = false
     useStore.username = res.data.userId
-    memberStore.getMemberInfo(useStore.username)
+    await memberStore.getMemberInfo(useStore.username)
+    if (!memberStore.userMemberInfo?.isCheckin) {
+      naiveui.dialog.success({
+        content: '每日签到，即可获得60AI能量（30次使用次数）',
+        showIcon: false,
+        negativeText: '取消',
+        positiveText: '签到',
+        closable: false,
+        onPositiveClick: async () => {
+          try {
+            const res = await userCheckIn(useStore.username)
+            if (res?.toast) {
+              naiveui.message.success(res.toast)
+              memberStore.getMemberInfo(useStore.username)
+            }
+          }
+          catch (error) {
+            console.error(error)
+          }
+        },
+      })
+    }
   }
   else if (res.code === 400 && checkedCnt.value < 16) {
     setTimeout(() => {

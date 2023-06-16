@@ -2,10 +2,11 @@
   <n-message-provider>
     <message-api />
   </n-message-provider>
-  <n-dialog-provider>
-    <dialog-api />
-  </n-dialog-provider>
+
   <n-config-provider :theme-overrides="appTheme">
+    <n-dialog-provider>
+      <dialog-api />
+    </n-dialog-provider>
     <main w-full flex>
       <SideBar web-only />
       <div w-full h-screen flex-col layout-left sm:pt-8 overflow-hidden>
@@ -31,6 +32,8 @@ import { useNormalStore } from '~/store'
 import { appTheme } from '~/config/themeOverrides'
 import { getQRCode } from '~/api/common'
 import { useMemberStore } from '~/store/member'
+import { userCheckIn } from '~/api/member'
+import naiveui from '~/utils/naiveui'
 defineOptions({ name: 'AppPage' })
 
 const memberStore = useMemberStore()
@@ -57,13 +60,35 @@ const loginInWechat = async () => {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   fetchQRCode()
   if (isWeChatBrowser()) {
     loginInWechat()
   }
   if (useStore.username) {
-    memberStore.getMemberInfo(useStore.username)
+    await memberStore.getMemberInfo(useStore.username)
+
+    if (!memberStore.userMemberInfo?.isCheckin) {
+      naiveui.dialog.success({
+        content: '每日签到，即可获得60AI能量（30次使用次数）',
+        showIcon: false,
+        negativeText: '取消',
+        positiveText: '签到',
+        closable: false,
+        onPositiveClick: async () => {
+          try {
+            const res = await userCheckIn(useStore.username)
+            if (res?.toast) {
+              naiveui.message.success(res.toast)
+              memberStore.getMemberInfo(useStore.username)
+            }
+          }
+          catch (error) {
+            console.error(error)
+          }
+        },
+      })
+    }
   }
 })
 </script>

@@ -26,10 +26,10 @@
             <ai-member-double wh-12 mr-2 />
             <div>
               <p font-600 text-5.5>
-                立即获得超多能量
+                每日签到能量翻倍
               </p>
               <p text-3.5 color="#9C9CA9">
-                充值会员天数x50能量
+                普通用户签到得60能量，会员签到120能量
               </p>
             </div>
           </div>
@@ -37,10 +37,10 @@
             <ai-member-wechat wh-12 mr-2 />
             <div>
               <p font-600 text-5.5>
-                立即获得超多能量
+                对话字数大幅提升
               </p>
               <p text-3.5 color="#9C9CA9">
-                充值会员天数x50能量
+                普通用户上限500字，会员上限1000字
               </p>
             </div>
           </div>
@@ -48,10 +48,10 @@
             <ai-member-new wh-12 mr-2 />
             <div>
               <p font-600 text-5.5>
-                立即获得超多能量
+                最新功能优先体验
               </p>
               <p text-3.5 color="#9C9CA9">
-                充值会员天数x50能量
+                更多功能尽情期待
               </p>
             </div>
           </div>
@@ -135,10 +135,10 @@
           <ai-member-double wh-8 mr-2 />
           <div>
             <p text-4 font-700>
-              立即获得超多能量
+              每日签到能量翻倍
             </p>
             <p text-3 color="#9C9CA9">
-              充值会员天数x50能量
+              普通用户签到得60能量，会员签到120能量
             </p>
           </div>
         </div>
@@ -146,10 +146,10 @@
           <ai-member-wechat wh-8 mr-2 />
           <div>
             <p text-4 font-700>
-              立即获得超多能量
+              对话字数大幅提升
             </p>
             <p text-3 color="#9C9CA9">
-              充值会员天数x50能量
+              普通用户上限500字，会员上限1000字
             </p>
           </div>
         </div>

@@ -51,6 +51,8 @@ export const appTheme = {
 
   Dialog: {
     titleTextColor: '#FFFFFF',
+    color: '#292C3C',
+    textColor: '#FFFFFF',
   },
 
   InternalSelection: {

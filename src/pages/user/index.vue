@@ -3,7 +3,8 @@
     <div flex-start>
       <ai-user-avator wh-14.5-37 bg="#D8B9F6" border="4 solid #FFFFFF" rounded-2xl />
       <div ml-2-6>
-        <div text-4-7 font-extrabold mb-1-2>
+        <div text-4-7 font-extrabold mb-1-2 flex-center>
+          <ai-member-vector v-if="memberStore.userMemberExpire > 0" mr-2 />
           ID： {{ normalStore.username || '--' }}
         </div>
         <div v-if="memberStore.userMemberExpire > 0" text-3-5>

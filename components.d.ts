@@ -21,6 +21,7 @@ declare module '@vue/runtime-core' {
     AiMemberEnergy: typeof import('~icons/ai/member-energy')['default']
     AiMemberEnergyMore: typeof import('~icons/ai/member-energy-more')['default']
     AiMemberNew: typeof import('~icons/ai/member-new')['default']
+    AiMemberVector: typeof import('~icons/ai/member-vector')['default']
     AiMemberWechat: typeof import('~icons/ai/member-wechat')['default']
     AiNavAvator: typeof import('~icons/ai/nav-avator')['default']
     AiNavTitle: typeof import('~icons/ai/nav-title')['default']

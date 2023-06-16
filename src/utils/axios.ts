@@ -70,7 +70,7 @@ class RequestHttp {
         if (data.code === RequestEnums.OVERDUE) {
           // 登录信息失效，应跳转到登录页面，并清空本地的token
           exitLogin()
-          naiveui.message.warning('登陆失效，请重新登陆')
+          naiveui.message.warning('登录失效，请重新登录')
           setTimeout(() => {
             location.reload()
           }, 1000)
@@ -99,7 +99,7 @@ class RequestHttp {
         break
       case RequestEnums.OVERDUE:
         exitLogin()
-        naiveui.message.warning('登陆失效，请重新登陆')
+        naiveui.message.warning('登录失效，请重新登录')
         setTimeout(() => {
           location.reload()
         }, 1000)
