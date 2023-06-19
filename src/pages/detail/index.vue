@@ -65,7 +65,7 @@ onMounted(() => {
 
 const goBack = () => {
   if (window.history.length > 1 && route.path !== prevRoute.value) {
-    router.push(prevRoute.value)
+    router.push(prevRoute.value || '/')
   }
   else {
     router.push('/')
