@@ -18,7 +18,7 @@
                 立即获得超多能量
               </p>
               <p text-3.5 color="#9C9CA9">
-                充值会员天数x50能量
+                充值会员天数x{{ MEMBER_ENERGY_PER_DAY }}能量
               </p>
             </div>
           </div>
@@ -29,7 +29,7 @@
                 每日签到能量翻倍
               </p>
               <p text-3.5 color="#9C9CA9">
-                普通用户签到得60能量，会员签到120能量
+                普通用户签到得{{ ENERGY_CHECK_IN }}能量，会员签到{{ ENERGY_CHECK_IN * 2 }}能量
               </p>
             </div>
           </div>
@@ -82,7 +82,8 @@
               {{ info.duration }}天会员 <span text-4 color="#51F0E3" font-400>（¥{{ info.perDayFee }}/天）</span>
             </p>
             <p flex-center text-3.5 color="#9C9CA9">
-              赠{{ info.duration * 50 }}能量 <ai-member-energy wh-4 ml-1 />
+              赠{{ info.duration * MEMBER_ENERGY_PER_DAY }}能量 <ai-member-energy wh-4 mx-1 />
+              累计 {{ info.duration * (ENERGY_CHECK_IN + MEMBER_ENERGY_PER_DAY) }}
             </p>
           </div>
           <p text-7 font-700>
@@ -127,7 +128,7 @@
               立即获得超多能量
             </p>
             <p text-3 color="#9C9CA9">
-              充值会员天数x50能量
+              充值会员天数x{{ MEMBER_ENERGY_PER_DAY }}能量
             </p>
           </div>
         </div>
@@ -138,7 +139,7 @@
               每日签到能量翻倍
             </p>
             <p text-3 color="#9C9CA9">
-              普通用户签到得60能量，会员签到120能量
+              普通用户签到得{{ ENERGY_CHECK_IN }}能量，会员签到{{ ENERGY_CHECK_IN * 2 }}能量
             </p>
           </div>
         </div>
@@ -167,7 +168,8 @@
             {{ info.duration }}天会员 <span text-4 color="#51F0E3" font-500>（¥{{ info.perDayFee }}/天）</span>
           </p>
           <p flex-center text-3 color="#9C9CA9">
-            赠{{ info.duration * 50 }}能量 <ai-member-energy wh-3 ml-1 />
+            赠{{ info.duration * MEMBER_ENERGY_PER_DAY }}能量 <ai-member-energy wh-3 ml-1 />
+            累计 {{ info.duration * (ENERGY_CHECK_IN + MEMBER_ENERGY_PER_DAY) }}
           </p>
         </div>
         <p text-5 font-400>
@@ -185,6 +187,7 @@
 </template>
 
 <script setup lang='ts'>
+import { ENERGY_CHECK_IN, MEMBER_ENERGY_PER_DAY } from './const'
 import { useMemberStore } from '~/store/member'
 const memberStore = useMemberStore()
 

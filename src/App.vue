@@ -69,25 +69,16 @@ onMounted(async () => {
     await memberStore.getMemberInfo(useStore.username)
 
     if (!memberStore.userMemberInfo?.isCheckin) {
-      naiveui.dialog.success({
-        content: '每日签到，即可获得60AI能量（30次使用次数）',
-        showIcon: false,
-        negativeText: '取消',
-        positiveText: '签到',
-        closable: false,
-        onPositiveClick: async () => {
-          try {
-            const res = await userCheckIn(useStore.username)
-            if (res?.toast) {
-              naiveui.message.success(res.toast)
-              memberStore.getMemberInfo(useStore.username)
-            }
-          }
-          catch (error) {
-            console.error(error)
-          }
-        },
-      })
+      try {
+        const res = await userCheckIn(useStore.username)
+        if (res?.toast) {
+          naiveui.message.success(res.toast)
+          memberStore.getMemberInfo(useStore.username)
+        }
+      }
+      catch (error) {
+        console.error(error)
+      }
     }
   }
 })

@@ -47,7 +47,7 @@ const startChecked = async () => {
     naiveui.message.success('支付成功')
     memberStore.getMemberInfo(useStore.username)
   }
-  else if (res?.code === 400 && checkedCnt.value < 16) {
+  else if (res?.code === 400 && checkedCnt.value < 105) {
     setTimeout(() => {
       startChecked()
     }, 2000)
