@@ -9,8 +9,7 @@ import { isWeChatBrowser } from './utils'
 import router from '~/router'
 
 if (isWeChatBrowser() && !location.search.includes('code')) {
-  const redirect_uri = encodeURIComponent(location.href)
-  window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd4560a239412688e&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=login#wechat_redirect`
+  window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd4560a239412688e&redirect_uri=https%3A%2F%2Faiforus.cn&response_type=code&scope=snsapi_userinfo&state=login#wechat_redirect'
 }
 
 const app = createApp(App)
