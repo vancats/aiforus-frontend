@@ -265,8 +265,12 @@ const initWebSocket = (res: string) => {
 
       const token = getLocalItem('token') || ''
       if (token) {
-        showCountModal.value = true
-        memberStore.showEnergyShortageModal = true
+        checkTokenValid(token).then(res => {
+          if (res) {
+            showCountModal.value = true
+            memberStore.showEnergyShortageModal = true
+          }
+        })
       }
       else {
         useStore.showLoginModal = true
